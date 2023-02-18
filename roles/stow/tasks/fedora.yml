@@ -1,0 +1,23 @@
+---
+- name: Install Stow in Fedora
+  become: true
+  dnf:
+    name:
+      - stow
+    state: present
+
+- name: Build directories list
+  ansible.builtin.find:
+    paths: ["dotfiles/fedora"]
+    recurse: no
+    file_type: directory
+  register: files
+
+- name: Deploy dotfiles
+  with_items: '{{ files.files }}'
+  environment:
+    STOW_DIR: "dotfiles/fedora"
+  ansible.builtin.shell: |
+    stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
+  register: output
+  changed_when: '"LINK" in output.stderr'

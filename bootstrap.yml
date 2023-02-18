@@ -1,0 +1,21 @@
+---
+- name: Bootstrap development environment
+  connection: local
+  hosts: localhost
+  tasks:
+    - name: CLI Tools
+      tags: cli
+      import_role:
+        name: cli
+    - name: Sublime Text
+      tags: sublime
+      import_role:
+        name: sublime
+    - name: Stow
+      tags: stow
+      import_role:
+        name: stow
+    - name: Fonts
+      tags: fonts
+      import_role:
+        name: fonts

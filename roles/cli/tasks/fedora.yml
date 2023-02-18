@@ -1,0 +1,33 @@
+---
+- name: Install GPG key for RPM Fusion - Free
+  become: true
+  rpm_key:
+    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_distribution | lower }}-2020"
+    state: present
+
+- name: Add RPM Fusion repository - Free
+  become: true
+  yum_repository:
+    name: rpm-fusion-free
+    description: RPM Fusion - Free
+    baseurl: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    enabled: yes
+    state: present
+
+- name: Install command line tools in Fedora
+  become: true
+  dnf:
+    name: 
+      - fd-find
+      - htop
+      - i3
+      - jq
+      - keepassxc
+      - neofetch
+      - neovim
+      - polybar
+      - python3-pip
+      - ripgrep
+      - tig
+      - tmux
+    state: present

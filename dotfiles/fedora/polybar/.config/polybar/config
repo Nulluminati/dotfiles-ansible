@@ -1,0 +1,250 @@
+include-file = ~/.config/polybar/colors.conf
+include-file = ~/.config/polybar/top.conf
+include-file = ~/.config/polybar/bottom.conf
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+index-sort = true
+enable-click = true
+fuzzy-match = true
+wrapping-scroll = false
+strip-wsnumbers = true
+
+format = <label-state> <label-mode>
+
+label-focused = %icon%
+label-focused-padding = 3
+label-focused-font = 1
+label-focused-foreground = ${colors.amber-trans}
+label-focused-background = ${colors.background}
+
+label-focused-alignment = center
+
+label-unfocused = %icon%
+label-unfocused-padding = 3
+label-unfocused-font = 1
+label-unfocused-foreground = ${colors.grey}
+label-unfocused-background = ${colors.background}
+
+label-unfocused-alignment = center
+
+label-visible = %icon%
+label-visible-padding = 3
+label-visible-font = 1
+label-visible-foreground = ${colors.grey}
+label-visible-background = ${colors.background}
+
+label-visible-alignment = center
+
+label-urgent = %icon%
+label-urgent-padding = 3
+label-urgent-font = 1
+label-urgent-foreground = ${colors.amber-trans}
+label-urgent-background = ${colors.background}
+
+label-urgent-alignment = center
+
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;ﴬ
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;阮
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;漣
+ws-icon-default = 
+
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format = <label>
+format-prefix-font = 3
+format-prefix = "﬙ "
+format-prefix-foreground = ${colors.yellow}
+label-foreground = ${colors.grey}
+label-font = 1
+label = " %percentage:2:2%%"
+
+
+[module/date]
+type = internal/date
+interval = 1.0
+
+date = "%A, %d %B"
+date-alt = "%A, %d %B %Y"
+time = "at %I:%M %p"
+time-alt = "at %k:%M:%S"
+
+label = %date% %time%
+label-font = 1
+
+format = <label>
+format-background = ${colors.background}
+format-foreground = ${colors.grey}
+label-foreground = ${colors.grey}
+
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+interval = 10
+fixed-values = true
+
+format-mounted = <label-mounted>
+format-mounted-prefix-font = 3
+format-mounted-prefix = "  "
+format-mounted-prefix-foreground = ${colors.orange}
+
+label-mounted = " %free%"
+label-mounted-font = 2
+label-mounted-foreground = ${colors.grey}
+
+[module/memory]
+type = internal/memory
+interval = 3
+
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.cyan}
+format-prefix-font = 3
+
+label = " %mb_used%"
+label-foreground = ${colors.grey}
+
+
+[module/network]
+type = internal/network
+interface = ens18
+
+interval = 1.0
+
+accumulate-stats = true
+unknown-as-up = true
+
+format-connected = <ramp-signal><label-connected>
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = "⚠ "
+format-disconnected-prefix-font = 3
+format-disconnected-prefix-foreground = ${colors.red}
+
+label-connected = %downspeed:8:8%
+label-connected-font = 1
+label-connected-foreground = ${colors.grey}
+
+label-disconnected = Disconnected
+label-disconnected-font = 1
+label-disconnected-foreground = ${colors.grey}
+
+ramp-signal-0 = 說
+ramp-signal-1 = 說
+ramp-signal-2 = 說
+ramp-signal-3 = 說
+ramp-signal-4 = 說
+ramp-signal-foreground = ${colors.green}
+ramp-signal-font = 3
+
+
+[module/powermenu]
+type = custom/menu
+
+format-foreground = ${colors.red}
+format-spacing = 1
+
+label-open = 
+label-open-font = 1
+label-close = 
+label-separator = 
+
+menu-0-0 = "reboot | " 
+menu-0-0-exec =systemctl reboot
+menu-0-1 = "poweroff | " 
+menu-0-1-exec =systemctl poweroff
+menu-0-2 = 
+menu-0-2-exec = menu-close
+menu-0-font = 1
+
+
+
+
+[module/sep]
+type = custom/text
+content = |
+content-foreground = ${colors.grey}
+content-font = 1
+
+
+[module/title]
+type = internal/xwindow
+
+format = <label>
+format-background = ${colors.background}
+format-foreground = ${colors.grey}
+format-padding = 4
+
+label = %title%
+label-font = 1
+label-maxlen = 50
+
+label-empty = Empty
+label-empty-foreground = ${colors.grey}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+; sink = alsa_output.pci-0000_12_00.3.analog-stereo
+use-ui-max = true
+interval = 5
+
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+label-volume = %percentage%%
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+click-right = pavucontrol
+
+[module/uptime]
+type = custom/script
+exec = ~/.config/polybar/scripts/uptime.sh
+format-foreground = ${colors.grey}
+
+[module/temp-cpu]
+type = internal/temperature
+interval = 0.5
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/class/thermal/thermal_zone1/temp
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 20
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 60
+
+label-foreground = ${colors.grey}
