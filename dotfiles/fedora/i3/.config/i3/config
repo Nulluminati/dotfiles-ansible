@@ -1,4 +1,4 @@
-set $mod Mod4
+set $mod Mod1
 
 font pango: Terminus 10
 
@@ -175,18 +175,6 @@ assign [class="KeePassXC"]          → $ws5
 assign [class="Slack"]              → $ws7
 assign [class="Spotify"]            → $ws7
 
-# assign workspace to monitors
-workspace $ws1 output DP-1
-workspace $ws2 output DP-1
-workspace $ws3 output DP-1
-workspace $ws4 output DP-1
-workspace $ws5 output DP-1
-workspace $ws6 output DP-3
-workspace $ws7 output DP-3
-workspace $ws8 output DP-2
-workspace $ws9 output DP-2
-workspace $ws10 output DP-2
-
 # i3-Gaps
 
 gaps inner 24
@@ -198,34 +186,11 @@ gaps right 0
 gaps top 0
 gaps bottom 0
 
-for_window [class="^.*"] border pixel 0
-
-# i3bar
-bar {
-  colors {
-    background #000000
-    statusline #FFFFFF
-    separator  #666666
-
-    focused_workspace  #83CAFA #51A2DA #FFFFFF
-    active_workspace   #3C6EB4 #294172 #FFFFFF
-    inactive_workspace #8C8C8C #4C4C4C #888888
-    urgent_workspace   #EC69A0 #DB3279 #FFFFFF
-    binding_mode       #b691d3 #A07CBC #FFFFFF
-  }
-  status_command i3status
-}
-
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex-autostart --autostart --environment i3
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
+# nm-applet is a desktop system tray GUI for NetworkManager.
 exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.

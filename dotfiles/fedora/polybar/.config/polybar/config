@@ -1,6 +1,5 @@
 include-file = ~/.config/polybar/colors.conf
 include-file = ~/.config/polybar/top.conf
-include-file = ~/.config/polybar/bottom.conf
 
 [module/i3]
 type = internal/i3
