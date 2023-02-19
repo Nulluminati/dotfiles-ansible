@@ -17,17 +17,28 @@
 - name: Install command line tools in Fedora
   become: true
   dnf:
-    name: 
+    name:
+      - dunst
       - fd-find
+      - feh
       - htop
       - i3
+      - ImageMagick
       - jq
       - keepassxc
       - neofetch
       - neovim
+      - picom
       - polybar
       - python3-pip
       - ripgrep
+      - rofi
       - tig
       - tmux
     state: present
+
+- name: Install pywal
+  become: yes
+  pip:
+    name: pywal
+    executable: pip3

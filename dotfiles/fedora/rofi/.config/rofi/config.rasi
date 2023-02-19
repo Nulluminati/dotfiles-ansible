@@ -1,0 +1,15 @@
+/* Rofi config file */
+configuration {
+    lines: 12;
+    font: "Hack Nerd Font 10";
+    show-icons: false;
+    display-window: "Window";
+    display-drun: "Search";
+}
+
+@theme "~/.cache/wal/colors-rofi-dark"
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
