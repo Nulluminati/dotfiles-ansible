@@ -1,31 +1,53 @@
 ---
-- name: Install GPG key for RPM Fusion - Free
+- name: Import repositories GPG keys
   become: true
   rpm_key:
-    key: "https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_distribution | lower }}-2020"
     state: present
+    key: "{{ item.gpg_url }}"
+  loop: "{{ fedora_repositories }}"
 
-- name: Add RPM Fusion repository - Free
+- name: Add repositories
   become: true
   yum_repository:
-    name: rpm-fusion-free
-    description: RPM Fusion - Free
-    baseurl: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.url }}"
+    gpgkey: "{{ item.gpg_url }}"
+    gpgcheck: "{{ item.gpg_check | bool }}"
     enabled: yes
+  loop: "{{ fedora_repositories }}"
+
+- name: Import RPM Fusion Free GPG key
+  become: true
+  rpm_key:
+    state: present
+    key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_distribution | lower }}-2020
+
+- name: Install RPM Fusion Free
+  become: true
+  dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm
     state: present
 
 - name: Install command line tools in Fedora
   become: true
   dnf:
     name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
       - dunst
       - fd-find
       - feh
+      - helm
       - htop
       - i3
       - ImageMagick
       - jq
       - keepassxc
+      - kubectl
       - neofetch
       - neovim
       - picom
@@ -33,8 +55,11 @@
       - python3-pip
       - ripgrep
       - rofi
+      - sublime-text
+      - terraform
       - tig
       - tmux
+      - unzip
     state: present
 
 - name: Install pywal
@@ -42,3 +67,19 @@
   pip:
     name: pywal
     executable: pip3
+
+- name: Download AWS CLI
+  get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
+  register: aws_cli_download
+
+- name: Unarchive AWS CLI Installer
+  unarchive: src=/tmp/awscliv2.zip dest=/tmp copy=no creates=/tmp/aws
+  when: aws_cli_download.changed
+  register: aws_cli_unarchive
+
+- name: Install AWS CLI
+  become: yes
+  shell: /tmp/aws/install --update
+  args:
+    creates: /usr/local/bin/aws
+  when: aws_cli_unarchive.changed

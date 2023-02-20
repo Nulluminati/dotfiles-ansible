@@ -7,10 +7,6 @@
       tags: cli
       import_role:
         name: cli
-    - name: Sublime Text
-      tags: sublime
-      import_role:
-        name: sublime
     - name: Stow
       tags: stow
       import_role:
