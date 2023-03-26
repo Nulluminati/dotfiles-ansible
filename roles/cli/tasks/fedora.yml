@@ -33,14 +33,22 @@
   become: true
   dnf:
     name:
+      - alacritty
+      - bat
+      - chromium
+      - conky
       - docker-ce
       - docker-ce-cli
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
       - dunst
+      - exa
       - fd-find
       - feh
+      - firefox
+      - golang
+      - golang-x-tools-gopls
       - helm
       - htop
       - i3
@@ -55,6 +63,8 @@
       - python3-pip
       - ripgrep
       - rofi
+      - rust
+      - rustfmt
       - sublime-text
       - terraform
       - tig
