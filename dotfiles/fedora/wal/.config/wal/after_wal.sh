@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 # Source the colors from wal
 source "${HOME}/.cache/wal/colors.sh"
 

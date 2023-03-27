@@ -1,15 +1,136 @@
 /* Rofi config file */
 configuration {
-    lines: 12;
-    font: "Hack Nerd Font 10";
-    show-icons: false;
-    display-window: "Window";
-    display-drun: "Search";
+    lines:                          12;
+    font:                           "Hack Nerd Font 10";
+    show-icons:                     true;
+    display-window:                 "Window";
+    display-drun:                   "";
+    drun-display-format:            "{icon} {name}";
+    disable-history:                false;
+    fullscreen:                     false;
+    hide-scrollbar:                 true;
+    sidebar-mode:                   false;
 }
 
-@theme "~/.cache/wal/colors-rofi-dark"
+@theme "~/.cache/wal/colors-rofi"
 
 element-text, element-icon {
-    background-color: inherit;
-    text-color:       inherit;
+    background-color:               inherit;
+    text-color:                     inherit;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                     @foreground;
+    border:                         2px;
+    border-color:                   @border-color;
+    border-radius:                  0px;
+    width:                          800px;
+    anchor:                         center;
+    x-offset:                       0;
+    y-offset:                       0;
+}
+
+entry {
+    background-color:               @background;
+    text-color:                     @foreground;
+    placeholder-color:              @foreground;
+    expand:                         true;
+    horizontal-align:               0;
+    placeholder:                    "Search...";
+    blink:                          true;
+    border:                         0px 0px 2px 0px;
+    border-color:                   @border-color;
+    border-radius:                  0px;
+    padding:                        8px;
+    margin:                         0px;
+}
+
+inputbar {
+    children:                       [ entry ];
+    background-color:               @background;
+    text-color:                     @foreground;
+    expand:                         false;
+    border:                         0px 0px 0px 0px;
+    border-radius:                  0px;
+    border-color:                   @foreground;
+    margin:                         0px 12px 0px 0px;
+    padding:                        0px;
+    position:                       center;
+}
+
+listview {
+    background-color:               @background;
+    border:                         0px 0px 0px 0px;
+    columns:                        1;
+    lines:                          7;
+    spacing:                        4px;
+    cycle:                          false;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+mainbox {
+    background-color:               @background;
+    children:                       [ inputbar, listview ];
+    spacing:                        15px;
+    padding:                        15px;
+}
+
+element {
+    background-color:               @background;
+    text-color:                     @foreground;
+    orientation:                    horizontal;
+    border-radius:                  0px;
+    padding:                        6px 6px 6px 6px;
+}
+
+element-icon {
+    background-color:               inherit;
+    text-color:                     inherit;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    size:                           24px;
+    border:                         0px;
+}
+
+element-text {
+    background-color:               inherit;
+    text-color:                     inherit;
+    expand:                         true;
+    horizontal-align:               0;
+    vertical-align:                 0.5;
+    margin:                         0px;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    background-color:               @background;
+    text-color:                     @foreground;
+    border-radius:                  0px;
+}
+
+element normal.active,
+element alternate.active {
+    background-color:               @background;
+    text-color:                     @foreground;
+}
+
+element selected {
+    background-color:               @background;
+    text-color:                     @foreground;
+    border:                         0px 0px 0px 0px;
+    border-radius:                  0px;
+    border-color:                   @border-color;
+}
+
+element selected.urgent {
+    background-color:               @background;
+    text-color:                     @foreground;
+}
+
+element selected.active {
+    background-color:               @background;
+    color:                          @foreground;
 }
