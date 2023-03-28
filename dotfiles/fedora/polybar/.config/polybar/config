@@ -183,3 +183,13 @@ click-right = pavucontrol
 type = custom/script
 exec = ~/.config/polybar/scripts/uptime.sh
 format-foreground = ${colors.foreground}
+
+[module/dnf-updates]
+type = custom/script
+interval = 600
+exec = ~/.config/polybar/scripts/dnf-updates.sh
+
+[module/weather]
+type = custom/script
+interval = 600
+exec = python3 ~/.config/polybar/scripts/weather.py
