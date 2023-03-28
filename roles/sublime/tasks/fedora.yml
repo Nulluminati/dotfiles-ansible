@@ -1,0 +1,82 @@
+---
+# Install Sublime Text
+
+- name: Import repositories GPG keys
+  become: true
+  rpm_key:
+    state: present
+    key: "{{ item.gpg_url }}"
+  loop: "{{ fedora_repositories }}"
+
+- name: Add repositories
+  become: true
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.url }}"
+    gpgkey: "{{ item.gpg_url }}"
+    gpgcheck: "{{ item.gpg_check | bool }}"
+    enabled: yes
+  loop: "{{ fedora_repositories }}"
+
+- name: Install command line tools in Fedora
+  become: true
+  dnf:
+    name:
+      - sublime-text
+    state: present
+
+# Create Directoris
+
+- name: Check Sublime installed package directory
+  stat:
+    path: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages"
+  register: check_sublime_installed_packages_dir
+
+- name: Create Sublime installed package directory
+  file:
+    path: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages"
+    state: directory
+  when: check_sublime_installed_packages_dir.stat.exists == False
+
+- name: Check Sublime package directory
+  stat:
+    path: "{{ ansible_env.HOME }}/.config/sublime-text/Packages"
+  register: check_sublime_packages_dir
+
+- name: Create Sublime Package directory
+  file:
+    path: "{{ ansible_env.HOME }}/.config/sublime-text/Packages"
+    state: directory
+  when: check_sublime_packages_dir.stat.exists == False
+
+
+# Install Package Control
+
+- name: Install package control for Sublime
+  get_url: 
+    url: "https://packagecontrol.io/Package%20Control.sublime-package"
+    dest: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages/Package Control.sublime-package"
+
+# Install Packages
+
+- name: Install Sublime plugins
+  git:
+    repo: "{{ item.name | default(item) }}"
+    version: "{{ item.version | default('master') }}"
+    dest: "{{ ansible_env.HOME }}/.config/sublime-text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
+    accept_hostkey: "yes"
+  with_items:
+    - name: "https://github.com/titoBouzout/SideBarEnhancements.git"
+      version: "st3"
+    - name: "https://github.com/sublimelsp/LSP.git"
+      version: "main"
+    - name: "https://github.com/sublimelsp/LSP-terraform.git"
+      version: "main"
+    - name: "https://github.com/sublimelsp/LSP-file-watcher-chokidar.git" 
+      version: "main"
+    - "https://github.com/jisaacks/GitGutter.git"
+    - "https://github.com/SublimeText/Origami.git"
+    - "https://github.com/TerminalFi/LSP-copilot.git"
+    - "https://github.com/clifford-github/sublime-ansible.git"
+    - "https://github.com/alexlouden/Terraform.tmLanguage.git"

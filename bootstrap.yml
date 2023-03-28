@@ -19,3 +19,7 @@
       tags: node
       import_role:
         name: node
+    - name: Sublime Text
+      tags: sublime
+      import_role:
+        name: sublime

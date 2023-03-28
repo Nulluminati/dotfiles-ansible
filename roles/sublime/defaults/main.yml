@@ -1,0 +1,7 @@
+---
+fedora_repositories:
+  - name: sublime-text
+    description: Sublime Text x86_64 - stable
+    url: https://download.sublimetext.com/rpm/stable/x86_64
+    gpg_url: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+    gpg_check: true
