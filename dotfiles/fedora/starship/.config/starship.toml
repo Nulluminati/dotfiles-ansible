@@ -42,7 +42,7 @@ format = '([\[](bold dimmed)[$all_status$ahead_behind]($style)[\]](bold dimmed))
 min_time = 1000
 format = "[$duration](bold yellow) "
 show_milliseconds = false
-show_notifications = true
+show_notifications = false
 min_time_to_notify = 10000
 
 [aws]
