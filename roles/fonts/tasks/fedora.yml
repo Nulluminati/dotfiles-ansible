@@ -1,7 +1,7 @@
 ---
 - name: Set Nerd Fonts
   set_fact:
-    fonts: "['Hack/Regular/complete/Hack Regular Nerd Font Complete.ttf', 'Hack/Bold/complete/Hack Bold Nerd Font Complete.ttf']"
+    fonts: "['Hack/Regular/HackNerdFont-Regular.ttf', 'Hack/Bold/HackNerdFont-Bold.ttf']"
 
 - name: Ensure Nerd Fonts directory exists.
   file:

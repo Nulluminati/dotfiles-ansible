@@ -1,0 +1,85 @@
+[line_break]
+disabled = false
+
+[character]
+success_symbol = "→(bold green)"
+error_symbol = "→(bold red)"
+
+[username]
+disabled = true
+
+[time]
+disabled = true
+
+[hostname]
+ssh_only = true
+format =  "[$hostname](bold green) "
+ssh_symbol = " "
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 4
+truncate_to_repo = false
+truncation_symbol = "…/"
+read_only = " "
+read_only_style = "bold red"
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+style = "bold yellow"
+
+[git_metrics]
+disabled = false
+format = "([\\[](dimmed bold)[+$added]($added_style) [-$deleted]($deleted_style)[\\]](dimmed bold)) "
+
+[git_status]
+disabled = false
+style = "bold yellow"
+format = '([\[](bold dimmed)[$all_status$ahead_behind]($style)[\]](bold dimmed)) '
+
+[cmd_duration]
+min_time = 1000
+format = "[$duration](bold yellow) "
+show_milliseconds = false
+show_notifications = true
+min_time_to_notify = 10000
+
+[aws]
+symbol = "  "
+
+[docker_context]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[java]
+symbol = " "
+
+[kubernetes]
+format = 'on [󱃾 $context \($namespace\)](dimmed green) '
+disabled = false
+
+[memory_usage]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[os.symbols]
+Fedora = " "
+Linux = " "
+
+[package]
+disabled = true
+
+[python]
+symbol = " "
+format = 'via [\( :${pyenv_prefix}(${version}\) )(\($virtualenv\) )]($style)'
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "

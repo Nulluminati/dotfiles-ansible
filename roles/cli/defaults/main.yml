@@ -23,3 +23,7 @@ fedora_repositories:
     url: https://download.sublimetext.com/rpm/stable/x86_64
     gpg_url: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
     gpg_check: true
+
+copr_repositories:
+  - name: atim/starship
+    creates: _copr:copr.fedorainfracloud.org:atim:starship.repo

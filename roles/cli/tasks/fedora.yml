@@ -29,6 +29,13 @@
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm
     state: present
 
+- name: Add copr repositories
+  become: yes
+  shell: dnf copr enable {{ item.name }} -y
+  args:
+    creates: /etc/yum.repos.d/{{ item.creates }}
+  loop: "{{ copr_repositories }}"
+
 - name: Install command line tools in Fedora
   become: true
   dnf:
@@ -48,6 +55,8 @@
       - fd-find
       - feh
       - firefox
+      - fish
+      - fzf
       - golang
       - golang-x-tools-gopls
       - helm
@@ -58,7 +67,7 @@
       - keepassxc
       - kubectl
       - neofetch
-      - neovim
+      - neovim 
       - picom
       - polybar
       - python3-pip
@@ -66,6 +75,7 @@
       - rofi
       - rust
       - rustfmt
+      - starship
       - sublime-text
       - terraform
       - tig
@@ -73,12 +83,58 @@
       - unzip
     state: present
 
+# Pywal - https://github.com/dylanaraps/pywal
 - name: Install pywal
   become: yes
   pip:
     name: pywal
     executable: pip3
 
+# Fish Shell
+# Fisher - https://github.com/jorgebucaran/fisher
+- name: Install fisher
+  shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+  args:
+    creates: ~/.config/fish/functions/fisher.fish
+    executable: fish
+
+- name: Set default shell to fish
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/fish
+
+- name: Install fish plugins
+  shell: fisher install {{ item }}
+  args:
+    executable: /usr/bin/fish
+  loop:
+    - gazorby/fish-abbreviation-tips
+    - jethrokuan/z
+    - jorgebucaran/nvm.fish
+    - PatrickF1/fzf.fish
+
+- name: Install VirtualFish
+  become: yes
+  pip:
+    name: virtualfish
+    executable: pip3
+
+- name: Install VirtualFish
+  shell: vf install
+  args:
+    executable: /usr/bin/fish
+
+# NodeJS
+- name: Install node
+  shell: nvm install {{ item }}
+  args:
+    executable: /usr/bin/fish
+  loop:
+    - 18.16.0
+    - latest
+
+# AWS CLI
 - name: Download AWS CLI
   get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
   register: aws_cli_download
