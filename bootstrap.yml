@@ -15,10 +15,6 @@
       tags: fonts
       import_role:
         name: fonts
-    - name: Node
-      tags: node
-      import_role:
-        name: node
     - name: Sublime Text
       tags: sublime
       import_role:

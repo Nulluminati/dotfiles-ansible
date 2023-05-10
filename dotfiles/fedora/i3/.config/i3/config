@@ -210,7 +210,7 @@ exec_always --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 exec_always --no-startup-id wal -i ~/Pictures/Wallpapers -o ~/.config/wal/after_wal.sh
 
 # start a terminal
-bindsym $mod+Return workspace $ws1; exec --no-startup-id alacritty
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun
