@@ -81,6 +81,7 @@
       - tig
       - tmux
       - unzip
+      - xclip
     state: present
 
 # Pywal - https://github.com/dylanaraps/pywal

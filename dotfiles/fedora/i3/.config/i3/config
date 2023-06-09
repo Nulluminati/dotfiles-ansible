@@ -221,3 +221,6 @@ bindsym $mod+space exec --no-startup-id rofi -show drun
 
 # switching window with win+tab
 bindsym $mod+Tab exec --no-startup-id rofi -show window
+
+# Screenshots
+bindsym Print exec maim -s -u | xclip -selection clipboard -t image/png -i
