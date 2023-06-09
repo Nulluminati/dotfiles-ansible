@@ -52,11 +52,11 @@ Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --
 ## Previews
 - Themes are generated from wallpapers in your `~/Pictures/Wallpapers` directory.
 
-![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_1.png)
+![](https://raw.githubusercontent.com/nulluminati/dotfiles-ansible/main/previews/preview_1.png)
 
-![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_2.png)
+![](https://raw.githubusercontent.com/nulluminati/dotfiles-ansible/main/previews/preview_2.png)
 
-![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_3.png)
+![](https://raw.githubusercontent.com/nulluminati/dotfiles-ansible/main/previews/preview_3.png)
 
 ## License
 <p align="center">
