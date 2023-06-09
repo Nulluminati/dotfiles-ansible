@@ -54,10 +54,12 @@ Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --
 
 
 ## License
-<img src="https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif" alt="Kopimi Logo" align="center" width="450">
+<p align="center">
+	<img src="https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif" alt="Kopimi Logo" align="center" width="450">
+</p>
 
-<a href="#octocat--hi-there-thanks-for-dropping-by">
-<h3 align="center" a=" ">✨ [kopimi](https://kopimi.com/) ✨</h3>
+<a href="https://kopimi.com/" align="center">
+	<h3 align="center">✨ kopimi ✨</h3>
 </a>
 
 I encourage you to fork, modify, change, share, or do whatever you want with this repository! Have fun!
