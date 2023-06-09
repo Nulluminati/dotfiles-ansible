@@ -52,14 +52,19 @@ Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --
 ## Previews
 - Themes are generated from wallpapers in your `~/Pictures/Wallpapers` directory.
 
+![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_1.png)
+
+![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_2.png)
+
+![](https://raw.githubusercontent.com/nulluminati/dotfiles/main/previews/preview_3.png)
 
 ## License
 <p align="center">
 	<img src="https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif" alt="Kopimi Logo" align="center" width="450">
 </p>
-
-<a href="https://kopimi.com/" align="center">
-	<h3 align="center">✨ kopimi ✨</h3>
-</a>
-
-I encourage you to fork, modify, change, share, or do whatever you want with this repository! Have fun!
+<p align="center">
+  <a href="https://kopimi.com/"><p>✨ kopimi ✨</p></a>
+</p>
+<p align="center">
+  I encourage you to fork, modify, change, share, or do whatever you want with this repository! Have fun!
+</p>
