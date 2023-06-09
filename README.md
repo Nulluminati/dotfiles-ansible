@@ -18,6 +18,10 @@
 
 > _"This is my dotfiles. There are many others like it, but this one is mine. My dotfiles is my best friend. It is my life. I must master it as I must master my life. Without me, my dotfiles is useless. Without my dotfiless, I am useless."_
 
+Ansible is used to drive the management of my dotfiles as I am often setting up new development VM's in my homelab.
+
+Ansible and Stow make up the underlying of this repository and how my dotfiles are deployed. Dotfiles within `dotfiles/fedora` are all managed by stow and after the initial ansible run will be symlinked to their respective config paths.
+
 These dotfiles are intended for use with Fedora. macOS support is planned at some point.
 
 ## Tools
@@ -38,20 +42,22 @@ The full list is much longer, see [CLI Tools](https://github.com/nulluminati/dot
 Font is Hack Nerd Font.
 
 ## Installation
+⚠️ Do NOT run the setup script if you do not fully understand what this project does ⚠️
+
 - TLDR : `./bin/setup`
 
 Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --tags "fonts"`
 
-Ansible and Stow make up the underlying of this repository and how my dotfiles are deployed. Dotfiles within `dotfiles/fedora` are all managed by stow and after the initial ansible run will be symlinked to their respective config paths.
 
 ## Previews
+- Themes are generated from wallpapers in your `~/Pictures/Wallpapers` directory.
 
 
 ## License
-<div align="center">
-![kopimi logo](https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif)
-</div>
+<img src="https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif" alt="Kopimi Logo" align="center" width="450">
 
-<h3 align="center">✨ [kopimi](https://kopimi.com/) ✨</h1>
+<a href="#octocat--hi-there-thanks-for-dropping-by">
+<h3 align="center" a=" ">✨ [kopimi](https://kopimi.com/) ✨</h3>
+</a>
 
 I encourage you to fork, modify, change, share, or do whatever you want with this repository! Have fun!
