@@ -1,11 +1,9 @@
 ```
-      :::::::::       ::::::::   :::::::::::       ::::::::::       :::::::::::       :::        ::::::::::       :::::::: 
-     :+:    :+:     :+:    :+:      :+:           :+:                  :+:           :+:        :+:             :+:    :+: 
-    +:+    +:+     +:+    +:+      +:+           +:+                  +:+           +:+        +:+             +:+         
-   +#+    +:+     +#+    +:+      +#+           :#::+::#             +#+           +#+        +#++:++#        +#++:++#++   
-  +#+    +#+     +#+    +#+      +#+           +#+                  +#+           +#+        +#+                    +#+    
- #+#    #+#     #+#    #+#      #+#           #+#                  #+#           #+#        #+#             #+#    #+#     
-#########       ########       ###           ###              ###########       ########## ##########       ########       
+ _____     ______     ______   ______   __     __         ______     ______    
+/\  __-.  /\  __ \   /\__  _\ /\  ___\ /\ \   /\ \       /\  ___\   /\  ___\   
+\ \ \/\ \ \ \ \/\ \  \/_/\ \/ \ \  __\ \ \ \  \ \ \____  \ \  __\   \ \___  \  
+ \ \____-  \ \_____\    \ \_\  \ \_\    \ \_\  \ \_____\  \ \_____\  \/\_____\ 
+  \/____/   \/_____/     \/_/   \/_/     \/_/   \/_____/   \/_____/   \/_____/  
 ```
 
 ## table of contents
@@ -50,6 +48,10 @@ Ansible and Stow make up the underlying of this repository and how my dotfiles a
 
 
 ## License
+<div align="center">
 ![kopimi logo](https://kopimi.com/wp-content/uploads/2023/04/kopimi_text.gif)
-[kopimi](https://kopimi.com/)
+</div>
+
+<h3 align="center">✨ [kopimi](https://kopimi.com/) ✨</h1>
+
 I encourage you to fork, modify, change, share, or do whatever you want with this repository! Have fun!
