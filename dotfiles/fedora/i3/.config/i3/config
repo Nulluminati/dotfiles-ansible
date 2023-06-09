@@ -1,6 +1,14 @@
 set $mod Mod1
 
+set_from_resource $fg i3wm.color7 #f4dc98
+set_from_resource $bg i3wm.color3 #0A1837
+
 font pango:Hack Nerd Font 10
+
+# focused borders
+for_window [class="^.*"] border pixel 2
+smart_borders on
+client.focused           $bg   $bg   $fg   $bg   $bg
 
 # use these keys for focus, movement, and resize directions
 set $left   h
@@ -36,8 +44,6 @@ hide_edge_borders none
 
 # set popups during fullscreen mode
 popup_during_fullscreen smart
-
-
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -202,9 +208,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # Polybar
 exec_always --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
-
-# Picom
-# exec --no-startup-id picom
 
 # Set WAL
 exec_always --no-startup-id wal -i ~/Pictures/Wallpapers -o ~/.config/wal/after_wal.sh
