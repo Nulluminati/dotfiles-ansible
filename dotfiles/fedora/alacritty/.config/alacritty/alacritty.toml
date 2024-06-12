@@ -1,0 +1,76 @@
+import = ["/home/natekift/.cache/wal/colors-alacritty.toml"]
+live_config_reload = true
+working_directory = "None"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[font]
+size = 12.0
+
+[font.bold]
+style = "Bold"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "Paste"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Copy"
+
+[[keyboard.bindings]]
+chars = """
+
+"""
+key = "NumpadEnter"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "Control"
+
+[mouse]
+hide_when_typing = false
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+
+[window]
+decorations = "full"
+dynamic_padding = true
+dynamic_title = true
+startup_mode = "Windowed"
+
+[window.padding]
+x = 10
+y = 10

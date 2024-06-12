@@ -50,6 +50,7 @@ min_time_to_notify = 10000
 
 [aws]
 symbol = "  "
+format = '/ [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
 
 [docker_context]
 symbol = " "
@@ -62,7 +63,7 @@ symbol = " "
 
 [kubernetes]
 disabled = false
-format = 'on [ﴱ $context \($namespace\)](dimmed green) '
+format = '/ [ﴱ $context \($namespace\)](dimmed green) '
 symbol = "ﴱ "
 
 [memory_usage]
