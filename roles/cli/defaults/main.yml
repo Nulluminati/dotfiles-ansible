@@ -14,8 +14,8 @@ fedora_repositories:
 
   - name: Kubernetes
     description: Kubernetes
-    url: https://packages.cloud.google.com/yum/repos/kubernetes-el7-$basearch
-    gpg_url: https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    url: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/
+    gpg_url: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key
     gpg_check: true
 
   - name: sublime-text
