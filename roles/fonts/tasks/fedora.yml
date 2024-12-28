@@ -4,6 +4,7 @@
     fonts: "['Hack/Regular/HackNerdFont-Regular.ttf', 'Hack/Bold/HackNerdFont-Bold.ttf']"
 
 - name: Ensure Nerd Fonts directory exists.
+  become: yes
   file:
     group: "{{ ansible_user_gid }}"
     owner: "{{ ansible_user_id }}"

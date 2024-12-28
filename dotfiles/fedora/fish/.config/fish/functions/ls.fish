@@ -1,4 +1,4 @@
-function l; command exa -Flagh --sort name --git --icons --group-directories-first $argv; end
-function ll; command exa -Flagh --git --icons --group-directories-first --sort modified $argv; end
-function la; command exa -Fla --icons; end
-function tree; command exa --tree --icons $argv; end
+function l; command eza -laghF --git --icons --group-directories-first --sort name $argv; end
+function ll; command eza -laghF --git --icons --group-directories-first --sort modified $argv; end
+function la; command eza -laF --icons; end
+function tree; command eza --tree --icons $argv; end

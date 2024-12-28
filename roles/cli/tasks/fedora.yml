@@ -51,7 +51,7 @@
       - docker-buildx-plugin
       - docker-compose-plugin
       - dunst
-      - exa
+      - eza
       - fd-find
       - feh
       - firefox
@@ -84,13 +84,6 @@
       - xclip
     state: present
 
-# Pywal - https://github.com/dylanaraps/pywal
-- name: Install pywal
-  become: yes
-  pip:
-    name: pywal
-    executable: pip3
-
 # Fish Shell
 # Fisher - https://github.com/jorgebucaran/fisher
 - name: Install fisher
@@ -115,16 +108,16 @@
     - jorgebucaran/nvm.fish
     - PatrickF1/fzf.fish
 
-- name: Install VirtualFish
+# Pip Packages
+- name: Install pip packages
   become: yes
   pip:
-    name: virtualfish
+    name: "{{ item }}"
     executable: pip3
-
-- name: Install VirtualFish
-  shell: vf install
-  args:
-    executable: /usr/bin/fish
+  loop:
+    - llm # https://github.com/simonw/llm
+    - pywal # Pywal - https://github.com/dylanaraps/pywal
+    - virtualfish
 
 # NodeJS
 - name: Install node
@@ -151,3 +144,13 @@
   args:
     creates: /usr/local/bin/aws
   when: aws_cli_unarchive.changed
+
+# LLM CLI
+- name: Install additional llm models
+  shell: llm install {{ item }}
+  args:
+    executable: /usr/bin/fish
+  loop:
+    - llm-claude-3 # llm keys set claude
+    - llm-gemini # llm keys set gemini
+    - llm-openrouter # llm keys set openrouter
