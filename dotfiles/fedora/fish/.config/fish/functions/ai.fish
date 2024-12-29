@@ -14,7 +14,7 @@ function llmgitmsg --description "Create a git commit message using AI"
 	end
 
     git add -A .
-    set commit_message (generate_commit_message $argv --retry "")
+    set commit_message (generate_commit_message)
 
     while true
     	set short_message (string split -m 1 "\n" $commit_message)[1]
@@ -41,7 +41,7 @@ function llmgitmsg --description "Create a git commit message using AI"
                 end
             case 'r' 'R'
                 echo "Regenerating commit message..."
-                set commit_message (generate_commit_message $argv --retry $commit_message)
+                set commit_message (generate_commit_message)
             case 'c' 'C' 'q' 'Q'
                 echo "Commit cancelled."
                 return 1

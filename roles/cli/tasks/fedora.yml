@@ -115,9 +115,11 @@
     name: "{{ item }}"
     executable: pip3
   loop:
-    - llm # https://github.com/simonw/llm
-    - pywal # Pywal - https://github.com/dylanaraps/pywal
-    - virtualfish
+    - files-to-prompt   # https://github.com/simonw/files-to-prompt
+    - llm               # https://github.com/simonw/llm
+    - pywal             # https://github.com/dylanaraps/pywal
+    - strip-tags        # https://github.com/simonw/strip-tags
+    - virtualfish       # https://github.com/justinmayer/virtualfish
 
 # NodeJS
 - name: Install node
