@@ -13,7 +13,6 @@ function llmgitmsg --description "Create a git commit message using AI"
 		git diff --minimal --cached | llm -t gitcommit
 	end
 
-    git add -A .
     set commit_message (generate_commit_message)
 
     while true
@@ -49,4 +48,11 @@ function llmgitmsg --description "Create a git commit message using AI"
                 echo "Invalid choice. Please try again."
         end
     end
+end
+
+function llmwebsum --description "Summarize a webpage using AI"
+	# Fetch a url with curl, strip tags to reduce tokens and send to llm
+    set content (curl -s $argv)
+    set trimmed_content (echo $content | strip-tags)
+    echo $trimmed_content| llm --system "Summarize in bullet points" -m claude-3.5-sonnet-latest
 end
