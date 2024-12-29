@@ -1,4 +1,3 @@
-model: claude-3.5-sonnet-latest
 prompt: >
   Write a descriptive commit following the Conventional Commits specification describing the changes in the following diff.
   Keep the commit message brief, but informative. Avoid stating the obvious. Focus on important changes a reviewer would care about.
@@ -8,6 +7,6 @@ prompt: >
   Template:
     <type>: <gitmoji> <description>
 
-    [optional body]
+    [body]
 
   The diff: $input

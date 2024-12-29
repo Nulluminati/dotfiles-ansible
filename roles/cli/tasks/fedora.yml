@@ -120,6 +120,7 @@
     - pywal             # https://github.com/dylanaraps/pywal
     - strip-tags        # https://github.com/simonw/strip-tags
     - virtualfish       # https://github.com/justinmayer/virtualfish
+    - yt-dlp            # https://github.com/yt-dlp/yt-dlp
 
 # NodeJS
 - name: Install node

@@ -1,5 +1,9 @@
-function llmchat --description "Chat with AI (claude-3.5-sonnet-latest)"
-	llm chat -m claude-3.5-sonnet-latest
+function llmmodel --description "Set model for AI commands"
+    llm models default $argv
+end
+
+function llmchat --description "Chat with AI"
+	llm chat
 end
 
 function llmgitmsg --description "Create a git commit message using AI"
@@ -54,5 +58,12 @@ function llmwebsum --description "Summarize a webpage using AI"
 	# Fetch a url with curl, strip tags to reduce tokens and send to llm
     set content (curl -s $argv)
     set trimmed_content (echo $content | strip-tags)
-    echo $trimmed_content| llm --system "Summarize in bullet points" -m claude-3.5-sonnet-latest
+    echo $trimmed_content| llm --system "Summarize in bullet points"
+end
+
+function llmytsum --description "Summarize a YouTube video using AI"
+    # Fetch subtitles with youtube-dl, strip tags to reduce tokens and send to llm
+    set sub_url (yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$argv")
+    set content (curl -s "$sub_url" | sed '/^$/d' | grep -v '^[0-9]*$' | grep -v '\-->' | sed 's/<[^>]*>//g' | tr '\n' ' ')
+    echo $content| llm --system "Summarize in bullet points"
 end
