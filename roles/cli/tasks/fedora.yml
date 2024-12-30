@@ -68,7 +68,7 @@
       - kubectl
       - neofetch
       - neovim 
-    # - picom
+      - picom
       - polybar
       - python3-pip
       - ripgrep

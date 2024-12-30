@@ -58,6 +58,10 @@ label-foreground = ${colors.foreground}
 label-font = 1
 label = " %percentage:2:2%%"
 
+[module/gpu-util]
+type = custom/script
+exec = ~/.config/polybar/scripts/gpu-util.sh
+interval = 10
 
 [module/date]
 type = internal/date
