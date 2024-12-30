@@ -108,7 +108,7 @@
     - jorgebucaran/nvm.fish
     - PatrickF1/fzf.fish
 
-# Pip Packages
+# Python / pip / uv
 - name: Install pip packages
   become: yes
   pip:

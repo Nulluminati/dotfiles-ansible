@@ -6,6 +6,11 @@ function llmchat --description "Chat with AI"
 	llm chat
 end
 
+function llmcmd --description "Reccomend a terminal command using AI"
+    set system (grep ^NAME= /etc/os-release | cut -d '=' -f 2 | tr -d '"')
+    llm -t cmd -p os $system $argv
+end
+
 function llmgitmsg --description "Create a git commit message using AI"
 	function read_input
         set -l prompt $argv[1]
