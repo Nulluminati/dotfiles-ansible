@@ -84,6 +84,15 @@
       - xclip
     state: present
 
+# Docker
+# Add user to docker group
+- name: Add user to docker group
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+
 # Fish Shell
 # Fisher - https://github.com/jorgebucaran/fisher
 - name: Install fisher
