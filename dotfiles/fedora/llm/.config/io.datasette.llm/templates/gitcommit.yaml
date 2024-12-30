@@ -2,11 +2,9 @@ prompt: >
   Write a descriptive commit following the Conventional Commits specification describing the changes in the following diff.
   Keep the commit message brief, but informative. Avoid stating the obvious. Focus on important changes a reviewer would care about.
 
-  Don't add fluff. No string delimiters wrapping it (like ```), no yapping, no markdown, no fenced code.
+  Don't add fluff. Just one commit message for all changes. Include a body. No string delimiters wrapping it (like ```), no yapping, no markdown, no fenced code.
 
   Template:
-    <type>: <description>
+    <type>:<description>\n\n[body]
 
-    [body]
-
-  The diff: $input
+  The diff: $input 

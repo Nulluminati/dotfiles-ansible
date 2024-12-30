@@ -21,7 +21,7 @@ function llmgitmsg --description "Create a git commit message using AI"
 
     while true
     	set short_message (string split -m 1 "\n" $commit_message)[1]
-		set description (string split -m 1 "\n" $commit_message)[2]
+		set description (string split -m 1 "\n" $commit_message)[3]
 
         echo -e "Proposed commit message:\n"
         echo $short_message
