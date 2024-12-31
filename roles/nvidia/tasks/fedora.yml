@@ -1,0 +1,20 @@
+---
+# TODO : Setup NVIDIA Grid GPU drivers for vgpu
+
+
+# Create systemd startup script for NVIDIA vGPU licensing check
+- name: Create nvidialicensecheck systemd service file
+  become: true
+  template:
+    src: templates/nvidialicensecheck.service.j2
+    dest: /lib/systemd/system/nvidialicensecheck.service
+
+- name: Reload the system configureation (registers new unit)
+  become: true
+  shell: systemctl daemon-reload
+
+- name: Enable nvidialicensecheck service
+  become: true
+  systemd:
+    name: nvidialicensecheck
+    enabled: true

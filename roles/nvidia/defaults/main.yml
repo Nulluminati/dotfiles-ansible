@@ -1,0 +1,4 @@
+---
+user: "{{ ansible_user_id }}"
+service_description: "NVIDIA License Check and Renewal"
+script_location: "/bin/bash /home/{{ user }}/.config/scripts/nvidialicense.sh"

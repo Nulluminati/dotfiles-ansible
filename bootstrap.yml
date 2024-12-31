@@ -19,3 +19,7 @@
       tags: sublime
       import_role:
         name: sublime
+    - name: Nvidia GPU
+      tags: nvidia
+      import_role:
+        name: nvidia

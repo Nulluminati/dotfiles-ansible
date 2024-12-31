@@ -1,0 +1,11 @@
+[Unit]
+Description={{ service_description }}
+After=network.target
+
+[Service]
+Type=oneshot
+User={{ user }}
+ExecStart={{ script_location }}
+
+[Install]
+WantedBy=multi-user.target
