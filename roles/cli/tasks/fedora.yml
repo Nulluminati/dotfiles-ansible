@@ -131,6 +131,23 @@
     - virtualfish       # https://github.com/justinmayer/virtualfish
     - yt-dlp            # https://github.com/yt-dlp/yt-dlp
 
+- name: Install uv
+  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  args:
+    creates: ~/.local/bin/uv
+    executable: uv
+
+- name: Install additional uv python versions
+  shell: uv python install {{ item }}
+  loop:
+    - 3.12
+
+- name: Install uv tools
+  shell: uv tool install {{ item }}
+  loop:
+    - --python python3.12 aider-chat@latest
+    - --python python3.12 open-interpreter@latest
+
 # NodeJS
 - name: Install node
   shell: nvm install {{ item }}
