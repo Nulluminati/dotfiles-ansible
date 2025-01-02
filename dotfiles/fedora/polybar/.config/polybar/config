@@ -60,7 +60,7 @@ label = " %percentage:2:2%%"
 
 [module/gpu-util]
 type = custom/script
-exec = ~/.config/polybar/scripts/gpu-util.sh
+exec = ~/.config/scripts/polybar/gpu-util.sh
 interval = 10
 format = <label>
 format-prefix-font = 3
@@ -192,16 +192,16 @@ click-right = pavucontrol
 
 [module/uptime]
 type = custom/script
-exec = ~/.config/polybar/scripts/uptime.sh
+exec = ~/.config/scripts/polybar/uptime.sh
 format-foreground = ${colors.foreground}
 
 [module/dnf-updates]
 type = custom/script
 interval = 600
-exec = ~/.config/polybar/scripts/dnf-updates.sh
+exec = ~/.config/scripts/polybar/dnf-updates.sh
 
 [module/weather]
 type = custom/script
 interval = 600
-exec = python3 ~/.config/polybar/scripts/weather.py
+exec = python3 ~/.config/scripts/polybar/weather.py
 click-left = firefox --new-tab --url "https://www.theweathernetwork.com/ca/weather/british-columbia/north-vancouver"

@@ -183,3 +183,14 @@
     - llm-claude-3 # llm keys set claude
     - llm-gemini # llm keys set gemini
     - llm-openrouter # llm keys set openrouter
+
+- name: Set llm api keys
+  template:
+    src: templates/llm_keys.json.j2
+    dest: "{{ ansible_env.HOME }}/.config/io.datasette.llm/keys.json"
+
+# aider
+- name: Set aider config
+  template:
+    src: templates/aider.conf.yml.j2
+    dest: "{{ ansible_env.HOME }}/.aider.conf.yml"

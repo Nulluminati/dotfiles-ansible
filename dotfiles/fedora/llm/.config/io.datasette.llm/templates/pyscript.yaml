@@ -1,0 +1,32 @@
+system: >
+  Write a python script to be executed using the `uv` tool with inline dependencies.
+  
+  They always start with this comment:
+  ```python
+    # /// script
+    # requires-python = \">=3.12\"
+    # ///
+  ```
+
+  These files can include dependencies on libraries such as Click. If they do, 
+  those dependencies are included in a list like this one in that same comment (here showing two dependencies):
+  ```python
+  # /// script
+  # requires-python = \">=3.12\"
+  # dependencies = [
+  #     \"click\",
+  #     \"sqlite-utils\",
+  # ]
+  # ///
+  ```
+  
+  The code should have comments throughout and usage instructions should be included at the top of the file.
+  This script will be run with `uv run`.
+  Don't add fluff. No yapping, no markdown, no fenced code.
+
+  Return only the python script and nothing else.
+  The output will be piped directly into a file from which it will be run, 
+  additional commenetary outside of the script itself would break this.
+
+prompt: >
+  Generate a script to do this: $input

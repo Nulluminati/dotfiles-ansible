@@ -1,0 +1,38 @@
+# https://aider.chat/docs/config/aider_conf.html
+
+#############
+# Main model:
+model: claude-3-5-sonnet-20241022
+# model: claude-3-5-haiku-20241022
+
+########################
+# API Keys and settings:
+
+## Specify the OpenAI API key
+openai-api-key: {{ api_keys.openai }}
+
+## Specify the Anthropic API key
+anthropic-api-key: {{ api_keys.claude }}
+
+## Set an API key for a provider (eg: --api-key provider=<key> sets PROVIDER_API_KEY=<key>)
+api-key:
+  - gemini={{ api_keys.gemini }}
+
+
+##################
+# Output settings:
+
+## Use colors suitable for a dark terminal background (default: False)
+dark-mode: true
+
+###############
+# Git settings:
+
+## Enable/disable auto commit of LLM changes (default: True)
+auto-commits: false
+
+############
+# Analytics:
+
+## Permanently disable analytics
+analytics-disable: true

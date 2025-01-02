@@ -21,3 +21,8 @@
     stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
   register: output
   changed_when: '"LINK" in output.stderr'
+
+- name: Create api key cfg file for dotfile scripts 
+  template:
+    src: templates/api_keys.cfg.j2
+    dest: "{{ ansible_env.HOME }}/.config/scripts/api_keys.cfg"

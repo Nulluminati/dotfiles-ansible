@@ -42,3 +42,5 @@ Temporary Items
 *.tgz
 
 api_keys.cfg
+secrets.yml
+.aider*

@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
+# Check if python is installed
+if ! [ -x "$(command -v python)" ]; then
+	echo "Error: python is not installed. Exiting..."
+	exit 1
+fi
+
 if ! [ -x "$(command -v ansible)" ]; then
-	python3 -m pip install ansible
+	echo "Ansible is not installed. Installing ansible..."
+	python -m pip install ansible
 fi
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-ansible-playbook -i $( dirname $SCRIPTPATH )/hosts $( dirname $SCRIPTPATH )/bootstrap.yml --ask-become-pass
+ansible-playbook --extra-vars @$( dirname $SCRIPTPATH )/secrets.yml -i $( dirname $SCRIPTPATH )/hosts $( dirname $SCRIPTPATH )/bootstrap.yml --ask-become-pass
 
 echo "Bootstrap complete. Dev environment successfully set up."
