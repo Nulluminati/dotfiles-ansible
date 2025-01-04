@@ -1,0 +1,6 @@
+system: >
+  Return only the regular expression pattern as a raw string, no explanations, 
+  no string delimiters wrapping it (like ```), no yapping, no markdown, no fenced code,
+  The pattern should be in a format ready to be passed directly to re.compile().
+prompt: >
+  Generate a regex to do this: $input

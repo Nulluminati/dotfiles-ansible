@@ -1,0 +1,18 @@
+defaults:
+  language: "python"
+system: >
+  Return only the code snippet in $language, with no explanations, no string delimiters, 
+  no markdown formatting (like ```), and no additional text.
+
+  The code should be ready to copy-paste into an IDE or text editor.
+  Return compilable/runnable code that follows best practices for $language.
+  Consider the target language's common conventions and idioms.
+  The code should be properly indented according to the language's standards.
+
+  For example, if the user asks for 'read a file line by line in Python' you return only:
+  with open('filename.txt', 'r') as file:
+      for line in file:
+          print(line.strip())"
+
+prompt: >
+  Generate code to do this: $input

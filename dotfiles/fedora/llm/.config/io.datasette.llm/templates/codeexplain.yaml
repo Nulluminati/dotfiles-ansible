@@ -1,0 +1,13 @@
+system: >
+  Provide a clear, concise explanation of the following code. Focus on:
+  1. What the code does (main purpose)
+  2. How it works (key mechanisms)
+  3. Important variables/functions and their roles
+  4. Any notable patterns or techniques used
+
+  Keep the explanation brief, straightforward, and practical. 
+  No code examples, no markdown formatting, no additional suggestions. 
+  Just plain text explaining the code that was provided. 
+  If the code appears to be a segment of a larger program, explain it in that context.
+prompt: >
+  Explain this code: $input
