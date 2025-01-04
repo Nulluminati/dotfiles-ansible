@@ -57,6 +57,7 @@
       - firefox
       - fish
       - fzf
+      - gh
       - golang
       - golang-x-tools-gopls
       - helm
@@ -118,19 +119,6 @@
     - PatrickF1/fzf.fish
 
 # Python / pip / uv
-- name: Install pip packages
-  become: yes
-  pip:
-    name: "{{ item }}"
-    executable: pip3
-  loop:
-    - files-to-prompt   # https://github.com/simonw/files-to-prompt
-    - llm               # https://github.com/simonw/llm
-    - pywal             # https://github.com/dylanaraps/pywal
-    - strip-tags        # https://github.com/simonw/strip-tags
-    - virtualfish       # https://github.com/justinmayer/virtualfish
-    - yt-dlp            # https://github.com/yt-dlp/yt-dlp
-
 - name: Install uv
   shell: curl -LsSf https://astral.sh/uv/install.sh | sh
   args:
@@ -145,8 +133,14 @@
 - name: Install uv tools
   shell: uv tool install {{ item }}
   loop:
-    - --python python3.12 aider-chat@latest
-    - --python python3.12 open-interpreter@latest
+    - --python python3.12 aider-chat@latest # https://github.com/Aider-AI/aider
+    - files-to-prompt                       # https://github.com/simonw/files-to-prompt
+    - llm                                   # https://github.com/simonw/llm
+    - pywal                                 # https://github.com/dylanaraps/pywal
+    - strip-tags                            # https://github.com/simonw/strip-tags
+    - virtualfish                           # https://github.com/justinmayer/virtualfish
+    - yt-dlp                                # https://github.com/yt-dlp/yt-dlp
+    - tldr                                  # https://github.com/Aider-AI/aider
 
 # NodeJS
 - name: Install node
@@ -175,14 +169,15 @@
   when: aws_cli_unarchive.changed
 
 # LLM CLI
-- name: Install additional llm models
+- name: Install additional llm models & plugins
   shell: llm install {{ item }}
   args:
     executable: /usr/bin/fish
   loop:
-    - llm-claude-3 # llm keys set claude
-    - llm-gemini # llm keys set gemini
-    - llm-openrouter # llm keys set openrouter
+    - llm-claude-3
+    - llm-gemini
+    - llm-jq # https://github.com/simonw/llm-jq
+    - llm-openrouter
 
 - name: Set llm api keys
   template:
