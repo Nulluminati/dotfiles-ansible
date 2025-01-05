@@ -168,6 +168,15 @@
     creates: /usr/local/bin/aws
   when: aws_cli_unarchive.changed
 
+# Github CLI Extensions
+- name: Install gh extensions
+  shell: gh extension install {{ item }}
+  args:
+    executable: /usr/bin/fish
+  loop:
+    - dlvhdr/gh-dash
+    - github/gh-copilot
+
 # LLM CLI
 - name: Install additional llm models & plugins
   shell: llm install {{ item }}
