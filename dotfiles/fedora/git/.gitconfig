@@ -1,0 +1,51 @@
+[user]
+    name  = Nathan Kift
+    email = nathan.kift@gmail.com
+[init]
+    defaultBranch = main
+[core]
+    autocrlf = input
+[github]
+  user = nulluminati
+[color]
+  ui     = auto
+  branch = auto
+  diff   = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local   = yellow
+  remote  = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old  = red bold
+  new  = green bold
+[color "status"]
+  added     = yellow
+  changed   = green
+  untracked = cyan
+[alias]
+  aa  = add --all
+  cm  = commit -m
+  cma = !git add --all && git commit -m
+  co  = checkout
+  cb      = checkout -b
+  cob     = checkout -b
+  unstage = reset HEAD
+  b  = branch
+  ba = branch -a
+  bd = branch -d
+  bD = branch -D
+  bm = branch -m
+  d  = diff
+  rb  = rebase
+  rbi = rebase -i
+  rbc = rebase --continue
+  rba = rebase --abort
+  rbs = rebase --skip
+  unstage = reset HEAD
+  undo = reset --soft HEAD
+[delta]
+  features = side-by-side line-numbers decorations
+  syntax-theme = Dracula

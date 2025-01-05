@@ -19,7 +19,7 @@ function llmgitmsg --description "Create a git commit message using AI"
     end
 	
 	function generate_commit_message
-		git diff --minimal --cached | llm -t gitcommit
+		PAGER="" git diff --minimal --cached | llm -t gitcommit
 	end
 
     set commit_message (generate_commit_message)
