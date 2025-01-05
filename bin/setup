@@ -1,19 +1,49 @@
 #!/usr/bin/env bash
 set -e
 
-# Check if python is installed
-if ! [ -x "$(command -v python)" ]; then
-	echo "Error: python is not installed. Exiting..."
+usage() {
+	echo "Usage: $0 [-t tags] [-h]"
+	echo "  -t    Specify ansible tags to run (comma separated)"
+	echo "  -h    Show this help message"
 	exit 1
+}
+
+# Process command line arguments
+while getopts "t:h" opt; do
+    case $opt in
+        t) TAGS=$OPTARG ;;
+        h) usage ;;
+        ?) usage ;;
+    esac
+done
+
+if ! [ -x "$(command -v python3)" ]; then
+    echo "Error: python3 is not installed. Exiting..."
+    exit 1
+fi
+
+if ! [ -x "$(command -v pip3)" ]; then
+    echo "Error: pip3 is not installed. Exiting..."
+    exit 1
 fi
 
 if ! [ -x "$(command -v ansible)" ]; then
 	echo "Ansible is not installed. Installing ansible..."
-	python -m pip install ansible
+	python3 -m pip install ansible
 fi
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+ROOTPATH="$(dirname $SCRIPTPATH)"
 
-ansible-playbook --extra-vars @$( dirname $SCRIPTPATH )/secrets.yml -i $( dirname $SCRIPTPATH )/hosts $( dirname $SCRIPTPATH )/bootstrap.yml --ask-become-pass
+# Build ansible-playbook command
+ANSIBLE_CMD="ansible-playbook --extra-vars @$ROOTPATH/secrets.yml -i $ROOTPATH/hosts $ROOTPATH/bootstrap.yml --ask-become-pass"
+
+# Add tags if specified
+if [ ! -z "$TAGS" ]; then
+    ANSIBLE_CMD="$ANSIBLE_CMD --tags $TAGS"
+fi
+
+# Run ansible playbook
+eval $ANSIBLE_CMD
 
 echo "Bootstrap complete. Dev environment successfully set up."
