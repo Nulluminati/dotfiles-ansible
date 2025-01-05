@@ -6,7 +6,7 @@ function llmchat --description "Chat with AI"
 	llm chat
 end
 
-function llmcmd --description "Reccomend a terminal command using AI"
+function llmcmd --description "Recommend a terminal command using AI"
     set system (grep ^NAME= /etc/os-release | cut -d '=' -f 2 | tr -d '"')
     llm -t cmd -p os $system $argv
 end
