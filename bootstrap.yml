@@ -3,6 +3,14 @@
   connection: local
   hosts: localhost
   tasks:
+    - name: Python uv
+      tags: uv
+      import_role:
+        name: uv
+    - name: LLM
+      tags: llm
+      import_role:
+        name: llm
     - name: CLI Tools
       tags: cli
       import_role:

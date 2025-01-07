@@ -1,0 +1,23 @@
+---
+- name: Install uv
+  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  args:
+    creates: ~/.local/bin/uv
+
+- name: Install additional uv python versions
+  shell: uv python install {{ item }}
+  loop: "{{ add_python_versions }}"
+
+- name: Install uv tools
+  shell: uv tool install {{ item }}
+  loop: "{{ packages }}"
+
+- name: Install mac uv tools
+  shell: uv tool install {{ item }}
+  loop: "{{ mac_packages }}"
+  when: ansible_distribution == "MacOSX"
+
+- name: Install fedora uv tools
+  shell: uv tool install {{ item }}
+  loop: "{{ fedora_packages }}"
+  when: ansible_distribution == "Fedora"

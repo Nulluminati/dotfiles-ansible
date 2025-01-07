@@ -1,0 +1,39 @@
+---
+- name: Check if uv is available
+  block:
+    - name: Check if uv command exists
+      ansible.builtin.raw: which uv
+      check_mode: false
+      changed_when: false
+      failed_when: which_res.rc > 1
+      register: which_res
+
+    - name: uv available
+      debug:
+        msg: uv is installed
+
+  rescue:
+    - name: No uv
+      debug:
+        msg: uv is not installed
+      ignore_errors: true
+
+- name: Install llm and additional tools with uv
+  shell: uv tool install {{ item }}
+  loop: "{{ uv_packages }}"
+
+- name: Install additional llm models & plugins
+  shell: llm install {{ item }}
+  loop: "{{ llm_plugins }}"
+
+- name: Set llm api keys for fedora
+  when: ansible_distribution == "Fedora"
+  template:
+    src: templates/llm_keys.json.j2
+    dest: "{{ ansible_env.HOME }}/.config/io.datasette.llm/keys.json"
+
+- name: Set llm api keys for mac
+  when: ansible_distribution == "MacOSX"
+  template:
+    src: templates/llm_keys.json.j2
+    dest: "{{ ansible_env.HOME }}/Library/Application Support/io.datasette.llm/keys.json"

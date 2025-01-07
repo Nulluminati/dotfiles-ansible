@@ -119,30 +119,6 @@
     - jorgebucaran/nvm.fish
     - PatrickF1/fzf.fish
 
-# Python / pip / uv
-- name: Install uv
-  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
-  args:
-    creates: ~/.local/bin/uv
-    executable: uv
-
-- name: Install additional uv python versions
-  shell: uv python install {{ item }}
-  loop:
-    - 3.12
-
-- name: Install uv tools
-  shell: uv tool install {{ item }}
-  loop:
-    - --python python3.12 aider-chat@latest # https://github.com/Aider-AI/aider
-    - files-to-prompt                       # https://github.com/simonw/files-to-prompt
-    - llm                                   # https://github.com/simonw/llm
-    - pywal                                 # https://github.com/dylanaraps/pywal
-    - strip-tags                            # https://github.com/simonw/strip-tags
-    - virtualfish                           # https://github.com/justinmayer/virtualfish
-    - yt-dlp                                # https://github.com/yt-dlp/yt-dlp
-    - tldr                                  # https://github.com/Aider-AI/aider
-
 # NodeJS
 - name: Install node
   shell: nvm install {{ item }}
@@ -177,22 +153,6 @@
   loop:
     - dlvhdr/gh-dash
     - github/gh-copilot
-
-# LLM CLI
-- name: Install additional llm models & plugins
-  shell: llm install {{ item }}
-  args:
-    executable: /usr/bin/fish
-  loop:
-    - llm-claude-3
-    - llm-gemini
-    - llm-jq # https://github.com/simonw/llm-jq
-    - llm-openrouter
-
-- name: Set llm api keys
-  template:
-    src: templates/llm_keys.json.j2
-    dest: "{{ ansible_env.HOME }}/.config/io.datasette.llm/keys.json"
 
 # aider
 - name: Set aider config

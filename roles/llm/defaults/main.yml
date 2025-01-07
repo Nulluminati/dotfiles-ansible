@@ -1,0 +1,11 @@
+---
+uv_packages:
+  - files-to-prompt                       # https://github.com/simonw/files-to-prompt
+  - llm                                   # https://github.com/simonw/llm
+  - strip-tags                            # https://github.com/simonw/strip-tags
+
+llm_plugins:
+  - llm-claude-3
+  - llm-gemini
+  - llm-jq # https://github.com/simonw/llm-jq
+  - llm-openrouter
