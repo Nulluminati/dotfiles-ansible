@@ -1,12 +1,8 @@
 ---
-# - name: Remove files that will conflict with Stow
-#   loop:
-#     - .bashrc
-#     - .profile
-#   ansible.builtin.file:
-#     path: "{{ ansible_env.HOME }}/{{ item }}"
-#     state: absent
-
 - name: Install stow in Fedora
   import_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
+
+- name: Install stow in macOS
+  import_tasks: mac.yml
+  when: ansible_distribution == "MacOSX"

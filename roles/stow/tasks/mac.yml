@@ -1,0 +1,30 @@
+---
+- name: Check if homebrew is available
+  block:
+    - name: Check if brew command exists
+      ansible.builtin.raw: which brew
+      check_mode: false
+      changed_when: false
+      failed_when: which_res.rc > 0
+      register: which_res
+
+- name: Install Stow in Mac
+  ansible.builtin.homebrew:
+    name: stow
+    state: present
+
+- name: Build directories list
+  ansible.builtin.find:
+    paths: ["dotfiles/mac"]
+    recurse: no
+    file_type: directory
+  register: files
+
+- name: Deploy dotfiles
+  with_items: '{{ files.files }}'
+  environment:
+    STOW_DIR: "dotfiles/mac"
+  ansible.builtin.shell: |
+    stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
+  register: output
+  changed_when: '"LINK" in output.stderr'
