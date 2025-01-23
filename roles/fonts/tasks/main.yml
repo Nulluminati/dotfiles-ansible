@@ -1,4 +1,6 @@
 ---
-- name: Install fonts in Fedora
-  import_tasks: fedora.yml
-  when: ansible_distribution == "Fedora"
+- name: Download Font
+  include_tasks: "nerdfonts.yml"
+  loop: "{{ fonts }}"
+  loop_control:
+    loop_var: font

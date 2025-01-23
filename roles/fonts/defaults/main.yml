@@ -1,0 +1,8 @@
+---
+fedora_font_dir: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts"
+mac_font_dir: "{{ ansible_env.HOME }}/Library/Fonts"
+
+fonts: 
+  - 'Hack/Regular/HackNerdFont-Regular.ttf'
+  - 'Hack/Bold/HackNerdFont-Bold.ttf'
+  - 'Hack/Italic/HackNerdFont-Italic.ttf'
