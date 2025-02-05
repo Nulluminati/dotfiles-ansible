@@ -5,7 +5,7 @@ uv_packages:
   - strip-tags                            # https://github.com/simonw/strip-tags
 
 llm_plugins:
-  - llm-claude-3
+  - llm-anthropic
   - llm-gemini
   - llm-jq # https://github.com/simonw/llm-jq
   - llm-openrouter
