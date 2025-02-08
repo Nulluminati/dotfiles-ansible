@@ -72,3 +72,23 @@ function llmytsum --description "Summarize a YouTube video using AI"
     set content (curl -s "$sub_url" | sed '/^$/d' | grep -v '^[0-9]*$' | grep -v '\-->' | sed 's/<[^>]*>//g' | tr '\n' ' ')
     echo $content| llm --system "Summarize in bullet points"
 end
+
+function llmgitprdesc --description "Generate PR description from branch changes vs main"
+    # Get branch name from argument or current branch
+    set branch_name (test -n "$argv[1]" && echo $argv[1] || git symbolic-ref --short HEAD 2>/dev/null)
+    if test -z "$branch_name"
+        echo "Not in a git repository branch"
+        return 1
+    end
+
+    # Get diff against main (fallback to origin/main)
+    set diff_content (git diff main...$branch_name 2>/dev/null || git diff origin/main...$branch_name 2>/dev/null)
+
+    if test -z "$diff_content"
+        echo "No differences found between $branch_name and main"
+        return
+    end
+
+    echo "Analyzing changes between $branch_name and main..."
+    echo $diff_content | llm -t prdesc
+end
