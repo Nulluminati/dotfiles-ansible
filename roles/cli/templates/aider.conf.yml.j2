@@ -2,8 +2,7 @@
 
 #############
 # Main model:
-model: claude-3-5-sonnet-20241022
-# model: claude-3-5-haiku-20241022
+# sonnet: true
 
 ########################
 # API Keys and settings:
@@ -17,6 +16,7 @@ anthropic-api-key: {{ api_keys.claude }}
 ## Set an API key for a provider (eg: --api-key provider=<key> sets PROVIDER_API_KEY=<key>)
 api-key:
   - gemini={{ api_keys.gemini }}
+  - openrouter={{ api_keys.openrouter }}
 
 
 ##################
