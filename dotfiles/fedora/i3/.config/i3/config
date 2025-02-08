@@ -209,8 +209,12 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Polybar
 exec_always --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
-# Set WAL
-exec_always --no-startup-id wal -i ~/Pictures/Wallpapers -o ~/.config/wal/after_wal.sh
+# Disabled. Sets WAL randomly based on a background
+#exec_always --no-startup-id wal -i ~/Pictures/Wallpapers -o ~/.config/wal/after_wal.sh
+
+# Set WAL / Colorscheme / Background
+exec_always --no-startup-id wal --theme dracula -o ~/.config/wal/after_wal.sh
+exec_always --no-startup-id feh --bg-scale ~/.config/wal/wallpapers/dracula.png
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
