@@ -28,16 +28,15 @@ function llmgitmsg --description "Create a git commit message using AI"
     set commit_message (generate_commit_message)
 
     while true
-    	set short_message (string split -m 1 "\n" $commit_message)[1]
-		set description (string split -m 1 "\n" $commit_message)[3]
+        # Extract message components based on description flag
+        set short_message (string split -m 1 "\n" $commit_message)[1]
+        set -q _flag_description && set description (string split -m 1 "\n" $commit_message)[3]
 
-        echo -e "Proposed commit message:\n"
-        echo $short_message
-        echo -e ""
+        echo -e "Proposed commit message:\n$short_message\n"
 
-        echo -e "Proposed commit description:\n"
-        echo $description
-        echo -e ""
+        if set -q _flag_description
+            echo -e "Proposed commit description:\n$description\n"
+        end
 
         set choice (read_input "Do you want to (a)ccept, (r)egenerate, or (c)ancel? (a/r/c) ")
 
