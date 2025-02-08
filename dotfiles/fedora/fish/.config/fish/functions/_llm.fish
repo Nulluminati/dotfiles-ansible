@@ -12,7 +12,10 @@ function llmcmd --description "Recommend a terminal command using AI"
 end
 
 function llmgitmsg --description "Create a git commit message using AI"
-	function read_input
+    argparse d/description -- $argv
+    or return 1
+
+    function read_input
         set -l prompt $argv[1]
         read -P $prompt reply
         echo $reply
@@ -36,11 +39,16 @@ function llmgitmsg --description "Create a git commit message using AI"
         echo $description
         echo -e ""
 
-        set choice (read_input "Do you want to (a)ccept or (r)egenerate? ")
+        set choice (read_input "Do you want to (a)ccept, (r)egenerate, or (c)ancel? (a/r/c) ")
 
         switch $choice
             case 'a' 'A' ''
-                if git commit $argv -m "$short_message" -m "$description"
+                if set -q _flag_description
+                    git commit $argv -m "$short_message" -m "$description"
+                else
+                    git commit $argv -m "$short_message"
+                end
+                if test $status -eq 0
                     echo "Changes committed successfully!"
                     return 0
                 else
