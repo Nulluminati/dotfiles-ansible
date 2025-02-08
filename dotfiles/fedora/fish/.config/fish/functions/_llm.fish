@@ -1,14 +1,20 @@
-function llmmodel --description "Set model for AI commands"
-    llm models default $argv
-end
-
-function llmchat --description "Chat with AI"
-	llm chat
-end
-
 function llmcmd --description "Recommend a terminal command using AI"
     set system (grep ^NAME= /etc/os-release | cut -d '=' -f 2 | tr -d '"')
     llm -t cmd -p os $system $argv
+end
+
+function llmsum --description "Summarize content from a webpage or YouTube video using AI"
+    if string match -qr 'youtube\.com|youtu\.be' -- $argv[1]
+        # YouTube video handling
+        set sub_url (yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$argv[1]")
+        set content (curl -s "$sub_url" | sed '/^$/d' | grep -v '^[0-9]*$' | grep -v '\-->' | sed 's/<[^>]*>//g' | tr '\n' ' ')
+    else
+        # Regular webpage handling
+        set content (curl -s $argv[1])
+        set content (echo $content | strip-tags)
+    end
+    
+    echo $content | llm --system "Summarize in bullet points"
 end
 
 function llmgitmsg --description "Create a git commit message using AI"
@@ -64,20 +70,6 @@ function llmgitmsg --description "Create a git commit message using AI"
                 echo "Invalid choice. Please try again."
         end
     end
-end
-
-function llmwebsum --description "Summarize a webpage using AI"
-	# Fetch a url with curl, strip tags to reduce tokens and send to llm
-    set content (curl -s $argv)
-    set trimmed_content (echo $content | strip-tags)
-    echo $trimmed_content| llm --system "Summarize in bullet points"
-end
-
-function llmytsum --description "Summarize a YouTube video using AI"
-    # Fetch subtitles with youtube-dl, strip tags to reduce tokens and send to llm
-    set sub_url (yt-dlp -q --skip-download --convert-subs srt --write-sub --sub-langs "en" --write-auto-sub --print "requested_subtitles.en.url" "$argv")
-    set content (curl -s "$sub_url" | sed '/^$/d' | grep -v '^[0-9]*$' | grep -v '\-->' | sed 's/<[^>]*>//g' | tr '\n' ' ')
-    echo $content| llm --system "Summarize in bullet points"
 end
 
 function llmgitprdesc --description "Generate PR description from branch changes vs main"
