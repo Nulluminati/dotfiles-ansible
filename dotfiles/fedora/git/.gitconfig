@@ -5,6 +5,7 @@
     defaultBranch = main
 [core]
     autocrlf = input
+    excludesfile = ~/.gitignore_global
 [github]
   user = nulluminati
 [color]
