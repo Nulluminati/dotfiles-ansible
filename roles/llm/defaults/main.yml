@@ -3,6 +3,7 @@ uv_packages:
   - files-to-prompt                       # https://github.com/simonw/files-to-prompt
   - llm                                   # https://github.com/simonw/llm
   - strip-tags                            # https://github.com/simonw/strip-tags
+  - ttok                                  # https://github.com/simonw/ttok
 
 llm_plugins:
   - llm-anthropic
