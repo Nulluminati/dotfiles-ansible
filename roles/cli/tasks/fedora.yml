@@ -58,6 +58,7 @@
       - fish
       - fzf
       - gh
+      - ghostty
       - git-delta
       - golang
       - golang-x-tools-gopls

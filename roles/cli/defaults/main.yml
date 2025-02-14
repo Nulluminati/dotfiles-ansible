@@ -27,3 +27,5 @@ fedora_repositories:
 copr_repositories:
   - name: atim/starship
     creates: _copr:copr.fedorainfracloud.org:atim:starship.repo
+  - name: pgdev/ghostty
+    creates: _copr:copr.fedorainfracloud.org:pgdev:ghostty.repo
