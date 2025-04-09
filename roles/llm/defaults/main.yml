@@ -7,6 +7,9 @@ uv_packages:
 
 llm_plugins:
   - llm-anthropic
+  - llm-fragments-github # https://github.com/simonw/llm-fragments-github
   - llm-gemini
   - llm-jq # https://github.com/simonw/llm-jq
   - llm-openrouter
+  - llm-templates-fabric # https://github.com/simonw/llm-templates-fabric
+  - llm-templates-github # https://github.com/simonw/llm-templates-github
