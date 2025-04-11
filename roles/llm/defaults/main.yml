@@ -7,6 +7,7 @@ uv_packages:
 
 llm_plugins:
   - llm-anthropic
+  - llm-docs
   - llm-fragments-github # https://github.com/simonw/llm-fragments-github
   - llm-gemini
   - llm-jq # https://github.com/simonw/llm-jq
