@@ -1,0 +1,82 @@
+---
+
+- name: Setup homebrew taps
+  homebrew_tap:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+  loop:
+    - hashicorp/tap # terraform
+    - homebrew/cask-fonts
+    - homebrew/cask-versions
+    - koekeishiya/formulae # skhd + yabai
+    - norwoodj/tap # helm-docs
+    - puma/puma # puma-dev
+    - vectordotdev/brew # vector
+    - warrensbox/tap # tgswitch
+
+- name: Install homebrew cask apps
+  homebrew_cask:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+    accept_external_apps: yes
+  loop:
+    - alacritty # Cross-platform, GPU-accelerated terminal emulator
+    - aws-vpn-client # AWS VPN Client
+    - chromedriver # WebDriver for Google Chrome
+    - chromium # Chromium web browser
+    - font-source-code-pro # Monospaced font family for user interface and coding environments
+    - kap # Screen recorder
+    - linearmouse # LinearMouse - Linear mouse acceleration
+    - ngrok # Expose localhost to the internet
+    - openlens # OpenLens - Kubernetes IDE
+    - stats # macOS system monitor in your menu bar
+    - wkhtmltopdf # Command line tools to render HTML into PDF and various image formats
+
+- name: Install homebrew packages
+  homebrew:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+  loop:
+    - argocd # GitOps Continuous Delivery for Kubernetes
+    - awscli # Official Amazon AWS command-line interface
+    - bash # Bourne-Again SHell, a UNIX command interpreter
+    - bat # Clone of cat with syntax highlighting and Git integration
+    - check-jsonschema # JSON Schema validator
+    - dive # Tool for exploring each layer in a docker image
+    - exa # Modern replacement for 'ls'
+    - fd # Simple, fast and user-friendly alternative to 'find'
+    - fzf # Command-line fuzzy finder written in Go
+    - git # Distributed revision control system
+    - grep # GNU grep, egrep and fgrep
+    - helm # The Kubernetes Package Manager
+    - helm-docs # Generate documentation for your Helm charts
+    - jq # Lightweight and flexible command-line JSON processor
+    - kubectx # Faster way to switch between clusters and namespaces in kubectl
+    - kubernetes-cli # Kubernetes command-line interface
+    - make # Utility for directing compilation
+    - minikube # Run a Kubernetes cluster locally
+    - neovim # Ambitious Vim-fork focused on extensibility and agility
+    - node # Platform built on V8 to build network applications
+    - pre-commit # Framework for managing multi-language pre-commit hooks
+    - ripgrep # Search tool like grep and The Silver Searcher
+    - skhd # Simple hotkey daemon for macOS
+    - starship # Cross-shell prompt for astronauts
+    - terraformer # CLI tool to generate terraform files from existing infrastructure
+    - terragrunt # Thin wrapper for Terraform
+    - tfenv # Terraform version manager inspired by rbenv
+    - tflint # Terraform linter focused on possible errors
+    - tgswitch # Switch between different versions of terraform
+    - tig # Text interface for Git repositories
+    - tldr # Collaborative cheatsheets for console commands
+    - tmux # Terminal multiplexer
+    - tree # Display directories as trees (with optional color/HTML output)
+    - vector # High-performance, open-source, observability data pipeline
+    - watch # Executes a program periodically, showing output fullscreen
+    - vim # Vi 'workalike' with many additional features
+    - wget # Internet file retriever
+    - yabai # Tiling window manager for macOS based on binary space partitioning
+    - yamllint # Linter for YAML files
+    - yq # Command-line YAML processor - jq wrapper for YAML documents
+    - zsh # UNIX shell (command interpreter)
