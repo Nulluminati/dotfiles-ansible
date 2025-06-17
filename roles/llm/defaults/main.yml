@@ -14,3 +14,6 @@ llm_plugins:
   - llm-openrouter
   - llm-templates-fabric # https://github.com/simonw/llm-templates-fabric
   - llm-templates-github # https://github.com/simonw/llm-templates-github
+  - llm-hacker-news # https://github.com/simonw/llm-hacker-news
+  - llm-tools-simpleeval # https://github.com/simonw/llm-tools-simpleeval
+  - llm-fragments-youtube # https://github.com/redraw/llm-fragments-youtube
