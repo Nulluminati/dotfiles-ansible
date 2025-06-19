@@ -12,6 +12,19 @@
     cmd: "npm install -g @anthropic-ai/claude-code"
   when: claude_check.rc != 0
 
+- name: Check if repomix is installed
+  ansible.builtin.shell:
+    cmd: "command -v repomix"
+  register: repomix_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Install repomix
+  ansible.builtin.shell:
+    cmd: "npm install -g repomix"
+  when: repomix_check.rc != 0
+
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + fedora_mcp_servers | default([]) }}"

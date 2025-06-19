@@ -1,12 +1,18 @@
 ---
 mcp_servers:
+  - name: aws-code-doc-gen
+    command: "uvx awslabs.code-doc-gen-mcp-server@latest"
+  - name: aws-docs
+    command: "uvx awslabs.aws-documentation-mcp-server@latest"
+  - name: aws-terraform
+    command: "uvx awslabs.terraform-mcp-server@latest"
+  - name: brave-search
+    command: "npx -y @modelcontextprotocol/server-brave-search"
+    env:
+      BRAVE_API_KEY: "{{ api_keys.brave }}"
   - name: context7
     transport: sse
     url: "https://mcp.context7.com/sse"
-  - name: sequential-thinking
-    command: "npx -y @modelcontextprotocol/server-sequential-thinking"
-  - name: memory
-    command: "npx -y @modelcontextprotocol/server-memory"
   - name: git
     command: "uvx mcp-server-git"
   - name: github
@@ -14,18 +20,33 @@ mcp_servers:
     url: "https://api.githubcopilot.com/mcp/"
     headers:
       Authorization: "Bearer {{ api_keys.github_pat }}"
+  - name: memory
+    command: "npx -y @modelcontextprotocol/server-memory"
+  - name: playwright
+    command: "npx -y @playwright/mcp@latest"
   # - name: notion
   #   transport: sse
   #   url: "https://mcp.notion.com/sse"
-  - name: aws-docs
-    command: "uvx awslabs.aws-documentation-mcp-server@latest"
-  - name: brave-search
-    command: "npx -y @modelcontextprotocol/server-brave-search"
-    env:
-      BRAVE_API_KEY: "{{ api_keys.brave }}"
-  # - name: zen
-  # - name: serena
+  - name: sequential-thinking
+    command: "npx -y @modelcontextprotocol/server-sequential-thinking"
 
 fedora_mcp_servers: []
+  # - name: serena
+  # - name: zen
 
-mac_mcp_servers: []
+mac_mcp_servers:
+  - name: aws-cost
+    command: "uvx awslabs.cost-analysis-mcp-server@latest"
+    env:
+      AWS_PROFILE: "root"
+  - name: aws-diagram
+    command: "uvx awslabs.aws-diagram-mcp-server@latest"
+    env:
+      AWS_PROFILE: "root"
+  - name: sentry
+    transport: http
+    url: "https://mcp.sentry.dev/mcp"
+  - name: shortcut
+    command: "npx -y @shortcut/mcp@latest"
+    env:
+      SHORTCUT_API_TOKEN: "{{ api_keys.shortcut }}"
