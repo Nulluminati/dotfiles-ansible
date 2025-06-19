@@ -36,7 +36,7 @@
 
 - name: Add stdio MCP servers
   ansible.builtin.shell:
-    cmd: "claude mcp add {{ item.item.name }} {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %}-- {{ item.item.command }}"
+    cmd: "claude mcp add {{ item.item.name }} -s user {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %}-- {{ item.item.command }}"
   loop: "{{ mcp_check_results.results | default([]) }}"
   loop_control:
     label: "{{ item.item.name }}"
@@ -46,7 +46,7 @@
 
 - name: Add sse/http MCP servers
   ansible.builtin.shell:
-    cmd: "claude mcp add --transport {{ item.item.transport }} {{ item.item.name }} {{ item.item.url }} {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %}"
+    cmd: "claude mcp add --transport {{ item.item.transport }} {{ item.item.name }} {{ item.item.url }} -s user {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %} {% if item.item.headers is defined %}{% for key, value in item.item.headers.items() %}-H '{{ key }}:{{ value }}' {% endfor %}{% endif %}"
   loop: "{{ mcp_check_results.results | default([]) }}"
   loop_control:
     label: "{{ item.item.name }}"
