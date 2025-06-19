@@ -1,0 +1,55 @@
+---
+- name: Check if claude is installed
+  ansible.builtin.shell:
+    cmd: "command -v claude"
+  register: claude_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Install Claude Code
+  ansible.builtin.shell:
+    cmd: "npm install -g @anthropic-ai/claude-code"
+  when: claude_check.rc != 0
+
+- name: Set mcp_server_list for Fedora
+  ansible.builtin.set_fact:
+    mcp_server_list: "{{ mcp_servers | default([]) + fedora_mcp_servers | default([]) }}"
+  when: ansible_distribution == "Fedora"
+
+- name: Set mcp_server_list for macOS
+  ansible.builtin.set_fact:
+    mcp_server_list: "{{ mcp_servers | default([]) + mac_mcp_servers | default([]) }}"
+  when: ansible_distribution == "MacOSX"
+
+- name: Check for configured MCP servers
+  ansible.builtin.shell:
+    cmd: "claude mcp get {{ item.name }}"
+  register: mcp_check_results
+  loop: "{{ mcp_server_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: mcp_server_list is defined and mcp_server_list | length > 0
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Add stdio MCP servers
+  ansible.builtin.shell:
+    cmd: "claude mcp add {{ item.item.name }} {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %}-- {{ item.item.command }}"
+  loop: "{{ mcp_check_results.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when:
+    - item.rc != 0
+    - item.item.transport is not defined or item.item.transport == 'stdio'
+
+- name: Add sse/http MCP servers
+  ansible.builtin.shell:
+    cmd: "claude mcp add --transport {{ item.item.transport }} {{ item.item.name }} {{ item.item.url }} {% if item.item.env is defined %}{% for key, value in item.item.env.items() %}-e {{ key }}='{{ value }}' {% endfor %}{% endif %}"
+  loop: "{{ mcp_check_results.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when:
+    - item.rc != 0
+    - item.item.transport is defined and (item.item.transport == 'sse' or item.item.transport == 'http')

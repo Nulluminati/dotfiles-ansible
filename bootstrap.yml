@@ -15,6 +15,10 @@
       tags: cli
       import_role:
         name: cli
+    - name: Claude Code
+      tags: claude_code
+      import_role:
+        name: claude_code
     - name: Stow
       tags: stow
       import_role:

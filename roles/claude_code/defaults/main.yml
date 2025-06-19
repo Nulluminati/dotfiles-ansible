@@ -1,0 +1,29 @@
+---
+mcp_servers:
+  - name: context7
+    transport: sse
+    url: "https://mcp.context7.com/sse"
+  - name: sequential-thinking
+    command: "npx -y @modelcontextprotocol/server-sequential-thinking"
+  - name: memory
+    command: "npx -y @modelcontextprotocol/server-memory"
+  - name: git
+    command: "uvx mcp-server-git"
+  - name: github
+    transport: http
+    url: "https://api.githubcopilot.com/mcp"
+  - name: notion
+    transport: sse
+    url: "https://mcp.notion.com/sse"
+  - name: aws-docs
+    command: "uvx awslabs.aws-documentation-mcp-server@latest"
+  - name: brave-search
+    command: "npx -y @modelcontextprotocol/server-brave-search"
+    env:
+      BRAVE_API_KEY: "{{ api_keys.brave }}"
+  # - name: zen
+  # - name: serena
+
+fedora_mcp_servers: []
+
+mac_mcp_servers: []
