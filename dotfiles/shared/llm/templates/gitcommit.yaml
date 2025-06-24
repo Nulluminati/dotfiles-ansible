@@ -4,6 +4,8 @@ prompt: >
 
   Don't add fluff. Just one commit message for all changes. Include a body. No string delimiters wrapping it (like ```), no yapping, no markdown, no fenced code.
 
+  What you write will be passed directly to git commit -m "[message]"
+
   Template:
     <type>:<description>\n\n[body]
 
