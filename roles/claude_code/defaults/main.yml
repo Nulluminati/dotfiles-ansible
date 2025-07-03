@@ -24,9 +24,9 @@ mcp_servers:
     command: "npx -y @modelcontextprotocol/server-memory"
   - name: playwright
     command: "npx -y @playwright/mcp@latest"
-  # - name: notion
-  #   transport: sse
-  #   url: "https://mcp.notion.com/sse"
+  - name: notion
+    transport: sse
+    url: "https://mcp.notion.com/sse"
   - name: sequential-thinking
     command: "npx -y @modelcontextprotocol/server-sequential-thinking"
 
