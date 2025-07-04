@@ -43,3 +43,10 @@ Temporary Items
 
 api_keys.cfg
 secrets.yml
+
+# Claude Code files
+/.claude/settings.local.json
+CLAUDE.local.md
+
+# memory-bank directory
+/memory-bank/
