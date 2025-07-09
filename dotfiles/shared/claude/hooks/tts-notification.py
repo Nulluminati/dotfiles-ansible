@@ -65,7 +65,7 @@ def generate_tts_message(data: Dict[str, Any]) -> str:
     elif tool == 'Bash':
         return (f"Bash command executed: {command}" 
                 if command else "Bash command completed")
-    elif tool == 'Edit' || tool == 'MultiEdit':
+    elif tool == 'Edit' or tool == 'MultiEdit':
         filename = file_path.split('/')[-1] if file_path else 'file'
         return f"Edited {filename}"
     elif tool == 'Read':
