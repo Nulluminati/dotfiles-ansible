@@ -1,4 +1,21 @@
-{
+ {
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(uv:*)",
+      "Bash(find:*)",
+      "Bash(mv:*)",
+      "Bash(grep:*)",
+      "Bash(npm:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Write",
+      "Edit",
+      "Bash(chmod:*)",
+      "Bash(touch:*)"
+    ],
+    "deny": []
+  },
   "hooks": {
     "Stop": [
       {
@@ -6,18 +23,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Glass.aiff"
+            "command": "uv run ~/.claude/hooks/tts-notification.py --tts --notifications"
           }
         ]
       }
     ],
-    "Notification": [
+    "PostToolUse": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Funk.aiff"
+            "command": "uv run ~/.claude/hooks/tts-notification.py --tts --notifications"
           }
         ]
       }

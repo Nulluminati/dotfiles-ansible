@@ -30,3 +30,5 @@ function starship_transient_prompt_func
 end
 starship init fish | source
 enable_transience
+
+alias claude="/home/natekift/.claude/local/claude"
