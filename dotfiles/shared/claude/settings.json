@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ~/.claude/hooks/tts-notification.py --tts --notifications"
+            "command": "uv run ~/.claude/hooks/tts-notification.py --notifications"
           }
         ]
       }

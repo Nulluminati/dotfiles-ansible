@@ -100,7 +100,7 @@ def speak_text(text: str) -> None:
         engine = pyttsx3.init()
         # Configure engine settings
         engine.setProperty('rate', 180)    # Speech rate (words per minute)
-        engine.setProperty('volume', 0.8)  # Volume (0.0 to 1.0)
+        engine.setProperty('volume', 0.5)  # Volume (0.0 to 1.0)
         engine.say(text)
         engine.runAndWait()
     except Exception as e:
