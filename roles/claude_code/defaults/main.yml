@@ -43,6 +43,9 @@ mac_mcp_servers:
     command: "uvx awslabs.aws-diagram-mcp-server@latest"
     env:
       AWS_PROFILE: "root"
+  - name: honeycomb
+    transport: http
+    url: "https://mcp.honeycomb.io/mcp"
   - name: sentry
     transport: http
     url: "https://mcp.sentry.dev/mcp"
