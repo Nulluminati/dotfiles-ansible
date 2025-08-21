@@ -1,4 +1,4 @@
- {
+{
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",
@@ -39,5 +39,11 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline",
+    "padding": 0
+  },
+  "model": "sonnet"
 }

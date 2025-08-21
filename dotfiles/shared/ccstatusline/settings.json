@@ -1,0 +1,92 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan",
+        "merge": true
+      },
+      {
+        "id": "49d72163-d87e-4f8a-a1b5-71b8eedb90f0",
+        "type": "output-style",
+        "backgroundColor": "bgGreen"
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack",
+        "merge": true
+      },
+      {
+        "id": "3be67703-1ac1-4d6f-983a-5b615415f5b0",
+        "type": "context-percentage",
+        "backgroundColor": "bgBrightGreen"
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta",
+        "merge": true
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      },
+      {
+        "id": "9e2930e6-ac63-48da-ad9d-d721bef66952",
+        "type": "tokens-input",
+        "backgroundColor": "bgBrightBlack",
+        "merge": true
+      },
+      {
+        "id": "83dcba7c-c60a-428d-9ed9-da1c8b7243e7",
+        "type": "tokens-output",
+        "backgroundColor": "bgCyan",
+        "merge": true
+      },
+      {
+        "id": "b6bd8690-d6d9-4cb7-8e21-eadadd076871",
+        "type": "tokens-cached",
+        "backgroundColor": "bgBrightWhite",
+        "merge": true
+      },
+      {
+        "id": "07c7bffd-4f4e-4fda-a6e4-39ffb217bdc8",
+        "type": "tokens-total",
+        "backgroundColor": "bgBrightWhite"
+      },
+      {
+        "id": "8d1ba1b3-4a3f-4a43-8b54-59a3c9d256a9",
+        "type": "block-timer",
+        "backgroundColor": "bgBrightBlue"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "globalBold": true,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [
+      ""
+    ],
+    "endCaps": [
+      ""
+    ],
+    "theme": "dracula"
+  }
+}
