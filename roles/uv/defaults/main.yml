@@ -3,7 +3,6 @@ add_python_versions:
   - 3.12
 
 packages:
-  - --python python3.12 aider-chat@latest --with playwright --with aider-chat[help] # https://github.com/Aider-AI/aider
   - virtualfish                           # https://github.com/justinmayer/virtualfish
   - yt-dlp                                # https://github.com/yt-dlp/yt-dlp
   - tldr                                  # 

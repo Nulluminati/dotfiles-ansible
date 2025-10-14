@@ -58,7 +58,6 @@
       - fish
       - fzf
       - gh
-      - ghostty
       - git-delta
       - golang
       - golang-x-tools-gopls
@@ -146,6 +145,18 @@
     creates: /usr/local/bin/aws
   when: aws_cli_unarchive.changed
 
+# NPM Packages
+- name: Install npm packages
+  ansible.builtin.shell:
+    cmd: npm install -g {{ item }}
+  loop:
+    - "gatsby-cli@5.11.0"
+    - "@google/gemini-cli"
+    - "happy-coder"
+    - "@openai/codex"
+    - "opencode-ai@latest"
+    - "resume-cli@3.0.8"
+
 # Github CLI Extensions
 - name: Install gh extensions
   shell: gh extension install {{ item }}
@@ -154,9 +165,3 @@
   loop:
     - dlvhdr/gh-dash
     - github/gh-copilot
-
-# aider
-- name: Set aider config
-  template:
-    src: templates/aider.conf.yml.j2
-    dest: "{{ ansible_env.HOME }}/.aider.conf.yml"
