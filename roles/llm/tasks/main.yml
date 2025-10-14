@@ -23,7 +23,7 @@
   loop: "{{ uv_packages }}"
 
 - name: Install additional llm models & plugins
-  shell: llm install {{ item }}
+  shell: llm install -U {{ item }}
   loop: "{{ llm_plugins }}"
 
 - name: Set llm api keys for fedora

@@ -7,6 +7,8 @@ uv_packages:
 
 llm_plugins:
   - llm-anthropic
+  - llm-bedrock # https://github.com/simonw/llm-bedrock
+  - llm-bedrock-anthropic # https://github.com/sblakey/llm-bedrock-anthropic
   - llm-docs
   - llm-fragments-github # https://github.com/simonw/llm-fragments-github
   - llm-gemini
