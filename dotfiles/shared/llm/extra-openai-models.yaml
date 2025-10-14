@@ -1,0 +1,12 @@
+- model_id: zai/GLM-4.6
+  model_name: GLM-4.6
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
+- model_id: zai/GLM-4.5
+  model_name: GLM-4.5
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
+- model_id: zai/GLM-4.5-air
+  model_name: GLM-4.5-air
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
