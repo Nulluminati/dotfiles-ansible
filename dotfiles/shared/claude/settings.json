@@ -34,5 +34,6 @@
     "type": "command",
     "command": "ccstatusline",
     "padding": 0
-  }
+  },
+  "alwaysThinkingEnabled": true
 }
