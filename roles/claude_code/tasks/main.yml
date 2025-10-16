@@ -1,4 +1,5 @@
 ---
+# Claude Code
 - name: Check if claude is installed
   ansible.builtin.shell:
     cmd: "command -v claude"
@@ -12,6 +13,7 @@
     cmd: "npm install -g @anthropic-ai/claude-code"
   when: claude_check.rc != 0
 
+# Repomix
 - name: Check if repomix is installed
   ansible.builtin.shell:
     cmd: "command -v repomix"
@@ -25,6 +27,28 @@
     cmd: "npm install -g repomix"
   when: repomix_check.rc != 0
 
+# ccstatusline
+- name: Check if ccstatusline is installed
+  ansible.builtin.shell:
+    cmd: "command -v ccstatusline"
+  register: ccstatusline_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Install ccstatusline
+  ansible.builtin.shell:
+    cmd: npm install -g ccstatusline@latest
+  when: ccstatusline_check.rc != 0
+
+# API Key
+- name: Set ZAI API Key
+  shell: set -Ux ZAI_API_KEY {{ api_keys.zai }}
+  args:
+    executable: /usr/bin/fish
+  when: ansible_distribution == "Fedora"
+
+# MCP Servers
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + fedora_mcp_servers | default([]) }}"
@@ -67,14 +91,6 @@
     - item.rc != 0
     - item.item.transport is defined and (item.item.transport == 'sse' or item.item.transport == 'http')
 
-- name: Set ZAI as Claude Provider for Fedora
-  shell: set -Ux ANTHROPIC_AUTH_TOKEN {{ api_keys.zai }} && set -Ux ANTHROPIC_BASE_URL https://api.z.ai/api/anthropic
-  args:
-    executable: /usr/bin/fish
-  when: ansible_distribution == "Fedora"
 
-- name: Install npm packages
-  ansible.builtin.shell:
-    cmd: npm install -g {{ item }}
-  loop:
-    - "ccstatusline@latest"
+
+

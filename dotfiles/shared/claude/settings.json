@@ -5,6 +5,7 @@
       "Edit"
     ],
     "deny": [
+      "Bash(rm -rf /)",
       "Read(**/.env*)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
@@ -15,13 +16,24 @@
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/websearch_to_brave.py"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ~/.claude/hooks/tts-notification.py --tts --notifications"
+            "command": "uv run ~/.claude/hooks/tts_notification.py --tts --notifications"
           }
         ]
       }
@@ -32,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ~/.claude/hooks/tts-notification.py --notifications"
+            "command": "uv run ~/.claude/hooks/tts_notification.py --notifications"
           }
         ]
       }
@@ -45,7 +57,9 @@
   },
   "env": {
     "API_TIMEOUT_MS": "3000000",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
+    "CLAUDE_CODE_ENABLE_TELEMETRY": 0,
+    "EDITOR": "subl"
   },
   "alwaysThinkingEnabled": true
 }
