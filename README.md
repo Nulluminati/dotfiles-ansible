@@ -28,6 +28,7 @@ These dotfiles are intended for use with Fedora. macOS support is planned at som
 
 The important stuff:
 - Alacritty
+- Claude Code
 - Fish Shell
 - i3
 - Picom
