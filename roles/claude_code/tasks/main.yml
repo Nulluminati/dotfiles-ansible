@@ -66,3 +66,15 @@
   when:
     - item.rc != 0
     - item.item.transport is defined and (item.item.transport == 'sse' or item.item.transport == 'http')
+
+- name: Set ZAI as Claude Provider for Fedora
+  shell: set -Ux ANTHROPIC_AUTH_TOKEN {{ api_keys.zai }} && set -Ux ANTHROPIC_BASE_URL https://api.z.ai/api/anthropic
+  args:
+    executable: /usr/bin/fish
+  when: ansible_distribution == "Fedora"
+
+- name: Install npm packages
+  ansible.builtin.shell:
+    cmd: npm install -g {{ item }}
+  loop:
+    - "ccstatusline@latest"
