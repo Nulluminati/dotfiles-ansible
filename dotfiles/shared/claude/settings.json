@@ -1,4 +1,10 @@
 {
+  "env": {
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "EDITOR": "subl"
+  },
   "permissions": {
     "allow": [
       "Write",
@@ -55,11 +61,6 @@
     "command": "ccstatusline",
     "padding": 0
   },
-  "env": {
-    "API_TIMEOUT_MS": "3000000",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
-    "CLAUDE_CODE_ENABLE_TELEMETRY": 0,
-    "EDITOR": "subl"
-  },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "model": "global.anthropic.claude-opus-4-5-20251101-v1:0"
 }
