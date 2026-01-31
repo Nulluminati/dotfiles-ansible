@@ -21,6 +21,7 @@
       "Read(**/.ssh/**)"
     ]
   },
+  "model": "global.anthropic.claude-opus-4-5-20251101-v1:0",
   "hooks": {
     "PreToolUse": [
       {
@@ -61,6 +62,14 @@
     "command": "ccstatusline",
     "padding": 0
   },
-  "alwaysThinkingEnabled": true,
-  "model": "global.anthropic.claude-opus-4-5-20251101-v1:0"
+  "enabledPlugins": {
+    "ralph-loop@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true
 }
