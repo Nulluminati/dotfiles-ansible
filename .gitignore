@@ -41,7 +41,6 @@ Temporary Items
 *.gzip
 *.tgz
 
-api_keys.cfg
 secrets.yml
 
 # Claude Code files
