@@ -8,24 +8,10 @@
   failed_when: false
   check_mode: false
 
-- name: Install Claude Code
+- name: Install Claude Code (native)
   ansible.builtin.shell:
-    cmd: "npm install -g @anthropic-ai/claude-code"
+    cmd: "curl -fsSL https://claude.ai/install.sh | bash"
   when: claude_check.rc != 0
-
-# Repomix
-- name: Check if repomix is installed
-  ansible.builtin.shell:
-    cmd: "command -v repomix"
-  register: repomix_check
-  changed_when: false
-  failed_when: false
-  check_mode: false
-
-- name: Install repomix
-  ansible.builtin.shell:
-    cmd: "npm install -g repomix"
-  when: repomix_check.rc != 0
 
 # ccstatusline
 - name: Check if ccstatusline is installed
@@ -44,6 +30,12 @@
 # API Key
 - name: Set ZAI API Key
   shell: set -Ux ZAI_API_KEY {{ api_keys.zai }}
+  args:
+    executable: /usr/bin/fish
+  when: ansible_distribution == "Fedora"
+
+- name: Set Synthetic.new API Key
+  shell: set -Ux SYNTHETIC_NEW_API_KEY {{ api_keys.synthetic }}
   args:
     executable: /usr/bin/fish
   when: ansible_distribution == "Fedora"
