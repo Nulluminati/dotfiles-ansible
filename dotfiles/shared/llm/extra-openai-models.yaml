@@ -22,3 +22,15 @@
   model_name: GLM-4.5-air
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
+- model_id: synthetic/Kimi-K2.5
+  model_name: hf:moonshotai/Kimi-K2.5 
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/GLM-4.7
+  model_name: hf:zai-org/GLM-4.7
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/MiniMax-M2.1
+  model_name: hf:MiniMaxAI/MiniMax-M2.1
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic

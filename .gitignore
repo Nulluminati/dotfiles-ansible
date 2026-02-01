@@ -55,5 +55,4 @@ CLAUDE.local.md
 package-lock.json
 
 # WIP files
-CLAUDE.md
 dotfiles/fedora/nvim/

@@ -199,12 +199,14 @@ format-foreground = ${colors.foreground}
 type = custom/script
 interval = 600
 exec = ~/.config/scripts/polybar/dnf-updates.sh
+label-font = 2
 
 [module/weather]
 type = custom/script
 interval = 600
 exec = python3 ~/.config/scripts/polybar/weather.py
 click-left = firefox --new-tab --url "https://www.theweathernetwork.com/ca/weather/british-columbia/north-vancouver"
+label-font = 2
 
 [module/synthetic-quota]
 type = custom/script
