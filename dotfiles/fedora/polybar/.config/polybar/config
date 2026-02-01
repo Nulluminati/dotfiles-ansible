@@ -63,7 +63,7 @@ type = custom/script
 exec = ~/.config/scripts/polybar/gpu-util.sh
 interval = 10
 format = <label>
-format-prefix-font = 3
+format-prefix-font = 1
 format-prefix = "  "
 format-prefix-foreground = ${colors.color1}
 label-foreground = ${colors.foreground}
@@ -95,7 +95,7 @@ format-mounted-prefix-font = 3
 format-mounted-prefix = "  "
 format-mounted-prefix-foreground = ${colors.color2}
 label-mounted = " %free%"
-label-mounted-font = 2
+label-mounted-font = 1
 label-mounted-foreground = ${colors.foreground}
 
 
@@ -157,7 +157,7 @@ menu-0-font = 1
 type = custom/text
 content = |
 content-foreground = ${colors.foreground}
-content-font = 1
+content-font = 2
 
 
 [module/title]
@@ -212,10 +212,10 @@ exec = python3 ~/.config/scripts/polybar/synthetic-quota.py
 interval = 300
 format = <label>
 format-prefix-font = 3
-format-prefix = "󰚩  "
+format-prefix = "󱚡  "
 format-prefix-foreground = ${colors.color6}
 label-foreground = ${colors.foreground}
-label-font = 1
+label-font = 2
 click-left = firefox --new-tab --url "https://synthetic.new/dashboard"
 
 [module/zai-quota]
@@ -224,8 +224,8 @@ exec = python3 ~/.config/scripts/polybar/zai-quota.py
 interval = 300
 format = <label>
 format-prefix-font = 3
-format-prefix = "󱁼  "
+format-prefix = "󰰸  "
 format-prefix-foreground = ${colors.color5}
 label-foreground = ${colors.foreground}
-label-font = 1
+label-font = 2
 click-left = firefox --new-tab --url "https://z.ai/manage-apikey/subscription"
