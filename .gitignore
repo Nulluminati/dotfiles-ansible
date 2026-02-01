@@ -50,3 +50,10 @@ CLAUDE.local.md
 
 # memory-bank directory
 /memory-bank/
+
+# Node
+package-lock.json
+
+# WIP files
+CLAUDE.md
+dotfiles/fedora/nvim/
