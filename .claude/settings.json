@@ -2,7 +2,7 @@
   "permissions": {
     "deny": [
       "Read(./secrets.yml)",
-      "Read(./**/api_keys.cfg)",
+      "Read(./**/api_keys.cfg)"
     ]
   }
 }
