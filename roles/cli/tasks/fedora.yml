@@ -59,6 +59,7 @@
       - fzf
       - gh
       - git-delta
+      - ghostty
       - golang
       - golang-x-tools-gopls
       - helm

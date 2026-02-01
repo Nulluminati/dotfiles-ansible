@@ -1,0 +1,48 @@
+# Ghostty Terminal Configuration
+# Based on Alacritty preferences
+
+# Font configuration (matches Alacritty: Hack Nerd Font, size 12)
+font-family = Hack Nerd Font
+font-size = 12
+
+# Cursor style (matches Alacritty: Block)
+cursor-style = block
+cursor-style-blink = false
+
+# Color theme - import pywal generated colors
+config-file = ~/.cache/wal/ghostty.conf
+
+# Draw bold text with bright colors (matches Alacritty)
+bold-color = bright
+
+# Window configuration (matches Alacritty decorations and padding)
+window-decoration = false
+window-padding-x = 10
+window-padding-y = 25
+
+# Scrolling (matches Alacritty: history 10000, multiplier 3)
+scrollback-limit = 10000
+
+# Mouse behavior (matches Alacritty: hide when typing)
+mouse-hide-while-typing = false
+
+# Key bindings
+# Ctrl+N to spawn new instance (matches Alacritty)
+keybind = ctrl+n=new_window
+
+# Copy/Paste bindings
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+
+# Confirm before closing window with multiple tabs
+quit-after-last-window-closed = true
+
+# Show tab bar if multiple tabs are open
+window-show-tab-bar = auto
+
+# Working directory behavior
+working-directory = inherit
+
+# Bell animation (matches Alacritty: EaseOutExpo, duration 0)
+# Ghostty uses bell-features for bell behavior
+bell-features = title
