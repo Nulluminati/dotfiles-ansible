@@ -10,21 +10,21 @@ mcp_servers:
     command: "npx -y @modelcontextprotocol/server-brave-search"
     env:
       BRAVE_API_KEY: "{{ api_keys.brave }}"
-  - name: context7
-    transport: sse
-    url: "https://mcp.context7.com/sse"
-  - name: git
-    command: "uvx mcp-server-git"
-  - name: github
-    transport: http
-    url: "https://api.githubcopilot.com/mcp/"
-    headers:
-      Authorization: "Bearer {{ api_keys.github_pat }}"
-  - name: playwright
-    command: "npx -y @playwright/mcp@latest"
-  - name: notion
-    transport: sse
-    url: "https://mcp.notion.com/sse"
+  # - name: context7
+  #   transport: sse
+  #   url: "https://mcp.context7.com/sse"
+  # - name: git
+  #   command: "uvx mcp-server-git"
+  # - name: github
+  #   transport: http
+  #   url: "https://api.githubcopilot.com/mcp/"
+  #   headers:
+  #     Authorization: "Bearer {{ api_keys.github_pat }}"
+  # - name: playwright
+  #   command: "npx -y @playwright/mcp@latest"
+  # - name: notion
+  #   transport: sse
+  #   url: "https://mcp.notion.com/sse"
 
 fedora_mcp_servers: []
   # - name: serena
@@ -39,12 +39,12 @@ mac_mcp_servers:
   #   command: "uvx awslabs.aws-diagram-mcp-server@latest"
   #   env:
   #     AWS_PROFILE: "root"
-  - name: honeycomb
-    transport: http
-    url: "https://mcp.honeycomb.io/mcp"
+  # - name: honeycomb
+  #   transport: http
+  #   url: "https://mcp.honeycomb.io/mcp"
   - name: linear
     transport: sse
     url: "https://mcp.linear.app/sse"
-  - name: sentry
-    transport: http
-    url: "https://mcp.sentry.dev/mcp"
+  # - name: sentry
+  #   transport: http
+  #   url: "https://mcp.sentry.dev/mcp"
