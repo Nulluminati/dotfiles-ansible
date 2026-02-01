@@ -164,3 +164,12 @@
   loop:
     - dlvhdr/gh-dash
     - github/gh-copilot
+
+# API Keys for polybar scripts
+- name: Set API keys as fish universal variables
+  shell: |
+    set -Ux OPENWEATHER_API_KEY {{ api_keys.openweather }}
+    set -Ux SYNTHETIC_API_KEY {{ api_keys.synthetic }}
+    set -Ux ZAI_API_KEY {{ api_keys.zai }}
+  args:
+    executable: /usr/bin/fish

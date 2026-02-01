@@ -27,19 +27,6 @@
     cmd: npm install -g ccstatusline@latest
   when: ccstatusline_check.rc != 0
 
-# API Key
-- name: Set ZAI API Key
-  shell: set -Ux ZAI_API_KEY {{ api_keys.zai }}
-  args:
-    executable: /usr/bin/fish
-  when: ansible_distribution == "Fedora"
-
-- name: Set Synthetic.new API Key
-  shell: set -Ux SYNTHETIC_NEW_API_KEY {{ api_keys.synthetic }}
-  args:
-    executable: /usr/bin/fish
-  when: ansible_distribution == "Fedora"
-
 # MCP Servers
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:

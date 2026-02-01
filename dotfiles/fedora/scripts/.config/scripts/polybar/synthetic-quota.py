@@ -9,7 +9,6 @@ Usage: synthetic-quota.py
 """
 
 import requests
-import configparser
 import os
 from datetime import datetime, timezone
 
@@ -40,12 +39,9 @@ def format_time_remaining(renews_at_str):
 
 
 # Synthetic API Key
-cfg = configparser.ConfigParser()
-cfg.read(os.path.join(os.path.dirname(__file__), '../api_keys.cfg'))
+api_key = os.environ.get('SYNTHETIC_API_KEY', '')
 
-try:
-    api_key = cfg.get('API_KEYS', 'synthetic', raw='')
-except (configparser.NoSectionError, configparser.NoOptionError):
+if not api_key:
     print("%{F#dc322f}?%{F-}")
     exit(1)
 

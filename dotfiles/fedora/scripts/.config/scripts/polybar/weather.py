@@ -10,13 +10,14 @@ Usage: weather.py
 """
 
 import requests
-import configparser
 import os
 
 # Openweather API Key
-cfg = configparser.ConfigParser()
-cfg.read(os.path.join(os.path.dirname(__file__), '../api_keys.cfg'))
-api_key = cfg.get('API_KEYS', 'openweather', raw='')
+api_key = os.environ.get('OPENWEATHER_API_KEY', '')
+
+if not api_key:
+    print("")
+    exit(1)
 
 # City/Town
 location = "Vancouver"
