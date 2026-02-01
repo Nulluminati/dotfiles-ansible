@@ -14,6 +14,7 @@ set -gx EDITOR nvim
 set -gx BROWSER firefox
 set -gx PAGER delta
 
+set -gx nvm_default_version latest
 
 set -U fish_greeting ""
 
@@ -30,5 +31,3 @@ function starship_transient_prompt_func
 end
 starship init fish | source
 enable_transience
-
-alias claude="/home/natekift/.claude/local/claude"
