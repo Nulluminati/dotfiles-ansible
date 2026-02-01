@@ -147,13 +147,12 @@
 
 # NPM Packages
 - name: Install npm packages
-  ansible.builtin.shell:
-    cmd: npm install -g {{ item }}
+  args:
+    executable: /usr/bin/fish
+  shell: npm install -g {{ item }}
   loop:
     - "gatsby-cli@5.11.0"
-    - "@google/gemini-cli"
     - "happy-coder"
-    - "@openai/codex"
     - "opencode-ai@latest"
     - "resume-cli@3.0.8"
 
