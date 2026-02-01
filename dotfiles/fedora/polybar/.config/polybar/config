@@ -205,3 +205,27 @@ type = custom/script
 interval = 600
 exec = python3 ~/.config/scripts/polybar/weather.py
 click-left = firefox --new-tab --url "https://www.theweathernetwork.com/ca/weather/british-columbia/north-vancouver"
+
+[module/synthetic-quota]
+type = custom/script
+exec = python3 ~/.config/scripts/polybar/synthetic-quota.py
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󰚩  "
+format-prefix-foreground = ${colors.color6}
+label-foreground = ${colors.foreground}
+label-font = 1
+click-left = firefox --new-tab --url "https://synthetic.new/dashboard"
+
+[module/zai-quota]
+type = custom/script
+exec = python3 ~/.config/scripts/polybar/zai-quota.py
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󱁼  "
+format-prefix-foreground = ${colors.color5}
+label-foreground = ${colors.foreground}
+label-font = 1
+click-left = firefox --new-tab --url "https://z.ai/manage-apikey/subscription"
