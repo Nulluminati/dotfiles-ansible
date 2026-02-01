@@ -1,3 +1,11 @@
+- model_id: zai/GLM-4.7-Flash
+  model_name: GLM-4.7-Flash
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
+- model_id: zai/GLM-4.7-FlashX
+  model_name: GLM-4.7-FlashX
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
 - model_id: zai/GLM-4.7
   model_name: GLM-4.7
   api_base: "https://api.z.ai/api/coding/paas/v4"
