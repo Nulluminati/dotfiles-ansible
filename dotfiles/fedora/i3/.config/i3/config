@@ -1,14 +1,21 @@
 set $mod Mod1
 
-set_from_resource $fg i3wm.color7 #f4dc98
-set_from_resource $bg i3wm.color3 #0A1837
+set_from_resource $fg i3wm.foreground #f4dc98
+set_from_resource $bg i3wm.background #0A1837
+set_from_resource $ac i3wm.color4 #BD93F9
 
 font pango:Hack Nerd Font 10
 
 # focused borders
 for_window [class="^.*"] border pixel 2
 smart_borders on
-client.focused           $bg   $bg   $fg   $bg   $bg
+# pywal colors - i3 will reload automatically when wal runs
+client.focused           $ac   $bg   $fg   $ac   $ac
+client.focused_inactive  $bg   $bg   $fg   $bg   $bg
+client.unfocused         $bg   $bg   $fg   $bg   $bg
+client.urgent            $bg   $bg   $fg   $bg   $bg
+client.placeholder       $bg   $bg   $fg   $bg   $bg
+client.background        $bg
 
 # use these keys for focus, movement, and resize directions
 set $left   h
@@ -222,6 +229,9 @@ bindsym $mod+Return exec --no-startup-id alacritty
 # rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+space exec --no-startup-id rofi -show drun
+
+# wal theme selector
+bindsym $mod+Shift+w exec --no-startup-id ~/.config/scripts/wal-select.sh
 
 # switching window with win+tab
 bindsym $mod+Tab exec --no-startup-id rofi -show window
