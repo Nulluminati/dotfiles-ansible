@@ -49,4 +49,4 @@
   undo = reset --soft HEAD
 [delta]
   features = side-by-side line-numbers decorations
-  syntax-theme = Dracula
+  syntax-theme = ansi-dark

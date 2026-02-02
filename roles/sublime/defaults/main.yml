@@ -11,7 +11,6 @@ sublime_packages:
   - name: "https://github.com/DamnWidget/anaconda.git"
   - name: "https://github.com/dzhibas/SublimePrettyJson.git"
   - name: "https://github.com/facelessuser/RawLineEdit.git"
-  - name: "https://github.com/facelessuser/sublime-dracula-scheme.git"
   - name: "https://github.com/jisaacks/GitGutter.git"
   - name: "https://github.com/p3lim/sublime-terrafmt.git"
   - name: "https://github.com/sublimelsp/LSP.git"
@@ -27,3 +26,7 @@ sublime_packages:
   - name: "https://github.com/TerminalFi/LSP-copilot.git"
   - name: "https://github.com/titoBouzout/SideBarEnhancements.git"
     version: "st3"
+ # Themes
+  - name: "https://github.com/facelessuser/sublime-dracula-scheme.git"
+  - name: "https://github.com/catppuccin/sublime-text.git"
+    version: "main"
