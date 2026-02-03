@@ -1,7 +1,6 @@
 ---
 name: python-uv
 description: Comprehensive guide for Python development with UV, the ultra-fast Python package installer and resolver. Use when working with Python projects, dependency management, virtual environments, or application development using UV.
-license: MIT
 metadata:
   version: "1.0"
   category: "python"
