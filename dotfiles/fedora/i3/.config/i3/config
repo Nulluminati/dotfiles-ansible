@@ -2,12 +2,12 @@ set $mod Mod1
 
 set_from_resource $fg i3wm.foreground #f4dc98
 set_from_resource $bg i3wm.background #0A1837
-set_from_resource $ac i3wm.color4 #BD93F9
+set_from_resource $ac i3wm.color7 #BD93F9
 
 font pango:Hack Nerd Font 10
 
 # focused borders
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 1
 smart_borders on
 # pywal colors - i3 will reload automatically when wal runs
 client.focused           $ac   $bg   $fg   $ac   $ac
@@ -190,7 +190,7 @@ assign [class="Spotify"]            → $ws7
 
 # i3-Gaps
 
-gaps inner 24
+gaps inner 16
 gaps outer 0
 
 gaps left 0
@@ -216,12 +216,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Polybar
 exec_always --no-startup-id sleep 1 && ~/.config/polybar/launch.sh
 
-# Disabled. Sets WAL randomly based on a background
-#exec_always --no-startup-id wal -i ~/Pictures/Wallpapers -o ~/.config/wal/after_wal.sh
-
 # Set WAL / Colorscheme / Background
-exec_always --no-startup-id wal --theme dracula -o ~/.config/wal/after_wal.sh
-exec_always --no-startup-id feh --bg-scale ~/.config/wal/wallpapers/dracula.png
+exec --no-startup-id wal --theme dracula -o ~/.config/wal/after_wal.sh
+exec --no-startup-id feh --bg-scale ~/.config/wal/wallpapers/dracula.png
 
 # start a terminal
 bindsym $mod+Return exec --no-startup-id alacritty
