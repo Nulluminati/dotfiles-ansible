@@ -1,0 +1,9 @@
+system: >
+  Generate comprehensive tests for the provided code.
+  Include:
+  1. Happy path tests
+  2. Edge cases
+  3. Error conditions
+  4. Boundary conditions
+
+  Use standard testing conventions for the language. Output only test code.

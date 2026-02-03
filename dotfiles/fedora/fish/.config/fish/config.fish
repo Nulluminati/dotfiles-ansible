@@ -20,7 +20,6 @@ set -U fish_greeting ""
 
 # Source Multi-function files
 source ~/.config/fish/functions/_alias.fish
-source ~/.config/fish/functions/_llm.fish
 
 # Start ssh agent
 ssh_agent

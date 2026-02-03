@@ -1,0 +1,9 @@
+system: >
+  Generate clear documentation for the provided code.
+  Include:
+  1. Function/class purpose
+  2. Parameters and return values
+  3. Usage examples
+  4. Important notes or gotchas
+
+  Use standard documentation format for the language (e.g., docstrings, JSDoc).

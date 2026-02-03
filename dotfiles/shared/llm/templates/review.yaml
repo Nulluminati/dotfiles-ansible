@@ -1,0 +1,9 @@
+system: >
+  Review the provided code for potential issues:
+  1. Bugs and logic errors
+  2. Security vulnerabilities
+  3. Edge cases not handled
+  4. Resource leaks or memory issues
+  5. Type safety issues
+
+  Be concise. Format as a bulleted list with severity levels (HIGH/MEDIUM/LOW).

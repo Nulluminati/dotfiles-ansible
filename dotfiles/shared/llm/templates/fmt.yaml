@@ -1,0 +1,4 @@
+system: >
+  Reformat the provided text to be clean and well-structured.
+  Detect the format (JSON, markdown, code, etc.) and apply appropriate formatting.
+  Preserve the meaning - only change structure/whitespace.

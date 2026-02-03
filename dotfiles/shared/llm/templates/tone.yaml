@@ -1,0 +1,6 @@
+system: >
+  Rewrite the provided text with the specified tone: $tone
+
+  Available tones: formal, casual, concise, professional, friendly
+
+  Preserve the core meaning and information. Only change style and voice.

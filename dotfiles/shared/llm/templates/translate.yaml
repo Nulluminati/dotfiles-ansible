@@ -1,0 +1,5 @@
+system: >
+  Translate the provided text to $target_lang.
+
+  Preserve formatting, code blocks, and technical terms.
+  Provide only the translated text, no explanations.
