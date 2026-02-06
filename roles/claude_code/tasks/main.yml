@@ -7,22 +7,41 @@
   changed_when: false
   failed_when: false
   check_mode: false
+  tags:
+    - install
+    - claude
 
 - name: Install Claude Code (native)
   ansible.builtin.shell:
     cmd: "curl -fsSL https://claude.ai/install.sh | bash"
   when: claude_check.rc != 0
+  tags:
+    - install
+    - claude
+
+- name: Install skills CLI via npx
+  ansible.builtin.shell:
+    cmd: "npm install -g skills"
+  register: skills_install
+  changed_when: true
+  tags: skills
 
 # MCP Servers
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + fedora_mcp_servers | default([]) }}"
   when: ansible_distribution == "Fedora"
+  tags:
+    - mcp
+    - config
 
 - name: Set mcp_server_list for macOS
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + mac_mcp_servers | default([]) }}"
   when: ansible_distribution == "MacOSX"
+  tags:
+    - mcp
+    - config
 
 - name: Check for configured MCP servers
   ansible.builtin.shell:
@@ -35,6 +54,9 @@
   changed_when: false
   failed_when: false
   check_mode: false
+  tags:
+    - mcp
+    - config
 
 - name: Add stdio MCP servers
   ansible.builtin.shell:
@@ -45,6 +67,9 @@
   when:
     - item.rc != 0
     - item.item.transport is not defined or item.item.transport == 'stdio'
+  tags:
+    - mcp
+    - config
 
 - name: Add sse/http MCP servers
   ansible.builtin.shell:
@@ -55,7 +80,6 @@
   when:
     - item.rc != 0
     - item.item.transport is defined and (item.item.transport == 'sse' or item.item.transport == 'http')
-
-
-
-
+  tags:
+    - mcp
+    - config

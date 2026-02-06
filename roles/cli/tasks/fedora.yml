@@ -5,6 +5,9 @@
     state: present
     key: "{{ item.gpg_url }}"
   loop: "{{ fedora_repositories }}"
+  tags:
+    - cli
+    - repos
 
 - name: Add repositories
   become: true
@@ -16,18 +19,27 @@
     gpgcheck: "{{ item.gpg_check | bool }}"
     enabled: yes
   loop: "{{ fedora_repositories }}"
+  tags:
+    - cli
+    - repos
 
 - name: Import RPM Fusion Free GPG key
   become: true
   rpm_key:
     state: present
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_distribution | lower }}-2020
+  tags:
+    - cli
+    - repos
 
 - name: Install RPM Fusion Free
   become: true
   dnf:
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm
     state: present
+  tags:
+    - cli
+    - repos
 
 - name: Add copr repositories
   become: yes
@@ -35,6 +47,9 @@
   args:
     creates: /etc/yum.repos.d/{{ item.creates }}
   loop: "{{ copr_repositories }}"
+  tags:
+    - cli
+    - repos
 
 - name: Install command line tools in Fedora
   become: true
@@ -45,6 +60,7 @@
       - bat
       - chromium
       - conky
+      - crush
       - docker-ce
       - docker-ce-cli
       - containerd.io
@@ -70,7 +86,7 @@
       - keepassxc
       - kubectl
       - neofetch
-      - neovim 
+      - neovim
       - picom
       - polybar
       - python3-pip
@@ -86,6 +102,9 @@
       - unzip
       - xclip
     state: present
+  tags:
+    - cli
+    - packages
 
 # Docker
 # Add user to docker group
@@ -95,6 +114,9 @@
     name: "{{ ansible_user_id }}"
     groups: docker
     append: yes
+  tags:
+    - cli
+    - docker
 
 # Fish Shell
 # Fisher - https://github.com/jorgebucaran/fisher
@@ -103,12 +125,18 @@
   args:
     creates: ~/.config/fish/functions/fisher.fish
     executable: fish
+  tags:
+    - cli
+    - fish
 
 - name: Set default shell to fish
   become: yes
   user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/fish
+  tags:
+    - cli
+    - fish
 
 - name: Install fish plugins
   shell: fisher install {{ item }}
@@ -119,6 +147,9 @@
     - jethrokuan/z
     - jorgebucaran/nvm.fish
     - PatrickF1/fzf.fish
+  tags:
+    - cli
+    - fish
 
 # NodeJS
 - name: Install node
@@ -128,16 +159,25 @@
   loop:
     - 18.16.0
     - latest
+  tags:
+    - cli
+    - nodejs
 
 # AWS CLI
 - name: Download AWS CLI
   get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
   register: aws_cli_download
+  tags:
+    - cli
+    - aws
 
 - name: Unarchive AWS CLI Installer
   unarchive: src=/tmp/awscliv2.zip dest=/tmp copy=no creates=/tmp/aws
   when: aws_cli_download.changed
   register: aws_cli_unarchive
+  tags:
+    - cli
+    - aws
 
 - name: Install AWS CLI
   become: yes
@@ -145,6 +185,9 @@
   args:
     creates: /usr/local/bin/aws
   when: aws_cli_unarchive.changed
+  tags:
+    - cli
+    - aws
 
 # NPM Packages
 - name: Install npm packages
@@ -156,6 +199,9 @@
     - "happy-coder"
     - "opencode-ai@latest"
     - "resume-cli@3.0.8"
+  tags:
+    - cli
+    - npm
 
 # Github CLI Extensions
 - name: Install gh extensions
@@ -165,6 +211,9 @@
   loop:
     - dlvhdr/gh-dash
     - github/gh-copilot
+  tags:
+    - cli
+    - gh
 
 # API Keys for polybar scripts
 - name: Set API keys as fish universal variables
@@ -174,3 +223,6 @@
     set -Ux ZAI_API_KEY {{ api_keys.zai }}
   args:
     executable: /usr/bin/fish
+  tags:
+    - cli
+    - api_keys

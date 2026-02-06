@@ -19,3 +19,4 @@ llm_plugins:
   - llm-hacker-news # https://github.com/simonw/llm-hacker-news
   - llm-tools-simpleeval # https://github.com/simonw/llm-tools-simpleeval
   - llm-fragments-youtube # https://github.com/redraw/llm-fragments-youtube
+  - llm-github-copilot # https://github.com/jmdaly/llm-github-copilot
