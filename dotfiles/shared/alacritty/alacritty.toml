@@ -51,6 +51,11 @@ action = "SpawnNewInstance"
 key = "N"
 mods = "Control"
 
+[[keyboard.bindings]]
+chars = "\x1b\r"
+key = "Return"
+mods = "Shift"
+
 [mouse]
 hide_when_typing = false
 
