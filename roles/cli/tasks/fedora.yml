@@ -60,7 +60,6 @@
       - bat
       - chromium
       - conky
-      - crush
       - docker-ce
       - docker-ce-cli
       - containerd.io
@@ -202,6 +201,23 @@
   tags:
     - cli
     - npm
+
+# Bun
+- name: Install bun
+  ansible.builtin.shell:
+    cmd: "curl -fsSL https://bun.sh/install | bash"
+    creates: "~/.bun/bin/bun"
+  tags:
+    - cli
+    - bun
+
+- name: Install crush via bun
+  ansible.builtin.shell:
+    cmd: "~/.bun/bin/bun install -g @charmland/crush"
+    creates: "~/.bun/bin/crush"
+  tags:
+    - cli
+    - bun
 
 # Github CLI Extensions
 - name: Install gh extensions
