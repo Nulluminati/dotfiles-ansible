@@ -47,9 +47,6 @@ secrets.yml
 /.claude/settings.local.json
 CLAUDE.local.md
 
-# memory-bank directory
-/memory-bank/
-
 # Node
 package-lock.json
 

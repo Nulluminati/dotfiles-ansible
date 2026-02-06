@@ -16,3 +16,12 @@ desktop.ini
 .iml
 *.sublime-workspace
 .aider*
+
+# Serena MCP #
+##############
+.serena/
+
+# Claude Code local overrides #
+###############################
+/.claude/settings.local.json
+CLAUDE.local.md
