@@ -6,7 +6,6 @@
     key: "{{ item.gpg_url }}"
   loop: "{{ fedora_repositories }}"
   tags:
-    - cli
     - repos
 
 - name: Add repositories
@@ -20,7 +19,6 @@
     enabled: yes
   loop: "{{ fedora_repositories }}"
   tags:
-    - cli
     - repos
 
 - name: Import RPM Fusion Free GPG key
@@ -29,7 +27,6 @@
     state: present
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_distribution | lower }}-2020
   tags:
-    - cli
     - repos
 
 - name: Install RPM Fusion Free
@@ -38,7 +35,6 @@
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm
     state: present
   tags:
-    - cli
     - repos
 
 - name: Add copr repositories
@@ -48,7 +44,6 @@
     creates: /etc/yum.repos.d/{{ item.creates }}
   loop: "{{ copr_repositories }}"
   tags:
-    - cli
     - repos
 
 - name: Install command line tools in Fedora
@@ -102,7 +97,6 @@
       - xclip
     state: present
   tags:
-    - cli
     - packages
 
 # Docker
@@ -114,7 +108,6 @@
     groups: docker
     append: yes
   tags:
-    - cli
     - docker
 
 # Fish Shell
@@ -125,7 +118,6 @@
     creates: ~/.config/fish/functions/fisher.fish
     executable: fish
   tags:
-    - cli
     - fish
 
 - name: Set default shell to fish
@@ -134,7 +126,6 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/fish
   tags:
-    - cli
     - fish
 
 - name: Install fish plugins
@@ -147,19 +138,22 @@
     - jorgebucaran/nvm.fish
     - PatrickF1/fzf.fish
   tags:
-    - cli
     - fish
 
 # NodeJS
 - name: Install node
-  shell: nvm install {{ item }}
+  shell: |
+    if not nvm list | grep -q {{ item }}
+      nvm install {{ item }}
+    end
   args:
     executable: /usr/bin/fish
   loop:
     - 18.16.0
     - latest
+  register: nvm_install_result
+  changed_when: "'installed' in nvm_install_result.stdout or 'now' in nvm_install_result.stdout"
   tags:
-    - cli
     - nodejs
 
 # AWS CLI
@@ -167,7 +161,6 @@
   get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
   register: aws_cli_download
   tags:
-    - cli
     - aws
 
 - name: Unarchive AWS CLI Installer
@@ -175,7 +168,6 @@
   when: aws_cli_download.changed
   register: aws_cli_unarchive
   tags:
-    - cli
     - aws
 
 - name: Install AWS CLI
@@ -185,21 +177,26 @@
     creates: /usr/local/bin/aws
   when: aws_cli_unarchive.changed
   tags:
-    - cli
     - aws
 
 # NPM Packages
 - name: Install npm packages
+  shell: |
+    set pkg (echo {{ item }} | sed 's/@\\d+\\.\\d+\\.\\d+$//' | sed 's/@latest$//')
+    if ! npm list -g $pkg >/dev/null 2>&1
+      npm install -g {{ item }}
+    end
   args:
     executable: /usr/bin/fish
-  shell: npm install -g {{ item }}
   loop:
     - "gatsby-cli@5.11.0"
     - "happy-coder"
     - "opencode-ai@latest"
+    - "@openai/codex@latest"
     - "resume-cli@3.0.8"
+  register: npm_install_result
+  changed_when: "'installed' in npm_install_result.stdout or 'added' in npm_install_result.stdout or 'updated' in npm_install_result.stdout"
   tags:
-    - cli
     - npm
 
 # Bun
@@ -208,15 +205,16 @@
     cmd: "curl -fsSL https://bun.sh/install | bash"
     creates: "~/.bun/bin/bun"
   tags:
-    - cli
     - bun
 
-- name: Install crush via bun
+- name: Install bun packages
   ansible.builtin.shell:
-    cmd: "~/.bun/bin/bun install -g @charmland/crush"
-    creates: "~/.bun/bin/crush"
+    cmd: "~/.bun/bin/bun install -g {{ item }}"
+    creates: "~/.bun/bin/{{ item.split('/')[-1] | replace('@', '') }}"
+  loop:
+    - "@charmland/crush"
+    - "ralph-tui"
   tags:
-    - cli
     - bun
 
 # Github CLI Extensions
@@ -228,7 +226,6 @@
     - dlvhdr/gh-dash
     - github/gh-copilot
   tags:
-    - cli
     - gh
 
 # API Keys for polybar scripts
@@ -240,5 +237,4 @@
   args:
     executable: /usr/bin/fish
   tags:
-    - cli
     - api_keys
