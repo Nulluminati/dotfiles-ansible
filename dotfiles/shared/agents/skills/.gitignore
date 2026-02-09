@@ -1,0 +1,9 @@
+# Ignore skills installed via the skills CLI (from .skill-lock.json)
+skill-creator/
+mermaid-diagrams/
+humanizer/
+uv-package-manager/
+ralph-tui-create-beads-rust/
+ralph-tui-create-beads/
+ralph-tui-create-json/
+ralph-tui-prd/
