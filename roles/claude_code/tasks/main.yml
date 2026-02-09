@@ -26,6 +26,22 @@
   changed_when: true
   tags: skills
 
+# Skills
+- name: Install skills globally
+  ansible.builtin.shell:
+    cmd: "skills add {{ item }} -g -y"
+  loop:
+    - "anthropics/skills@skill-creator"
+    - "softaworks/agent-toolkit@mermaid-diagrams"
+    - "softaworks/agent-toolkit@humanizer"
+    - "wshobson/agents@uv-package-manager"
+    - "subsy/ralph-tui@ralph-tui-create-beads-rust"
+    - "subsy/ralph-tui@ralph-tui-create-beads"
+    - "subsy/ralph-tui@ralph-tui-create-json"
+    - "subsy/ralph-tui@ralph-tui-prd"
+  tags:
+    - skills
+
 # MCP Servers
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:
