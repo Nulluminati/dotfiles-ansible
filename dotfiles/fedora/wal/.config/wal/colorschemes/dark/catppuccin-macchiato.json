@@ -7,10 +7,10 @@
   "colors": {
     "color0": "#24273a", 
     "color1": "#ed8796",  
-    "color2": "#c6a0f6", 
+    "color2": "#a6da95", 
     "color3": "#eed49f", 
     "color4": "#8aadf4", 
-    "color5": "#ed8796", 
+    "color5": "#c6a0f6", 
     "color6": "#94e2d5",
     "color7": "#cad3f5", 
     "color8": "#6e738d", 
@@ -20,6 +20,6 @@
     "color12": "#8aadf4", 
     "color13": "#c6a0f6", 
     "color14": "#8bd5ca", 
-    "color15": "#a5adcb" 
+    "color15": "#cad3f5" 
   }
 }

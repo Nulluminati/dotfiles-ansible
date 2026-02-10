@@ -92,7 +92,7 @@ done < "$PRESETS_FILE"
 
 # Build rofi input with icon syntax using temp file (command substitution strips null bytes)
 TEMP_ROFI=$(mktemp)
-for name in "${!WALLPAPERS[@]}"; do
+printf '%s\n' "${!WALLPAPERS[@]}" | sort | while IFS= read -r name; do
     printf "%s\0icon\x1f%s\n" "$name" "${THUMBNAILS[$name]}" >> "$TEMP_ROFI"
 done
 
@@ -123,7 +123,7 @@ fi
 # Apply the preset (feh for wallpaper, wal for theme colors)
 # Use -n to skip wal's wallpaper setting, then use feh directly
 wal -n --theme "$theme" -o ~/.config/wal/after_wal.sh
-feh --bg-scale "$wallpaper"
+feh --bg-fill "$wallpaper"
 
 # Optional: Notify user
 if command -v notify-send &>/dev/null; then
