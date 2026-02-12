@@ -4,6 +4,10 @@
 # Displays: model, context window %, tokens, git info
 #
 
+# Prevent git from taking optional locks that refresh the index.
+# This script runs frequently and should never write to the repo.
+export GIT_OPTIONAL_LOCKS=0
+
 # Read JSON input from stdin
 input=$(cat)
 
