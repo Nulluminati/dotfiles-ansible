@@ -17,10 +17,10 @@ function synth --description "Run AI CLI tools with Synthetic.new Models"
     # Execute with Synthetic.new environment variables
     ANTHROPIC_BASE_URL=https://api.synthetic.new/anthropic \
     ANTHROPIC_AUTH_TOKEN="$SYNTHETIC_API_KEY" \
-    ANTHROPIC_DEFAULT_OPUS_MODEL=hf:moonshotai/Kimi-K2.5 \
-    ANTHROPIC_DEFAULT_SONNET_MODEL=hf:moonshotai/Kimi-K2.5 \
+    ANTHROPIC_DEFAULT_OPUS_MODEL=hf:nvidia/Kimi-K2.5-NVFP4 \
+    ANTHROPIC_DEFAULT_SONNET_MODEL=hf:nvidia/Kimi-K2.5-NVFP4 \
     ANTHROPIC_DEFAULT_HAIKU_MODEL=hf:MiniMaxAI/MiniMax-M2.1 \
-    CLAUDE_CODE_SUBAGENT_MODEL=hf:moonshotai/Kimi-K2.5 \
+    CLAUDE_CODE_SUBAGENT_MODEL=hf:nvidia/Kimi-K2.5-NVFP4 \
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
     command $cmd $args
 end

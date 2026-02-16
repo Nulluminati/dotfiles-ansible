@@ -31,10 +31,10 @@ function happy --description "Happy Coder CLI with provider selection"
             set provider_args \
                 --claude-env "ANTHROPIC_BASE_URL=https://api.synthetic.new/anthropic" \
                 --claude-env "ANTHROPIC_AUTH_TOKEN=$SYNTHETIC_API_KEY" \
-                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=hf:moonshotai/Kimi-K2.5" \
-                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=hf:moonshotai/Kimi-K2.5" \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
+                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
                 --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=hf:MiniMaxAI/MiniMax-M2.1" \
-                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=hf:moonshotai/Kimi-K2.5" \
+                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
                 --claude-env "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1"
 
         case claude ""
