@@ -9,5 +9,6 @@ packages:
 
 fedora_packages:
   - pywal                                 # https://github.com/dylanaraps/pywal
+  - "maestral[gui]"                       # https://maestral.app/ - Dropbox client
 
 mac_packages: []

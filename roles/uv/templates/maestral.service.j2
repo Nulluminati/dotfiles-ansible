@@ -1,0 +1,16 @@
+[Unit]
+Description=Maestral Dropbox daemon
+Documentation=https://maestral.app/docs
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+NotifyAccess=exec
+ExecStart=%h/.local/bin/maestral start --foreground
+ExecStop=%h/.local/bin/maestral stop
+ExecStopPost=-/bin/sh -c 'if command -v notify-send >/dev/null 2>&1 && [ -n "$DBUS_SESSION_BUS_ADDRESS" ]; then notify-send -i dropbox -u normal "Maestral" "Dropbox sync stopped"; fi'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
