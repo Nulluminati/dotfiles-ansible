@@ -179,26 +179,6 @@
   tags:
     - aws
 
-# NPM Packages
-- name: Install npm packages
-  shell: |
-    set pkg (echo {{ item }} | sed 's/@\\d+\\.\\d+\\.\\d+$//' | sed 's/@latest$//')
-    if ! npm list -g $pkg >/dev/null 2>&1
-      npm install -g {{ item }}
-    end
-  args:
-    executable: /usr/bin/fish
-  loop:
-    - "gatsby-cli@5.11.0"
-    - "happy-coder"
-    - "opencode-ai@latest"
-    - "@openai/codex@latest"
-    - "resume-cli@3.0.8"
-  register: npm_install_result
-  changed_when: "'installed' in npm_install_result.stdout or 'added' in npm_install_result.stdout or 'updated' in npm_install_result.stdout"
-  tags:
-    - npm
-
 # Bun
 - name: Install bun
   ansible.builtin.shell:
@@ -212,8 +192,12 @@
     cmd: "~/.bun/bin/bun install -g {{ item }}"
     creates: "~/.bun/bin/{{ item.split('/')[-1] | replace('@', '') }}"
   loop:
-    - "@charmland/crush"
     - "ralph-tui"
+    - "gatsby-cli@5.11.0"
+    - "happy-coder"
+    - "opencode-ai@latest"
+    - "@openai/codex@latest"
+    - "resume-cli@3.0.8"
   tags:
     - bun
 

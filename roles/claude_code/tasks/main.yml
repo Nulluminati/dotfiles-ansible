@@ -19,11 +19,10 @@
     - install
     - claude
 
-- name: Install skills CLI via npx
+- name: Install skills CLI via bun
   ansible.builtin.shell:
-    cmd: "npm install -g skills"
-  register: skills_install
-  changed_when: true
+    cmd: "~/.bun/bin/bun install -g skills"
+    creates: "~/.bun/bin/skills"
   tags: skills
 
 # Skills
