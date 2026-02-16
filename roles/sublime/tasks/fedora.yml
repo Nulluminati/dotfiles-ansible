@@ -7,6 +7,8 @@
     state: present
     key: "{{ item.gpg_url }}"
   loop: "{{ fedora_repositories }}"
+  tags:
+    - repos
 
 - name: Add repositories
   become: true
@@ -18,13 +20,17 @@
     gpgcheck: "{{ item.gpg_check | bool }}"
     enabled: yes
   loop: "{{ fedora_repositories }}"
+  tags:
+    - repos
 
-- name: Install command line tools in Fedora
+- name: Install Sublime Text in Fedora
   become: true
   dnf:
     name:
       - sublime-text
     state: present
+  tags:
+    - packages
 
 # Create Directoris
 
@@ -32,31 +38,46 @@
   stat:
     path: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages"
   register: check_sublime_installed_packages_dir
+  tags:
+    - sublime
+    - config
 
 - name: Create Sublime installed package directory
   file:
     path: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages"
     state: directory
   when: check_sublime_installed_packages_dir.stat.exists == False
+  tags:
+    - sublime
+    - config
 
 - name: Check Sublime package directory
   stat:
     path: "{{ ansible_env.HOME }}/.config/sublime-text/Packages"
   register: check_sublime_packages_dir
+  tags:
+    - sublime
+    - config
 
 - name: Create Sublime Package directory
   file:
     path: "{{ ansible_env.HOME }}/.config/sublime-text/Packages"
     state: directory
   when: check_sublime_packages_dir.stat.exists == False
+  tags:
+    - sublime
+    - config
 
 
 # Install Package Control
 
 - name: Install package control for Sublime
-  get_url: 
+  get_url:
     url: "https://packagecontrol.io/Package%20Control.sublime-package"
     dest: "{{ ansible_env.HOME }}/.config/sublime-text/Installed Packages/Package Control.sublime-package"
+  tags:
+    - sublime
+    - packagecontrol
 
 # Install Packages
 
@@ -67,3 +88,6 @@
     dest: "{{ ansible_env.HOME }}/.config/sublime-text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
     accept_hostkey: "yes"
   with_items: "{{ sublime_packages }}"
+  tags:
+    - sublime
+    - plugins

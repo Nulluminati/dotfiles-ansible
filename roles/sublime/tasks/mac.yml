@@ -7,31 +7,46 @@
   stat:
     path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
   register: check_sublime_installed_packages_dir
+  tags:
+    - sublime
+    - config
 
 - name: Create Sublime installed package directory
   file:
     path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
     state: directory
   when: check_sublime_installed_packages_dir.stat.exists == False
+  tags:
+    - sublime
+    - config
 
 - name: Check Sublime package directory
   stat:
     path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages"
   register: check_sublime_packages_dir
+  tags:
+    - sublime
+    - config
 
 - name: Create Sublime Package directory
   file:
     path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages"
     state: directory
   when: check_sublime_packages_dir.stat.exists == False
+  tags:
+    - sublime
+    - config
 
 
 # Install Package Control
 
 - name: Install package control for Sublime
-  get_url: 
+  get_url:
     url: "https://packagecontrol.io/Package%20Control.sublime-package"
     dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages/Package Control.sublime-package"
+  tags:
+    - sublime
+    - packagecontrol
 
 # Install Packages
 
@@ -42,3 +57,6 @@
     dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
     accept_hostkey: "yes"
   with_items: "{{ sublime_packages }}"
+  tags:
+    - sublime
+    - plugins

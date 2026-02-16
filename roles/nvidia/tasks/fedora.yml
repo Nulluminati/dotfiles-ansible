@@ -8,13 +8,22 @@
   template:
     src: templates/nvidialicensecheck.service.j2
     dest: /lib/systemd/system/nvidialicensecheck.service
+  tags:
+    - nvidia
+    - systemd
 
 - name: Reload the system configureation (registers new unit)
   become: true
   shell: systemctl daemon-reload
+  tags:
+    - nvidia
+    - systemd
 
 - name: Enable nvidialicensecheck service
   become: true
   systemd:
     name: nvidialicensecheck
     enabled: true
+  tags:
+    - nvidia
+    - systemd

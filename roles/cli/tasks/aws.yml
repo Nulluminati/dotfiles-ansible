@@ -1,0 +1,22 @@
+---
+- name: Download AWS CLI
+  get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
+  register: aws_cli_download
+  tags:
+    - aws
+
+- name: Unarchive AWS CLI Installer
+  unarchive: src=/tmp/awscliv2.zip dest=/tmp copy=no creates=/tmp/aws
+  when: aws_cli_download.changed
+  register: aws_cli_unarchive
+  tags:
+    - aws
+
+- name: Install AWS CLI
+  become: yes
+  shell: /tmp/aws/install --update
+  args:
+    creates: /usr/local/bin/aws
+  when: aws_cli_unarchive.changed
+  tags:
+    - aws

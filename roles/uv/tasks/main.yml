@@ -39,3 +39,6 @@
 - name: Setup maestral
   import_tasks: maestral.yml
   when: ansible_distribution == "Fedora"
+  tags:
+    - maestral
+    - dropbox

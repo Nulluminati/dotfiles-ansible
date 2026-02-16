@@ -17,23 +17,38 @@
       debug:
         msg: uv is not installed
       ignore_errors: true
+  tags:
+    - llm
+    - uv
 
 - name: Install llm and additional tools with uv
   shell: uv tool install {{ item }}
   loop: "{{ uv_packages }}"
+  tags:
+    - llm
+    - uv
 
 - name: Install additional llm models & plugins
   shell: llm install -U {{ item }}
   loop: "{{ llm_plugins }}"
+  tags:
+    - llm
+    - plugins
 
 - name: Set llm api keys for fedora
   when: ansible_distribution == "Fedora"
   template:
     src: templates/llm_keys.json.j2
     dest: "{{ ansible_env.HOME }}/.config/io.datasette.llm/keys.json"
+  tags:
+    - llm
+    - config
 
 - name: Set llm api keys for mac
   when: ansible_distribution == "MacOSX"
   template:
     src: templates/llm_keys.json.j2
     dest: "{{ ansible_env.HOME }}/Library/Application Support/io.datasette.llm/keys.json"
+  tags:
+    - llm
+    - config

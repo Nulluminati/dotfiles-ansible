@@ -1,4 +1,15 @@
 ---
+# Claude Code skills to install globally
+claude_code_skills:
+  - "anthropics/skills@skill-creator"
+  - "softaworks/agent-toolkit@mermaid-diagrams"
+  - "softaworks/agent-toolkit@humanizer"
+  - "wshobson/agents@uv-package-manager"
+  - "subsy/ralph-tui@ralph-tui-create-beads-rust"
+  - "subsy/ralph-tui@ralph-tui-create-beads"
+  - "subsy/ralph-tui@ralph-tui-create-json"
+  - "subsy/ralph-tui@ralph-tui-prd"
+
 mcp_servers:
   - name: brave-search
     command: "npx -y @modelcontextprotocol/server-brave-search"

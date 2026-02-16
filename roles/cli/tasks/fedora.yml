@@ -49,52 +49,7 @@
 - name: Install command line tools in Fedora
   become: true
   dnf:
-    name:
-      - alacritty
-      - autorandr
-      - bat
-      - chromium
-      - conky
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-      - dunst
-      - eza
-      - fd-find
-      - feh
-      - firefox
-      - fish
-      - fzf
-      - gh
-      - git-delta
-      - ghostty
-      - golang
-      - golang-x-tools-gopls
-      - helm
-      - htop
-      - i3
-      - ImageMagick
-      - jq
-      - keepassxc
-      - kubectl
-      - neofetch
-      - neovim
-      - picom
-      - polybar
-      - python3-pip
-      - ripgrep
-      - rofi
-      - rust
-      - rustfmt
-      - starship
-      - sublime-text
-      - terraform
-      - tig
-      - tmux
-      - unzip
-      - xclip
+    name: "{{ cli_dnf_packages }}"
     state: present
   tags:
     - packages
@@ -132,11 +87,7 @@
   shell: fisher install {{ item }}
   args:
     executable: /usr/bin/fish
-  loop:
-    - gazorby/fish-abbreviation-tips
-    - jethrokuan/z
-    - jorgebucaran/nvm.fish
-    - PatrickF1/fzf.fish
+  loop: "{{ fish_plugins }}"
   tags:
     - fish
 
@@ -148,36 +99,15 @@
     end
   args:
     executable: /usr/bin/fish
-  loop:
-    - 18.16.0
-    - latest
+  loop: "{{ node_versions }}"
   register: nvm_install_result
   changed_when: "'installed' in nvm_install_result.stdout or 'now' in nvm_install_result.stdout"
   tags:
     - nodejs
 
 # AWS CLI
-- name: Download AWS CLI
-  get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscliv2.zip
-  register: aws_cli_download
-  tags:
-    - aws
-
-- name: Unarchive AWS CLI Installer
-  unarchive: src=/tmp/awscliv2.zip dest=/tmp copy=no creates=/tmp/aws
-  when: aws_cli_download.changed
-  register: aws_cli_unarchive
-  tags:
-    - aws
-
 - name: Install AWS CLI
-  become: yes
-  shell: /tmp/aws/install --update
-  args:
-    creates: /usr/local/bin/aws
-  when: aws_cli_unarchive.changed
-  tags:
-    - aws
+  import_tasks: aws.yml
 
 # Bun
 - name: Install bun
@@ -191,13 +121,7 @@
   ansible.builtin.shell:
     cmd: "~/.bun/bin/bun install -g {{ item }}"
     creates: "~/.bun/bin/{{ item.split('/')[-1] | replace('@', '') }}"
-  loop:
-    - "ralph-tui"
-    - "gatsby-cli@5.11.0"
-    - "happy-coder"
-    - "opencode-ai@latest"
-    - "@openai/codex@latest"
-    - "resume-cli@3.0.8"
+  loop: "{{ bun_packages }}"
   tags:
     - bun
 
@@ -206,9 +130,7 @@
   shell: gh extension install {{ item }}
   args:
     executable: /usr/bin/fish
-  loop:
-    - dlvhdr/gh-dash
-    - github/gh-copilot
+  loop: "{{ gh_extensions }}"
   tags:
     - gh
 

@@ -1,4 +1,78 @@
 ---
+# DNF packages to install
+cli_dnf_packages:
+  - alacritty
+  - autorandr
+  - bat
+  - chromium
+  - conky
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+  - dunst
+  - eza
+  - fd-find
+  - feh
+  - firefox
+  - fish
+  - fzf
+  - gh
+  - git-delta
+  - ghostty
+  - golang
+  - golang-x-tools-gopls
+  - helm
+  - htop
+  - i3
+  - ImageMagick
+  - jq
+  - keepassxc
+  - kubectl
+  - neofetch
+  - neovim
+  - picom
+  - polybar
+  - python3-pip
+  - ripgrep
+  - rofi
+  - rust
+  - rustfmt
+  - starship
+  - sublime-text
+  - terraform
+  - tig
+  - tmux
+  - unzip
+  - xclip
+
+# Fish plugins to install via fisher
+fish_plugins:
+  - gazorby/fish-abbreviation-tips
+  - jethrokuan/z
+  - jorgebucaran/nvm.fish
+  - PatrickF1/fzf.fish
+
+# Node.js versions to install via nvm.fish
+node_versions:
+  - 18.16.0
+  - latest
+
+# Bun packages to install globally
+bun_packages:
+  - ralph-tui
+  - gatsby-cli@5.11.0
+  - happy-coder
+  - opencode-ai@latest
+  - "@openai/codex@latest"
+  - resume-cli@3.0.8
+
+# GitHub CLI extensions to install
+gh_extensions:
+  - dlvhdr/gh-dash
+  - github/gh-copilot
+
 fedora_repositories:
   - name: docker-ce-stable
     description: Docker CE Stable - $basearch

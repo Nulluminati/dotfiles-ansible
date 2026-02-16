@@ -5,6 +5,8 @@
     name:
       - stow
     state: present
+  tags:
+    - packages
 
 - name: Build directories list
   ansible.builtin.find:
@@ -12,6 +14,9 @@
     recurse: no
     file_type: directory
   register: files
+  tags:
+    - stow
+    - dotfiles
 
 - name: Deploy dotfiles
   with_items: '{{ files.files }}'
@@ -21,3 +26,6 @@
     stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
   register: output
   changed_when: '"LINK" in output.stderr'
+  tags:
+    - stow
+    - dotfiles

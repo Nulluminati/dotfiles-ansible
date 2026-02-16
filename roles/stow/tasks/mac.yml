@@ -7,11 +7,17 @@
       changed_when: false
       failed_when: which_res.rc > 0
       register: which_res
+  tags:
+    - stow
+    - homebrew
 
 - name: Install Stow in Mac
   ansible.builtin.homebrew:
     name: stow
     state: present
+  tags:
+    - packages
+    - homebrew
 
 - name: Build directories list
   ansible.builtin.find:
@@ -19,6 +25,9 @@
     recurse: no
     file_type: directory
   register: files
+  tags:
+    - stow
+    - dotfiles
 
 - name: Deploy dotfiles
   with_items: '{{ files.files }}'
@@ -28,3 +37,6 @@
     stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
   register: output
   changed_when: '"LINK" in output.stderr'
+  tags:
+    - stow
+    - dotfiles

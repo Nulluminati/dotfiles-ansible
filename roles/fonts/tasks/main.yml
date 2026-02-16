@@ -4,3 +4,5 @@
   loop: "{{ fonts }}"
   loop_control:
     loop_var: font
+  tags:
+    - fonts
