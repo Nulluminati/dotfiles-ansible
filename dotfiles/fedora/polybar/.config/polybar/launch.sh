@@ -11,4 +11,5 @@ end
 for m in (polybar --list-monitors | cut -d":" -f1)
     set -x MONITOR $m
     polybar --reload top -r &
+    polybar --reload bottom -r &
 end

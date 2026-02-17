@@ -1,5 +1,6 @@
 include-file = ~/.config/polybar/colors.conf
 include-file = ~/.config/polybar/top.conf
+include-file = ~/.config/polybar/bottom.conf
 
 [module/i3]
 type = internal/i3
@@ -55,7 +56,7 @@ format-prefix-font = 3
 format-prefix = "﬙ "
 format-prefix-foreground = ${colors.color4}
 label-foreground = ${colors.foreground}
-label-font = 1
+label-font = 2
 label = " %percentage:2:2%%"
 
 [module/gpu-util]
@@ -67,7 +68,7 @@ format-prefix-font = 1
 format-prefix = "  "
 format-prefix-foreground = ${colors.color1}
 label-foreground = ${colors.foreground}
-label-font = 1
+label-font = 2
 label-spacing = 3
 
 [module/date]
@@ -95,7 +96,7 @@ format-mounted-prefix-font = 3
 format-mounted-prefix = "  "
 format-mounted-prefix-foreground = ${colors.color2}
 label-mounted = " %free%"
-label-mounted-font = 1
+label-mounted-font = 2
 label-mounted-foreground = ${colors.foreground}
 
 
@@ -108,6 +109,7 @@ format-prefix-foreground = ${colors.color3}
 format-prefix-font = 3
 label = " %mb_used%"
 label-foreground = ${colors.foreground}
+label-font = 2
 
 
 [module/network]
@@ -122,10 +124,10 @@ format-disconnected-prefix = "⚠ "
 format-disconnected-prefix-font = 3
 format-disconnected-prefix-foreground = ${colors.alert}
 label-connected = %downspeed:8:8%
-label-connected-font = 1
+label-connected-font = 2
 label-connected-foreground = ${colors.foreground}
 label-disconnected = Disconnected
-label-disconnected-font = 1
+label-disconnected-font = 2
 label-disconnected-foreground = ${colors.foreground}
 ramp-signal-0 = 說
 ramp-signal-1 = 說
@@ -204,13 +206,13 @@ label-font = 2
 [module/weather]
 type = custom/script
 interval = 600
-exec = python3 ~/.config/scripts/polybar/weather.py
+exec = uv run ~/.config/scripts/polybar/weather.py 2>/dev/null
 click-left = firefox --new-tab --url "https://www.theweathernetwork.com/ca/weather/british-columbia/north-vancouver"
 label-font = 2
 
 [module/synthetic-quota]
 type = custom/script
-exec = python3 ~/.config/scripts/polybar/synthetic-quota.py
+exec = uv run ~/.config/scripts/polybar/synthetic-quota.py 2>/dev/null
 interval = 300
 format = <label>
 format-prefix-font = 3
@@ -222,7 +224,7 @@ click-left = firefox --new-tab --url "https://synthetic.new/dashboard"
 
 [module/zai-quota]
 type = custom/script
-exec = python3 ~/.config/scripts/polybar/zai-quota.py
+exec = uv run ~/.config/scripts/polybar/zai-quota.py 2>/dev/null
 interval = 300
 format = <label>
 format-prefix-font = 3
@@ -231,3 +233,40 @@ format-prefix-foreground = ${colors.color5}
 label-foreground = ${colors.foreground}
 label-font = 2
 click-left = firefox --new-tab --url "https://z.ai/manage-apikey/subscription"
+
+[module/openrouter-balance]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/openrouter-balance.py 2>/dev/null
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󰮄  "
+format-prefix-foreground = ${colors.color4}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://openrouter.ai/keys"
+
+[module/copilot-quota]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/copilot-quota.py 2>/dev/null
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󰊤  "
+format-prefix-foreground = ${colors.color3}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://github.com/copilot"
+
+[module/claude-credits]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/claude-credits.py 2>/dev/null
+interval = 600
+format = <label>
+format-prefix-font = 3
+format-prefix = "  "
+format-prefix-foreground = ${colors.color6}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-right = ~/.config/scripts/polybar/claude-credits-setup.sh
+click-left = firefox --new-tab --url "https://platform.claude.com/settings/billing"
