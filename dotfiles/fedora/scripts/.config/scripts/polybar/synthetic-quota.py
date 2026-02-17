@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = ["requests"]
+# ///
+
 """\
 synthetic-quota.py
 
@@ -10,6 +14,7 @@ Usage: synthetic-quota.py
 
 import requests
 import os
+import sys
 from datetime import datetime, timezone
 
 
@@ -43,7 +48,7 @@ api_key = os.environ.get('SYNTHETIC_API_KEY', '')
 
 if not api_key:
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)
 
 # Get quota data from synthetic.new API
 try:
@@ -53,7 +58,7 @@ try:
     data = response.json()
 except Exception:
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)
 
 # Extract subscription data
 try:
@@ -64,7 +69,7 @@ try:
 
     if limit == 0:
         print("%{F#dc322f}?%{F-}")
-        exit(1)
+        sys.exit(1)
 
     # Calculate percentage remaining
     remaining = limit - requests_used
@@ -89,4 +94,4 @@ try:
 
 except (KeyError, TypeError, ZeroDivisionError):
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)

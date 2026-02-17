@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = ["requests"]
+# ///
+
 """\
 zai-quota.py
 
@@ -10,6 +14,7 @@ Usage: zai-quota.py
 
 import requests
 import os
+import sys
 from datetime import datetime, timezone
 
 
@@ -44,7 +49,7 @@ api_key = os.environ.get('ZAI_API_KEY', '')
 
 if not api_key:
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)
 
 # Get quota data from zai API
 try:
@@ -58,7 +63,7 @@ try:
     data = response.json()
 except Exception:
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)
 
 # Extract quota data
 try:
@@ -73,7 +78,7 @@ try:
 
     if tokens_limit is None:
         print("%{F#dc322f}?%{F-}")
-        exit(1)
+        sys.exit(1)
 
     # Get percentage (0-100, where 100 means fully used)
     percentage_used = tokens_limit.get("percentage", 0)
@@ -90,7 +95,7 @@ try:
     # Get time to next reset from API response
     next_reset_ms = tokens_limit.get("nextResetTime")
     minutes_to_reset = get_time_to_reset(next_reset_ms)
-    time_remaining = format_time_remaining(minutes_to_reset) if minutes_to_reset is not None else ""
+    time_remaining = format_time_remaining(minutes_to_reset) if minutes_to_reset is not None else "5h 0m"
 
     # Output formatted percentage with polybar color tags
     if time_remaining:
@@ -100,4 +105,4 @@ try:
 
 except (KeyError, TypeError):
     print("%{F#dc322f}?%{F-}")
-    exit(1)
+    sys.exit(1)

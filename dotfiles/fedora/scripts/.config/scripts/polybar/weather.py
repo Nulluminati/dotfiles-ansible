@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = ["requests"]
+# ///
+
 """\
 weather.py 2023 Nulluminati (https://github.com/Nulluminati)
 
@@ -11,13 +15,14 @@ Usage: weather.py
 
 import requests
 import os
+import sys
 
 # Openweather API Key
 api_key = os.environ.get('OPENWEATHER_API_KEY', '')
 
 if not api_key:
     print("")
-    exit(1)
+    sys.exit(1)
 
 # City/Town
 location = "Vancouver"
@@ -53,11 +58,11 @@ try:
     weather_data = weather_request.json()
 except:
     print("")
-    exit(1)
+    sys.exit(1)
 
 if weather_request.status_code != 200:
     print("")
-    exit(1)
+    sys.exit(1)
 
 # Get the temperature
 temp = weather_data["main"]["temp"]
