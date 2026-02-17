@@ -8,7 +8,7 @@
       "skillPath": "skills/skill-creator/SKILL.md",
       "skillFolderHash": "a01fbe3fa7f17f64173bd4fdcfecea86a3fd664c",
       "installedAt": "2026-02-06T05:21:06.977Z",
-      "updatedAt": "2026-02-09T07:25:37.677Z"
+      "updatedAt": "2026-02-16T21:29:24.581Z"
     },
     "mermaid-diagrams": {
       "source": "softaworks/agent-toolkit",
@@ -17,7 +17,7 @@
       "skillPath": "skills/mermaid-diagrams/SKILL.md",
       "skillFolderHash": "1b7a962715838d762fe4b34701d797d1d57496cd",
       "installedAt": "2026-02-06T06:17:04.870Z",
-      "updatedAt": "2026-02-09T07:25:40.002Z"
+      "updatedAt": "2026-02-16T21:29:33.150Z"
     },
     "humanizer": {
       "source": "softaworks/agent-toolkit",
@@ -26,7 +26,7 @@
       "skillPath": "skills/humanizer/SKILL.md",
       "skillFolderHash": "004c1998fffe4d5cd4535123d65cf9fb1a107b64",
       "installedAt": "2026-02-06T06:19:51.756Z",
-      "updatedAt": "2026-02-09T07:25:41.547Z"
+      "updatedAt": "2026-02-16T21:29:34.729Z"
     },
     "uv-package-manager": {
       "source": "wshobson/agents",
@@ -35,7 +35,7 @@
       "skillPath": "plugins/python-development/skills/uv-package-manager/SKILL.md",
       "skillFolderHash": "916b782e8fa418c8a7ea5b39d7371ba9de5b8009",
       "installedAt": "2026-02-06T06:21:03.048Z",
-      "updatedAt": "2026-02-09T07:25:43.809Z"
+      "updatedAt": "2026-02-16T21:29:36.947Z"
     },
     "ralph-tui-create-beads-rust": {
       "source": "subsy/ralph-tui",
@@ -44,7 +44,7 @@
       "skillPath": "skills/ralph-tui-create-beads-rust/SKILL.md",
       "skillFolderHash": "779eaa0fb04f828b38d97938257ae70f70b74a0f",
       "installedAt": "2026-02-06T07:56:10.610Z",
-      "updatedAt": "2026-02-09T07:25:45.868Z"
+      "updatedAt": "2026-02-16T21:29:38.886Z"
     },
     "ralph-tui-create-beads": {
       "source": "subsy/ralph-tui",
@@ -53,7 +53,7 @@
       "skillPath": "skills/ralph-tui-create-beads/SKILL.md",
       "skillFolderHash": "7a98b4e3f96f463dd70fd9f9a75ca9340dc55aad",
       "installedAt": "2026-02-06T07:56:15.136Z",
-      "updatedAt": "2026-02-09T07:25:47.644Z"
+      "updatedAt": "2026-02-16T21:29:40.730Z"
     },
     "ralph-tui-create-json": {
       "source": "subsy/ralph-tui",
@@ -62,7 +62,7 @@
       "skillPath": "skills/ralph-tui-create-json/SKILL.md",
       "skillFolderHash": "8773e8874e3eaa4d59e2cd871999d7d426fc2ec3",
       "installedAt": "2026-02-06T07:56:18.422Z",
-      "updatedAt": "2026-02-09T07:25:49.423Z"
+      "updatedAt": "2026-02-16T21:29:42.518Z"
     },
     "ralph-tui-prd": {
       "source": "subsy/ralph-tui",
@@ -71,7 +71,7 @@
       "skillPath": "skills/ralph-tui-prd/SKILL.md",
       "skillFolderHash": "bf73ca88685816787c9822388db5b6519dd0848e",
       "installedAt": "2026-02-09T06:02:06.213Z",
-      "updatedAt": "2026-02-09T07:25:51.282Z"
+      "updatedAt": "2026-02-16T21:29:44.660Z"
     }
   },
   "dismissed": {
