@@ -8,15 +8,7 @@
   },
   "permissions": {
     "allow": [
-      "mcp__brave-search__brave_web_search",
-      "mcp__plugin_serena_serena__list_dir",
-      "mcp__plugin_serena_serena__read_file",
-      "mcp__plugin_serena_serena__write_memory",
-      "mcp__plugin_serena_serena__search_for_pattern",
-      "mcp__plugin_serena_serena__activate_project",
-      "mcp__plugin_serena_serena__find_file",
-      "mcp__plugin_serena_serena__think_about_task_adherence",
-      "mcp__plugin_serena_serena__read_memory"
+      "mcp__brave-search__brave_web_search"
     ],
     "deny": [
       "Bash(rm -rf /)",
@@ -73,9 +65,9 @@
     "frontend-design@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "serena@claude-plugins-official": true,
     "context7@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "skipDangerousModePermissionPrompt": true
 }
