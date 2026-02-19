@@ -21,8 +21,6 @@ cli_dnf_packages:
   - gh
   - git-delta
   - ghostty
-  - golang
-  - golang-x-tools-gopls
   - helm
   - htop
   - i3
@@ -43,6 +41,7 @@ cli_dnf_packages:
   - sublime-text
   - terraform
   - tig
+  - opentofu
   - tmux
   - unzip
   - xclip
@@ -61,17 +60,12 @@ node_versions:
 
 # Bun packages to install globally
 bun_packages:
-  - ralph-tui
   - gatsby-cli@5.11.0
-  - happy-coder
-  - opencode-ai@latest
-  - "@openai/codex@latest"
   - resume-cli@3.0.8
 
 # GitHub CLI extensions to install
 gh_extensions:
   - dlvhdr/gh-dash
-  - github/gh-copilot
 
 fedora_repositories:
   - name: docker-ce-stable
@@ -103,3 +97,5 @@ copr_repositories:
     creates: _copr:copr.fedorainfracloud.org:atim:starship.repo
   - name: scottames/ghostty
     creates: _copr:copr.fedorainfracloud.org:scottames:ghostty.repo
+  - name: "@go-sig/golang-rawhide"
+    creates: _copr:copr.fedorainfracloud.org:group_go-sig:golang-rawhide.repo
