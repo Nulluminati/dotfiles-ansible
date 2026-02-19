@@ -25,3 +25,8 @@ desktop.ini
 ###############################
 /.claude/settings.local.json
 CLAUDE.local.md
+
+# Sidecar and TD #
+##################
+.sidecar
+.todos
