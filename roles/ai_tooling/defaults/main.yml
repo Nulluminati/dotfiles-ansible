@@ -1,6 +1,15 @@
 ---
-# Claude Code skills to install globally
-claude_code_skills:
+# Bun packages to install globally
+bun_tools:
+  - ralph-tui
+  - happy-coder
+  - opencode-ai@latest
+  - "@openai/codex@latest"
+  - "@github/copilot@latest"
+  - skills
+
+# Agent skills to install globally via skills CLI
+agent_skills:
   - "anthropics/skills@skill-creator"
   - "softaworks/agent-toolkit@mermaid-diagrams"
   - "softaworks/agent-toolkit@humanizer"

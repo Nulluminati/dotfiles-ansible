@@ -1,5 +1,6 @@
 ---
-# Claude Code
+# Claude Code CLI and MCP Servers
+
 - name: Check if claude is installed
   ansible.builtin.shell:
     cmd: "command -v claude"
@@ -18,22 +19,6 @@
   tags:
     - install
     - claude
-
-- name: Install skills CLI via bun
-  ansible.builtin.shell:
-    cmd: "~/.bun/bin/bun install -g skills"
-    creates: "~/.bun/bin/skills"
-  tags:
-    - skills
-    - bun
-
-# Skills
-- name: Install skills globally
-  ansible.builtin.shell:
-    cmd: "skills add {{ item }} -g -y"
-  loop: "{{ claude_code_skills }}"
-  tags:
-    - skills
 
 # MCP Servers
 - name: Set mcp_server_list for Fedora

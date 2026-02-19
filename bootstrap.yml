@@ -15,10 +15,10 @@
       tags: cli
       import_role:
         name: cli
-    - name: Claude Code
-      tags: claude_code
+    - name: AI Tooling
+      tags: ai_tooling
       import_role:
-        name: claude_code
+        name: ai_tooling
     - name: Stow
       tags: stow
       import_role:

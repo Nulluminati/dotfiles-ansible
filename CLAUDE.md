@@ -1,5 +1,10 @@
 # CLAUDE.md
 
+## MANDATORY: Use td for Task Management
+
+You must run td usage --new-session at conversation start (or after /clear) to see current work.
+Use td usage -q for subsequent reads.
+
 Ansible + GNU Stow dotfiles management for Fedora Linux (macOS partial).
 
 ## WHY
@@ -12,7 +17,7 @@ Reproducible development environment setup across machines. Ansible handles syst
 bootstrap.yml    # Main playbook - imports all roles with tags
 bin/             # Setup scripts
 hosts            # Ansible inventory (localhost)
-roles/           # Ansible roles: uv, llm, cli, claude_code, stow, fonts, sublime, nvidia
+roles/           # Ansible roles: uv, llm, cli, ai_tooling, stow, fonts, sublime, nvidia
 dotfiles/
   fedora/        # Fedora-specific configs
   shared/        # Cross-platform configs

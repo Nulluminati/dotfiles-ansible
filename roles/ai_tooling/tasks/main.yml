@@ -1,0 +1,40 @@
+---
+# Claude Code and MCP Servers
+- name: Install Claude Code and MCP servers
+  import_tasks: claude_code.yml
+
+# Bun tools (AI CLI tools and skills CLI)
+- name: Install bun tools
+  ansible.builtin.shell:
+    cmd: "~/.bun/bin/bun install -g {{ item }}"
+  loop: "{{ bun_tools }}"
+  tags:
+    - bun_tools
+    - bun
+
+- name: Install skills globally
+  ansible.builtin.shell:
+    cmd: "skills add {{ item }} -g -y"
+  loop: "{{ agent_skills }}"
+  tags:
+    - skills
+
+- name: Install sidecar
+  ansible.builtin.shell:
+    cmd: "go install github.com/marcus/sidecar/cmd/sidecar@latest"
+    creates: "~/go/bin/sidecar"
+  environment:
+    GOPATH: "{{ ansible_env.HOME }}/go"
+    GOBIN: "{{ ansible_env.HOME }}/go/bin"
+  tags:
+    - sidecar
+
+- name: Install td
+  ansible.builtin.shell:
+    cmd: "go install github.com/marcus/td@latest"
+    creates: "~/go/bin/td"
+  environment:
+    GOPATH: "{{ ansible_env.HOME }}/go"
+    GOBIN: "{{ ansible_env.HOME }}/go/bin"
+  tags:
+    - sidecar
