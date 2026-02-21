@@ -45,6 +45,8 @@ cli_dnf_packages:
   - tmux
   - golang
   - golang-x-tools-gopls
+  - ruby
+  - rubygems
   - unzip
   - xclip
 
