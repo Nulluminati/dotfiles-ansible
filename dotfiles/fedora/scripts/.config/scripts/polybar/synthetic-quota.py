@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 
 
 def format_time_remaining(renews_at_str):
-    """Format time remaining until renewal in compact form (e.g., '2d', '5h', '30m')."""
+    """Format time remaining until renewal in compact form (e.g., '2d', '5h 30m', '45m')."""
     try:
         renews_at = datetime.fromisoformat(renews_at_str.replace('Z', '+00:00'))
         now = datetime.now(timezone.utc)
@@ -36,7 +36,7 @@ def format_time_remaining(renews_at_str):
         if days > 0:
             return f"{days}d"
         elif hours > 0:
-            return f"{hours}h"
+            return f"{hours}h {minutes}m"
         else:
             return f"{minutes}m"
     except (ValueError, TypeError):

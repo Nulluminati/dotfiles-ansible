@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 
 
 def format_time_remaining(minutes_remaining):
-    """Format time remaining in compact form (e.g., '4h', '45m')."""
+    """Format time remaining in compact form (e.g., '4h 30m', '45m')."""
     if minutes_remaining is None:
         return ""
     if minutes_remaining <= 0:
@@ -30,7 +30,7 @@ def format_time_remaining(minutes_remaining):
     minutes = int(minutes_remaining % 60)
 
     if hours > 0:
-        return f"{hours}h"
+        return f"{hours}h {minutes}m"
     else:
         return f"{minutes}m"
 
