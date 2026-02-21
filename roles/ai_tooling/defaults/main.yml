@@ -18,7 +18,6 @@ agent_skills:
   - "subsy/ralph-tui@ralph-tui-create-beads"
   - "subsy/ralph-tui@ralph-tui-create-json"
   - "subsy/ralph-tui@ralph-tui-prd"
-  - "marcus/td@td-task-management"
 
 mcp_servers:
   - name: brave-search

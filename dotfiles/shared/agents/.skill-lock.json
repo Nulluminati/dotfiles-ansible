@@ -73,15 +73,6 @@
       "installedAt": "2026-02-09T06:02:06.213Z",
       "updatedAt": "2026-02-19T06:27:59.944Z"
     },
-    "td-task-management": {
-      "source": "marcus/td",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/marcus/td.git",
-      "skillPath": "td-task-management/SKILL.md",
-      "skillFolderHash": "39b416c538684a5a0780a14936ca01bf2722119c",
-      "installedAt": "2026-02-19T06:28:02.409Z",
-      "updatedAt": "2026-02-19T06:28:02.409Z"
-    }
   },
   "dismissed": {
     "findSkillsPrompt": true

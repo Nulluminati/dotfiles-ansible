@@ -19,22 +19,3 @@
   tags:
     - skills
 
-- name: Install sidecar
-  ansible.builtin.shell:
-    cmd: "go install github.com/marcus/sidecar/cmd/sidecar@latest"
-    creates: "~/go/bin/sidecar"
-  environment:
-    GOPATH: "{{ ansible_env.HOME }}/go"
-    GOBIN: "{{ ansible_env.HOME }}/go/bin"
-  tags:
-    - sidecar
-
-- name: Install td
-  ansible.builtin.shell:
-    cmd: "go install github.com/marcus/td@latest"
-    creates: "~/go/bin/td"
-  environment:
-    GOPATH: "{{ ansible_env.HOME }}/go"
-    GOBIN: "{{ ansible_env.HOME }}/go/bin"
-  tags:
-    - sidecar
