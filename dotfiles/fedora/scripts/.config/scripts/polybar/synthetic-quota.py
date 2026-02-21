@@ -6,7 +6,8 @@
 """\
 synthetic-quota.py
 
-Displays remaining API quota and time until renewal for synthetic.new subscription.
+Displays remaining API quota and time until renewal for synthetic.new.
+Shows subscription, search.hourly, and freeToolCalls quotas.
 Intended for use in polybar.
 
 Usage: synthetic-quota.py
@@ -19,9 +20,8 @@ from datetime import datetime, timezone
 
 
 def format_time_remaining(renews_at_str):
-    """Format time remaining until renewal in compact form (e.g., '2d 5h', '3h 20m')."""
+    """Format time remaining until renewal in compact form (e.g., '2d', '5h', '30m')."""
     try:
-        # Parse ISO 8601 timestamp
         renews_at = datetime.fromisoformat(renews_at_str.replace('Z', '+00:00'))
         now = datetime.now(timezone.utc)
 
@@ -34,20 +34,49 @@ def format_time_remaining(renews_at_str):
         minutes = (diff.seconds % 3600) // 60
 
         if days > 0:
-            return f"{days}d {hours}h"
+            return f"{days}d"
         elif hours > 0:
-            return f"{hours}h {minutes}m"
+            return f"{hours}h"
         else:
             return f"{minutes}m"
     except (ValueError, TypeError):
         return ""
 
 
+def get_color(percentage):
+    """Return color based on percentage remaining."""
+    if percentage > 50:
+        return "#2aa198"  # Green
+    elif percentage >= 20:
+        return "#b58900"  # Yellow
+    else:
+        return "#dc322f"  # Red
+
+
+def format_quota(limit, used, renews_at, icon="", show_time=True):
+    """Format a single quota for display."""
+    if limit == 0:
+        if icon:
+            return f"%{{F#dc322f}}{icon}?%{{F-}}"
+        return "%{{F#dc322f}}?%{{F-}}"
+
+    remaining = limit - used
+    percentage = (remaining / limit) * 100
+    color = get_color(percentage)
+    time_remaining = format_time_remaining(renews_at) if (renews_at and show_time) else ""
+
+    prefix = f"{icon} " if icon else ""
+    if time_remaining:
+        return f"{prefix}%{{F{color}}}{int(percentage)}%%{{F-}} [{time_remaining}]"
+    else:
+        return f"{prefix}%{{F{color}}}{int(percentage)}%%{{F-}}"
+
+
 # Synthetic API Key
 api_key = os.environ.get('SYNTHETIC_API_KEY', '')
 
 if not api_key:
-    print("%{F#dc322f}?%{F-}")
+    print("%{{F#dc322f}}syn:?%{{F-}}")
     sys.exit(1)
 
 # Get quota data from synthetic.new API
@@ -57,41 +86,26 @@ try:
     response.raise_for_status()
     data = response.json()
 except Exception:
-    print("%{F#dc322f}?%{F-}")
+    print("%{{F#dc322f}}syn:?%{{F-}}")
     sys.exit(1)
 
-# Extract subscription data
+# Extract and format all quotas
 try:
-    subscription = data.get("subscription", {})
-    limit = subscription.get("limit", 0)
-    requests_used = subscription.get("requests", 0)
-    renews_at = subscription.get("renewsAt")
+    # Subscription (main API quota) - no icon
+    sub = data.get("subscription", {})
+    sub_str = format_quota(sub.get("limit", 0), sub.get("requests", 0), sub.get("renewsAt"))
 
-    if limit == 0:
-        print("%{F#dc322f}?%{F-}")
-        sys.exit(1)
+    # Search (hourly quota) - magnifying glass icon, no time
+    search = data.get("search", {}).get("hourly", {})
+    search_str = format_quota(search.get("limit", 0), search.get("requests", 0), search.get("renewsAt"), icon="\uf002", show_time=False)
 
-    # Calculate percentage remaining
-    remaining = limit - requests_used
-    percentage = (remaining / limit) * 100
+    # Free tool calls (daily quota) - wrench icon, no time
+    free = data.get("freeToolCalls", {})
+    free_str = format_quota(free.get("limit", 0), free.get("requests", 0), free.get("renewsAt"), icon="\uf0ad", show_time=False)
 
-    # Determine color based on percentage
-    if percentage > 50:
-        color = "#2aa198"  # Green
-    elif percentage >= 20:
-        color = "#b58900"  # Yellow
-    else:
-        color = "#dc322f"  # Red
-
-    # Format time remaining until renewal
-    time_remaining = format_time_remaining(renews_at) if renews_at else ""
-
-    # Output formatted percentage with polybar color tags
-    if time_remaining:
-        print(f"%{{F{color}}}{int(percentage)}%%{{F-}} ({time_remaining})")
-    else:
-        print(f"%{{F{color}}}{int(percentage)}%%{{F-}}")
+    # Output all quotas with dot separator
+    print(f"{sub_str} · {search_str} · {free_str}")
 
 except (KeyError, TypeError, ZeroDivisionError):
-    print("%{F#dc322f}?%{F-}")
+    print("%{{F#dc322f}}syn:?%{{F-}}")
     sys.exit(1)
