@@ -60,3 +60,61 @@
   tags:
     - sublime
     - plugins
+
+# Install Helm LSP dependencies
+
+- name: Ensure local bin directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: '0755'
+  tags:
+    - sublime
+    - helm-ls
+
+- name: Download helm-ls
+  ansible.builtin.get_url:
+    url: "https://github.com/mrjosh/helm-ls/releases/download/master/helm_ls_darwin_amd64"
+    dest: "{{ ansible_env.HOME }}/.local/bin/helm_ls"
+    mode: '0755'
+    timeout: 30
+  tags:
+    - sublime
+    - helm-ls
+
+- name: Install yaml-language-server
+  community.general.npm:
+    name: yaml-language-server
+    global: true
+    state: present
+  tags:
+    - sublime
+    - helm-ls
+
+- name: Install ruby-lsp gem
+  community.general.gem:
+    name: ruby-lsp
+    state: present
+    user_install: true
+  tags:
+    - sublime
+    - ruby-lsp
+
+- name: Ensure Sublime User directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/User"
+    state: directory
+    mode: '0755'
+  tags:
+    - sublime
+    - helm-ls
+
+- name: Configure LSP settings for helm-ls
+  ansible.builtin.template:
+    src: templates/LSP.sublime-settings.j2
+    dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/User/LSP.sublime-settings"
+    mode: '0644'
+  tags:
+    - sublime
+    - helm-ls
+    - ruby-lsp

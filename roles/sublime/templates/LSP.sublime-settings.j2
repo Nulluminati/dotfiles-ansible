@@ -1,0 +1,39 @@
+{
+  "clients": {
+    "helm-ls": {
+      "enabled": true,
+      "command": ["helm_ls", "serve"],
+      "selector": "source.yaml.helm",
+      "settings": {
+        "helm-ls": {
+          "logLevel": "info",
+          "valuesFiles": {
+            "mainValuesFile": "values.yaml",
+            "lintOverlayValuesFile": "values.lint.yaml",
+            "additionalValuesFilesGlobPattern": "values*.yaml"
+          },
+          "helmLint": {
+            "enabled": true,
+            "ignoredMessages": []
+          },
+          "yamlls": {
+            "enabled": true,
+            "enabledForFilesGlob": "*.{yaml,yml}",
+            "path": "yaml-language-server"
+          }
+        }
+      }
+    },
+    "ruby-lsp": {
+      "enabled": true,
+      "command": ["ruby-lsp"],
+      "selector": "source.ruby | text.html.rails",
+      "initializationOptions": {
+        "enabledFeatures": {
+          "diagnostics": true
+        },
+        "experimentalFeaturesEnabled": true
+      }
+    }
+  }
+}
