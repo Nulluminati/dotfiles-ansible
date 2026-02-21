@@ -28,13 +28,13 @@ set $right  l
 set $ws1    "1:   Terminal"
 set $ws2    "2:   Code "
 set $ws3    "3:   Firefox "
-set $ws4    "4:   Files "
-set $ws5    "5:   Notes "
-set $ws6    "6:   Chat "
-set $ws7    "7:   Music "
+set $ws4    "4:   Passwords "
+set $ws5    "5:   General "
+set $ws6    "6:   General "
+set $ws7    "7:   General "
 set $ws8    "8:   General "
 set $ws9    "9:   General "
-set $ws10   "10:   Settings "
+set $ws10   "10:   General "
 
 # use $mod+Mouse to drag floating windows to their wanted position
 floating_modifier $mod
@@ -183,10 +183,7 @@ mode "  " {
 assign [class="terminal"]           → $ws1
 assign [class="Sublime Text"]       → $ws2
 assign [class="Firefox"]            → $ws3
-assign [class="Notion"]             → $ws4
-assign [class="KeePassXC"]          → $ws5
-assign [class="Slack"]              → $ws7
-assign [class="Spotify"]            → $ws7
+assign [class="KeePassXC"]          → $ws4
 
 # i3-Gaps
 
