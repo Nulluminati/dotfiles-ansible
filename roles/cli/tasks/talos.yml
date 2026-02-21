@@ -1,0 +1,50 @@
+---
+# Talos Linux CLI tools
+- name: Download talosctl
+  ansible.builtin.get_url:
+    url: "https://github.com/siderolabs/talos/releases/latest/download/talosctl-linux-amd64"
+    dest: "/tmp/talosctl"
+    mode: '0755'
+  register: talosctl_download
+  tags:
+    - talos
+
+- name: Install talosctl binary
+  become: yes
+  ansible.builtin.copy:
+    src: "/tmp/talosctl"
+    dest: "/usr/local/bin/talosctl"
+    mode: '0755'
+    remote_src: yes
+  when: talosctl_download.changed
+  tags:
+    - talos
+
+- name: Install talhelper
+  ansible.builtin.get_url:
+    url: "https://github.com/budimanjojo/talhelper/releases/latest/download/talhelper_linux_amd64.tar.gz"
+    dest: "/tmp/talhelper_linux_amd64.tar.gz"
+    mode: '0644'
+  register: talhelper_download
+  tags:
+    - talos
+
+- name: Extract talhelper
+  ansible.builtin.unarchive:
+    src: "/tmp/talhelper_linux_amd64.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+  when: talhelper_download.changed
+  tags:
+    - talos
+
+- name: Install talhelper binary
+  become: yes
+  ansible.builtin.copy:
+    src: "/tmp/talhelper"
+    dest: "/usr/local/bin/talhelper"
+    mode: '0755'
+    remote_src: yes
+  when: talhelper_download.changed
+  tags:
+    - talos

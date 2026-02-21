@@ -54,17 +54,6 @@
   tags:
     - packages
 
-- name: Install Go from COPR
-  become: true
-  dnf:
-    name:
-      - golang
-      - golang-x-tools-gopls
-    state: present
-  tags:
-    - packages
-    - golang
-
 # Docker
 # Add user to docker group
 - name: Add user to docker group
@@ -77,30 +66,8 @@
     - docker
 
 # Fish Shell
-# Fisher - https://github.com/jorgebucaran/fisher
-- name: Install fisher
-  shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-  args:
-    creates: ~/.config/fish/functions/fisher.fish
-    executable: fish
-  tags:
-    - fish
-
-- name: Set default shell to fish
-  become: yes
-  user:
-    name: "{{ ansible_user_id }}"
-    shell: /usr/bin/fish
-  tags:
-    - fish
-
-- name: Install fish plugins
-  shell: fisher install {{ item }}
-  args:
-    executable: /usr/bin/fish
-  loop: "{{ fish_plugins }}"
-  tags:
-    - fish
+- name: Setup Fish Shell
+  import_tasks: fish.yml
 
 # NodeJS
 - name: Install node
@@ -158,51 +125,5 @@
     - api_keys
 
 # Talos Linux CLI tools
-- name: Download talosctl
-  ansible.builtin.get_url:
-    url: "https://github.com/siderolabs/talos/releases/latest/download/talosctl-linux-amd64"
-    dest: "/tmp/talosctl"
-    mode: '0755'
-  register: talosctl_download
-  tags:
-    - talos
-
-- name: Install talosctl binary
-  become: yes
-  ansible.builtin.copy:
-    src: "/tmp/talosctl"
-    dest: "/usr/local/bin/talosctl"
-    mode: '0755'
-    remote_src: yes
-  when: talosctl_download.changed
-  tags:
-    - talos
-
-- name: Install talhelper
-  ansible.builtin.get_url:
-    url: "https://github.com/budimanjojo/talhelper/releases/latest/download/talhelper_linux_amd64.tar.gz"
-    dest: "/tmp/talhelper_linux_amd64.tar.gz"
-    mode: '0644'
-  register: talhelper_download
-  tags:
-    - talos
-
-- name: Extract talhelper
-  ansible.builtin.unarchive:
-    src: "/tmp/talhelper_linux_amd64.tar.gz"
-    dest: "/tmp"
-    remote_src: yes
-  when: talhelper_download.changed
-  tags:
-    - talos
-
-- name: Install talhelper binary
-  become: yes
-  ansible.builtin.copy:
-    src: "/tmp/talhelper"
-    dest: "/usr/local/bin/talhelper"
-    mode: '0755'
-    remote_src: yes
-  when: talhelper_download.changed
-  tags:
-    - talos
+- name: Install Talos Linux tools
+  import_tasks: talos.yml
