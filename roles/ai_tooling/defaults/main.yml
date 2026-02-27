@@ -11,9 +11,12 @@ bun_tools:
 # Agent skills to install globally via skills CLI
 agent_skills:
   - "anthropics/skills@skill-creator"
+  - "anthropics/skills@frontend-design"
   - "softaworks/agent-toolkit@mermaid-diagrams"
   - "softaworks/agent-toolkit@humanizer"
+  - "softaworks/agent-toolkit@agent-md-refactor"
   - "wshobson/agents@uv-package-manager"
+  - "wshobson/agents@code-review-excellence"
   - "subsy/ralph-tui@ralph-tui-create-beads-rust"
   - "subsy/ralph-tui@ralph-tui-create-beads"
   - "subsy/ralph-tui@ralph-tui-create-json"
@@ -24,14 +27,13 @@ mcp_servers:
     command: "npx -y @modelcontextprotocol/server-brave-search"
     env:
       BRAVE_API_KEY: "{{ api_keys.brave }}"
-  # - name: github
-  #   transport: http
-  #   url: "https://api.githubcopilot.com/mcp/"
-  #   headers:
-  #     Authorization: "Bearer {{ api_keys.github_pat }}"
+  - name: context7
+    command: "npx -y @upstash/context7-mcp"
+  - name: grep_app
+    transport: http
+    url: "https://mcp.grep.app"
 
 fedora_mcp_servers: []
-
 
 mac_mcp_servers:
   # - name: honeycomb
