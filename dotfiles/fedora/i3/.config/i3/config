@@ -1,5 +1,8 @@
 set $mod Mod1
 
+# Set screen resolution (Intel iGPU passthrough with EDID)
+exec --no-startup-id ~/.config/scripts/set-resolution.sh
+
 set_from_resource $fg i3wm.foreground #f4dc98
 set_from_resource $bg i3wm.background #0A1837
 set_from_resource $ac i3wm.color7 #BD93F9
