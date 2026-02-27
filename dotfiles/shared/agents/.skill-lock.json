@@ -7,8 +7,17 @@
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/skill-creator/SKILL.md",
       "skillFolderHash": "a01fbe3fa7f17f64173bd4fdcfecea86a3fd664c",
-      "installedAt": "2026-02-06T05:21:06.977Z",
-      "updatedAt": "2026-02-19T06:27:41.962Z"
+      "installedAt": "2026-02-23T02:51:45.197Z",
+      "updatedAt": "2026-02-23T07:51:42.883Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "installedAt": "2026-02-23T02:51:47.809Z",
+      "updatedAt": "2026-02-23T07:51:44.834Z"
     },
     "mermaid-diagrams": {
       "source": "softaworks/agent-toolkit",
@@ -16,8 +25,8 @@
       "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
       "skillPath": "skills/mermaid-diagrams/SKILL.md",
       "skillFolderHash": "1b7a962715838d762fe4b34701d797d1d57496cd",
-      "installedAt": "2026-02-06T06:17:04.870Z",
-      "updatedAt": "2026-02-19T06:27:45.208Z"
+      "installedAt": "2026-02-23T02:51:50.290Z",
+      "updatedAt": "2026-02-23T07:51:47.125Z"
     },
     "humanizer": {
       "source": "softaworks/agent-toolkit",
@@ -25,8 +34,17 @@
       "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
       "skillPath": "skills/humanizer/SKILL.md",
       "skillFolderHash": "004c1998fffe4d5cd4535123d65cf9fb1a107b64",
-      "installedAt": "2026-02-06T06:19:51.756Z",
-      "updatedAt": "2026-02-19T06:27:47.214Z"
+      "installedAt": "2026-02-23T02:51:52.185Z",
+      "updatedAt": "2026-02-23T07:51:48.963Z"
+    },
+    "agent-md-refactor": {
+      "source": "softaworks/agent-toolkit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
+      "skillPath": "skills/agent-md-refactor/SKILL.md",
+      "skillFolderHash": "89a8fede359cb48c66f1af44c5aa8fc07b82cded",
+      "installedAt": "2026-02-23T02:51:54.045Z",
+      "updatedAt": "2026-02-23T07:51:50.768Z"
     },
     "uv-package-manager": {
       "source": "wshobson/agents",
@@ -34,8 +52,17 @@
       "sourceUrl": "https://github.com/wshobson/agents.git",
       "skillPath": "plugins/python-development/skills/uv-package-manager/SKILL.md",
       "skillFolderHash": "916b782e8fa418c8a7ea5b39d7371ba9de5b8009",
-      "installedAt": "2026-02-06T06:21:03.048Z",
-      "updatedAt": "2026-02-19T06:27:49.607Z"
+      "installedAt": "2026-02-23T02:51:56.564Z",
+      "updatedAt": "2026-02-23T07:51:53.243Z"
+    },
+    "code-review-excellence": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skillPath": "plugins/developer-essentials/skills/code-review-excellence/SKILL.md",
+      "skillFolderHash": "62630a2a65d22a351aa15b76fbf277557e58cf63",
+      "installedAt": "2026-02-23T02:51:59.123Z",
+      "updatedAt": "2026-02-23T07:51:55.727Z"
     },
     "ralph-tui-create-beads-rust": {
       "source": "subsy/ralph-tui",
@@ -43,8 +70,8 @@
       "sourceUrl": "https://github.com/subsy/ralph-tui.git",
       "skillPath": "skills/ralph-tui-create-beads-rust/SKILL.md",
       "skillFolderHash": "779eaa0fb04f828b38d97938257ae70f70b74a0f",
-      "installedAt": "2026-02-06T07:56:10.610Z",
-      "updatedAt": "2026-02-19T06:27:51.925Z"
+      "installedAt": "2026-02-23T02:52:01.473Z",
+      "updatedAt": "2026-02-23T07:51:59.077Z"
     },
     "ralph-tui-create-beads": {
       "source": "subsy/ralph-tui",
@@ -52,8 +79,8 @@
       "sourceUrl": "https://github.com/subsy/ralph-tui.git",
       "skillPath": "skills/ralph-tui-create-beads/SKILL.md",
       "skillFolderHash": "7a98b4e3f96f463dd70fd9f9a75ca9340dc55aad",
-      "installedAt": "2026-02-06T07:56:15.136Z",
-      "updatedAt": "2026-02-19T06:27:55.179Z"
+      "installedAt": "2026-02-23T02:52:03.967Z",
+      "updatedAt": "2026-02-23T07:52:01.216Z"
     },
     "ralph-tui-create-json": {
       "source": "subsy/ralph-tui",
@@ -61,8 +88,8 @@
       "sourceUrl": "https://github.com/subsy/ralph-tui.git",
       "skillPath": "skills/ralph-tui-create-json/SKILL.md",
       "skillFolderHash": "8773e8874e3eaa4d59e2cd871999d7d426fc2ec3",
-      "installedAt": "2026-02-06T07:56:18.422Z",
-      "updatedAt": "2026-02-19T06:27:57.810Z"
+      "installedAt": "2026-02-23T02:52:06.254Z",
+      "updatedAt": "2026-02-23T07:52:03.446Z"
     },
     "ralph-tui-prd": {
       "source": "subsy/ralph-tui",
@@ -70,19 +97,9 @@
       "sourceUrl": "https://github.com/subsy/ralph-tui.git",
       "skillPath": "skills/ralph-tui-prd/SKILL.md",
       "skillFolderHash": "bf73ca88685816787c9822388db5b6519dd0848e",
-      "installedAt": "2026-02-09T06:02:06.213Z",
-      "updatedAt": "2026-02-19T06:27:59.944Z"
-    },
+      "installedAt": "2026-02-23T02:52:08.374Z",
+      "updatedAt": "2026-02-23T07:52:05.581Z"
+    }
   },
-  "dismissed": {
-    "findSkillsPrompt": true
-  },
-  "lastSelectedAgents": [
-    "amp",
-    "codex",
-    "gemini-cli",
-    "github-copilot",
-    "kimi-cli",
-    "opencode"
-  ]
+  "dismissed": {}
 }
