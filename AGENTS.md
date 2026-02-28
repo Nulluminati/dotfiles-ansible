@@ -12,7 +12,7 @@ Reproducible development environment setup across machines. Ansible handles syst
 bootstrap.yml    # Main playbook - imports all roles with tags
 bin/             # Setup scripts
 hosts            # Ansible inventory (localhost)
-roles/           # Ansible roles: uv, llm, cli, ai_tooling, stow, fonts, sublime, nvidia
+roles/           # Ansible roles: uv, llm, cli, ai_tooling, stow, fonts, sublime
 dotfiles/
   fedora/        # Fedora-specific configs
   shared/        # Cross-platform configs

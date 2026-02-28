@@ -1,4 +1,0 @@
----
-- name: Install Nvidia Drivers in Fedora
-  import_tasks: fedora.yml
-  when: ansible_distribution == "Fedora"

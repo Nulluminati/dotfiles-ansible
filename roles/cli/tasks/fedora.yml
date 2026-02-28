@@ -54,6 +54,15 @@
   tags:
     - packages
 
+- name: Grant cap_perfmon capability to intel_gpu_top
+  become: true
+  capabilities:
+    path: /usr/bin/intel_gpu_top
+    capability: cap_perfmon=ep
+    state: present
+  tags:
+    - packages
+
 # Docker
 # Add user to docker group
 - name: Add user to docker group

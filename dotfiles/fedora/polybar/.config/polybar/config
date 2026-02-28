@@ -62,7 +62,7 @@ label = " %percentage:2:2%%"
 [module/gpu-util]
 type = custom/script
 exec = ~/.config/scripts/polybar/gpu-util.sh
-interval = 10
+interval = 1
 format = <label>
 format-prefix-font = 1
 format-prefix = "  "

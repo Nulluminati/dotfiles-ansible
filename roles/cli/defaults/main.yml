@@ -23,6 +23,10 @@ cli_dnf_packages:
   - ghostty
   - helm
   - htop
+  - intel-gpu-tools
+  - intel-media-driver
+  - libva-utils
+  - libcap
   - i3
   - ImageMagick
   - jq
