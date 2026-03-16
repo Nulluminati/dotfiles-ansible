@@ -47,7 +47,7 @@ function synth --description "Run AI CLI tools with Synthetic.new Models"
     ANTHROPIC_AUTH_TOKEN="$SYNTHETIC_API_KEY" \
     ANTHROPIC_DEFAULT_OPUS_MODEL=$selected_model \
     ANTHROPIC_DEFAULT_SONNET_MODEL=$selected_model \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL=$selected_model \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="hf:zai-org/GLM-4.7-Flash" \
     CLAUDE_CODE_SUBAGENT_MODEL=$selected_model \
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
     command $cmd $args
