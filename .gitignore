@@ -52,4 +52,5 @@ package-lock.json
 
 # WIP files
 TODO.md
+docs/
 dotfiles/fedora/nvim/
