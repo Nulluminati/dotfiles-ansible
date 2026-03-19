@@ -1,11 +1,12 @@
 ---
 # Bun packages to install globally
 bun_tools:
-  - ralph-tui
-  - happy-coder
-  - opencode-ai@latest
   - "@openai/codex@latest"
   - "@github/copilot@latest"
+  - "@let-it-cook/cli"
+  - happy-coder
+  - opencode-ai@latest
+  - ralph-tui
   - skills
 
 # Agent skills to install globally via skills CLI
