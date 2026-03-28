@@ -5,7 +5,6 @@ bun_tools:
   - "@github/copilot@latest"
   - "@let-it-cook/cli"
   - happy-coder
-  - opencode-ai@latest
   - ralph-tui
   - skills
 
