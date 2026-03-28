@@ -19,7 +19,7 @@ function happy --description "Happy Coder CLI with provider selection"
     switch $provider
         case zai
             set provider_args \
-                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=GLM-4.7" \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=GLM-5-turbo" \
                 --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=GLM-4.7" \
                 --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=GLM-4.5-Air" \
                 --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=GLM-4.7" \
