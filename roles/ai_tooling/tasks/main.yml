@@ -19,3 +19,6 @@
   tags:
     - skills
 
+# Pi AI CLI tool extensions
+- name: Install Pi extensions
+  import_tasks: pi.yml

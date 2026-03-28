@@ -1,0 +1,22 @@
+---
+# Pi AI CLI tool extensions
+
+- name: Check if Pi extensions directory exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.pi/agent/extensions"
+  register: pi_extensions_dir
+  tags:
+    - pi
+    - config
+
+- name: Install Pi extension dependencies
+  ansible.builtin.command:
+    cmd: npm install
+    chdir: "{{ ansible_env.HOME }}/.pi/agent/extensions"
+  register: npm_result
+  changed_when: '"added" in npm_result.stdout'
+  failed_when: npm_result.rc != 0 and 'ENOENT' not in npm_result.stderr
+  when: pi_extensions_dir.stat.exists
+  tags:
+    - pi
+    - config
