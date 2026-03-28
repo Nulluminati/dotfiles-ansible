@@ -9,7 +9,7 @@
       "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
       "pluginName": "example-skills",
       "installedAt": "2026-02-23T02:51:45.197Z",
-      "updatedAt": "2026-03-19T18:03:19.078Z"
+      "updatedAt": "2026-03-28T00:03:18.207Z"
     },
     "frontend-design": {
       "source": "anthropics/skills",
@@ -19,7 +19,7 @@
       "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
       "pluginName": "example-skills",
       "installedAt": "2026-02-23T02:51:47.809Z",
-      "updatedAt": "2026-03-19T18:03:22.622Z"
+      "updatedAt": "2026-03-28T00:03:54.171Z"
     },
     "mermaid-diagrams": {
       "source": "softaworks/agent-toolkit",
@@ -28,7 +28,7 @@
       "skillPath": "skills/mermaid-diagrams/SKILL.md",
       "skillFolderHash": "1b7a962715838d762fe4b34701d797d1d57496cd",
       "installedAt": "2026-02-23T02:51:50.290Z",
-      "updatedAt": "2026-03-19T18:03:27.139Z"
+      "updatedAt": "2026-03-28T00:03:56.294Z"
     },
     "humanizer": {
       "source": "softaworks/agent-toolkit",
@@ -37,7 +37,7 @@
       "skillPath": "skills/humanizer/SKILL.md",
       "skillFolderHash": "004c1998fffe4d5cd4535123d65cf9fb1a107b64",
       "installedAt": "2026-02-23T02:51:52.185Z",
-      "updatedAt": "2026-03-19T18:03:32.802Z"
+      "updatedAt": "2026-03-28T00:03:58.497Z"
     },
     "agent-md-refactor": {
       "source": "softaworks/agent-toolkit",
@@ -46,16 +46,16 @@
       "skillPath": "skills/agent-md-refactor/SKILL.md",
       "skillFolderHash": "89a8fede359cb48c66f1af44c5aa8fc07b82cded",
       "installedAt": "2026-02-23T02:51:54.045Z",
-      "updatedAt": "2026-03-19T18:03:36.807Z"
+      "updatedAt": "2026-03-28T00:04:00.685Z"
     },
     "uv-package-manager": {
       "source": "wshobson/agents",
       "sourceType": "github",
       "sourceUrl": "https://github.com/wshobson/agents.git",
       "skillPath": "plugins/python-development/skills/uv-package-manager/SKILL.md",
-      "skillFolderHash": "cd5fceeaba8a0831758d9f82403658737cc3b5f1",
+      "skillFolderHash": "0b93ced74eca1c723f6854ec2902559b5bbd5434",
       "installedAt": "2026-02-23T02:51:56.564Z",
-      "updatedAt": "2026-03-19T18:03:40.939Z"
+      "updatedAt": "2026-03-28T00:04:03.027Z"
     },
     "code-review-excellence": {
       "source": "wshobson/agents",
@@ -64,7 +64,7 @@
       "skillPath": "plugins/developer-essentials/skills/code-review-excellence/SKILL.md",
       "skillFolderHash": "01df909b77da6e637490582b2899447eed1786bd",
       "installedAt": "2026-02-23T02:51:59.123Z",
-      "updatedAt": "2026-03-19T18:03:45.494Z"
+      "updatedAt": "2026-03-28T00:04:05.345Z"
     },
     "ralph-tui-create-beads-rust": {
       "source": "subsy/ralph-tui",
@@ -73,7 +73,7 @@
       "skillPath": "skills/ralph-tui-create-beads-rust/SKILL.md",
       "skillFolderHash": "779eaa0fb04f828b38d97938257ae70f70b74a0f",
       "installedAt": "2026-02-23T02:52:01.473Z",
-      "updatedAt": "2026-03-19T18:03:49.711Z"
+      "updatedAt": "2026-03-28T00:04:07.759Z"
     },
     "ralph-tui-create-beads": {
       "source": "subsy/ralph-tui",
@@ -82,7 +82,7 @@
       "skillPath": "skills/ralph-tui-create-beads/SKILL.md",
       "skillFolderHash": "7a98b4e3f96f463dd70fd9f9a75ca9340dc55aad",
       "installedAt": "2026-02-23T02:52:03.967Z",
-      "updatedAt": "2026-03-19T18:03:53.824Z"
+      "updatedAt": "2026-03-28T00:04:10.255Z"
     },
     "ralph-tui-create-json": {
       "source": "subsy/ralph-tui",
@@ -91,7 +91,7 @@
       "skillPath": "skills/ralph-tui-create-json/SKILL.md",
       "skillFolderHash": "8773e8874e3eaa4d59e2cd871999d7d426fc2ec3",
       "installedAt": "2026-02-23T02:52:06.254Z",
-      "updatedAt": "2026-03-19T18:03:58.540Z"
+      "updatedAt": "2026-03-28T00:04:12.577Z"
     },
     "ralph-tui-prd": {
       "source": "subsy/ralph-tui",
@@ -100,7 +100,7 @@
       "skillPath": "skills/ralph-tui-prd/SKILL.md",
       "skillFolderHash": "bf73ca88685816787c9822388db5b6519dd0848e",
       "installedAt": "2026-02-23T02:52:08.374Z",
-      "updatedAt": "2026-03-19T18:04:03.664Z"
+      "updatedAt": "2026-03-28T00:04:15.040Z"
     }
   },
   "dismissed": {}

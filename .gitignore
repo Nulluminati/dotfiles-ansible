@@ -54,4 +54,3 @@ package-lock.json
 TODO.md
 docs/
 dotfiles/fedora/nvim/
-roles/cli/tasks/mac.yml
