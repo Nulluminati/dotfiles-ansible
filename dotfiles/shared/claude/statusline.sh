@@ -22,6 +22,7 @@ get_provider() {
         "") echo "Anthropic" ;;
         "https://api.z.ai/api/anthropic") echo "Z.ai" ;;
         "https://api.synthetic.new/anthropic") echo "Synthetic" ;;
+        "https://api.fireworks.ai/inference"*) echo "Fireworks" ;;
         *) echo "Unknown Provider" ;;
     esac
 }

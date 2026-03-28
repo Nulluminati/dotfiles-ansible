@@ -41,9 +41,19 @@ function happy --description "Happy Coder CLI with provider selection"
             # Default: no extra env vars, use standard Claude
             set provider_args ""
 
+        case firepass fireworks
+            set provider_args \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
+                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
+                --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
+                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
+                --claude-env "ANTHROPIC_BASE_URL=https://api.fireworks.ai/inference" \
+                --claude-env "ANTHROPIC_AUTH_TOKEN=$FIREWORKS_API_KEY" \
+                --claude-env "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1"
+
         case '*'
             echo "Error: Unknown provider '$provider'" >&2
-            echo "Valid providers: zai, synth, claude" >&2
+            echo "Valid providers: zai, synth, firepass, claude" >&2
             return 1
     end
 
