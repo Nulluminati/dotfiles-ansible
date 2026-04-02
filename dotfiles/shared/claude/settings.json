@@ -5,7 +5,8 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "0",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "EDITOR": "subl"
+    "EDITOR": "subl",
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "permissions": {
     "allow": [
@@ -65,5 +66,11 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "includeCoAuthoredBy": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "effortLevel": "medium"
 }
