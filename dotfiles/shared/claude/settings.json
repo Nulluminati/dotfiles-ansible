@@ -8,6 +8,11 @@
     "EDITOR": "subl",
     "ENABLE_TOOL_SEARCH": "true"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "mcp__brave-search__*",
@@ -79,9 +84,5 @@
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
   "teammateMode": "tmux",
-  "includeCoAuthoredBy": false,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
+  "model": "opus[1m]"
 }
