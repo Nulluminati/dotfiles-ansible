@@ -31,6 +31,12 @@ When working on a new project or adding significant functionality:
 - When fixing bugs or errors, get explicit permission before discarding the old implementation entirely. Prefers incremental fixes to rewrites.
 - NEVER name things as 'improved' or 'new' or 'enhanced', etc. Code naming should be evergreen. What is new today will be "old" someday.
 
+# Writing prose
+
+- Before drafting prose a human outside this conversation will read (Linear tickets, PR descriptions, Notion docs, Slack posts, status updates), invoke the `humanizer` skill and apply its guidance. My default voice carries AI tells: em dash overuse, rule of three, "pivotal/seamless/vibrant" vocabulary, superficial -ing clauses, bold-header colon lists. The skill lists the patterns and gives replacements.
+- Short internal commit messages and conversational replies don't need it.
+- Terse beats verbose. Specific beats abstract. Don't announce the skill to the user, just apply it.
+
 # Getting help
 
 - ALWAYS ask for clarification rather than making assumptions.
@@ -65,6 +71,14 @@ When working on a new project or adding significant functionality:
 - Commit messages should follow the conventional commit format.
 - Commit messages should be written in the imperative mood.
 - Commit messages should be written in the present tense.
+
+### Pull Requests
+
+- PR descriptions must be meaningful and provide context on the **why** behind the change
+- Focus on the problem being solved, the approach taken, and any trade-offs or decisions made
+- Do NOT include low-value content like lists of changed files — reviewers can see that in the diff
+- A good PR description helps reviewers understand motivation and impact, not just what changed
+- Before opening a PR, check for `.github/pull_request_template.md` (or `PULL_REQUEST_TEMPLATE.md` / `docs/`). If one exists, conform to its exact structure: same headers in the same order, fold extra context into its sections rather than adding parallel top-level headers.
 
 ## Python
 
