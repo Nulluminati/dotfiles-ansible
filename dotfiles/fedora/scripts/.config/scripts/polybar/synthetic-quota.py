@@ -6,8 +6,9 @@
 """\
 synthetic-quota.py
 
-Displays remaining API quota and time until renewal for synthetic.new.
-Shows subscription, search.hourly, and freeToolCalls quotas.
+Displays remaining API quota for synthetic.new.
+Shows 5-hour rolling, weekly token, and search hourly quotas.
+Each shows: remaining count/$ / percentage / time to reset
 Intended for use in polybar.
 
 Usage: synthetic-quota.py
@@ -19,8 +20,10 @@ import sys
 from datetime import datetime, timezone
 
 
-def format_time_remaining(renews_at_str):
-    """Format time remaining until renewal in compact form (e.g., '2d', '5h 30m', '45m')."""
+def format_time_remaining_iso(renews_at_str):
+    """Format time remaining until renewal in compact form."""
+    if not renews_at_str:
+        return ""
     try:
         renews_at = datetime.fromisoformat(renews_at_str.replace('Z', '+00:00'))
         now = datetime.now(timezone.utc)
@@ -53,23 +56,68 @@ def get_color(percentage):
         return "#dc322f"  # Red
 
 
-def format_quota(limit, used, renews_at, icon="", show_time=True):
-    """Format a single quota for display."""
+def format_rolling_quota(data, icon=""):
+    """Format 5-hour rolling limit: remaining / percentage / time."""
+    if not data:
+        return ""
+
+    remaining = data.get("remaining", 0)
+    max_limit = data.get("max", 0)
+
+    if max_limit == 0:
+        return ""
+
+    percentage = (remaining / max_limit) * 100
+    color = get_color(percentage)
+
+    next_tick = data.get("nextTickAt")
+    time_str = format_time_remaining_iso(next_tick)
+
+    prefix = f"{icon} " if icon else ""
+    return f"{prefix}%{{F{color}}}{remaining:.2f}/{int(percentage)}%%{{F-}} [{time_str}]"
+
+
+def format_weekly_token(data, icon=""):
+    """Format weekly token limit: $ remaining / percentage / time."""
+    if not data:
+        return ""
+
+    remaining_str = data.get("remainingCredits", "$0.00").replace("$", "")
+    try:
+        remaining = float(remaining_str)
+    except ValueError:
+        remaining = 0
+
+    percent_remaining = data.get("percentRemaining", 0)
+    color = get_color(percent_remaining)
+
+    next_regen = data.get("nextRegenAt")
+    time_str = format_time_remaining_iso(next_regen)
+
+    prefix = f"{icon} " if icon else ""
+    return f"{prefix}%{{F{color}}}${remaining:.2f}/{int(percent_remaining)}%%{{F-}} [{time_str}]"
+
+
+def format_search_quota(data, icon=""):
+    """Format search hourly limit: remaining / percentage / time."""
+    if not data:
+        return ""
+
+    limit = data.get("limit", 0)
+    used = data.get("requests", 0)
+
     if limit == 0:
-        if icon:
-            return f"%{{F#dc322f}}{icon}?%{{F-}}"
-        return "%{{F#dc322f}}?%{{F-}}"
+        return ""
 
     remaining = limit - used
     percentage = (remaining / limit) * 100
     color = get_color(percentage)
-    time_remaining = format_time_remaining(renews_at) if (renews_at and show_time) else ""
+
+    renews_at = data.get("renewsAt")
+    time_str = format_time_remaining_iso(renews_at)
 
     prefix = f"{icon} " if icon else ""
-    if time_remaining:
-        return f"{prefix}%{{F{color}}}{int(percentage)}%%{{F-}} [{time_remaining}]"
-    else:
-        return f"{prefix}%{{F{color}}}{int(percentage)}%%{{F-}}"
+    return f"{prefix}%{{F{color}}}{remaining:.2f}/{int(percentage)}%%{{F-}} [{time_str}]"
 
 
 # Synthetic API Key
@@ -89,22 +137,36 @@ except Exception:
     print("%{{F#dc322f}}syn:?%{{F-}}")
     sys.exit(1)
 
-# Extract and format all quotas
+# Build output with exactly 3 items: 5-hour, weekly, search
 try:
-    # Subscription (main API quota) - no icon
-    sub = data.get("subscription", {})
-    sub_str = format_quota(sub.get("limit", 0), sub.get("requests", 0), sub.get("renewsAt"))
+    parts = []
 
-    # Search (hourly quota) - magnifying glass icon, no time
+    # 5-hour rolling - clock icon
+    rolling = data.get("rollingFiveHourLimit", {})
+    if rolling:
+        rolling_str = format_rolling_quota(rolling, icon="\uf017")
+        if rolling_str:
+            parts.append(rolling_str)
+
+    # Weekly token - dollar icon
+    weekly = data.get("weeklyTokenLimit", {})
+    if weekly:
+        weekly_str = format_weekly_token(weekly, icon="\uf155")
+        if weekly_str:
+            parts.append(weekly_str)
+
+    # Search hourly - magnifying glass icon
     search = data.get("search", {}).get("hourly", {})
-    search_str = format_quota(search.get("limit", 0), search.get("requests", 0), search.get("renewsAt"), icon="\uf002", show_time=False)
+    if search.get("limit", 0) > 0:
+        search_str = format_search_quota(search, icon="\uf002")
+        if search_str:
+            parts.append(search_str)
 
-    # Free tool calls (daily quota) - wrench icon, no time
-    free = data.get("freeToolCalls", {})
-    free_str = format_quota(free.get("limit", 0), free.get("requests", 0), free.get("renewsAt"), icon="\uf0ad", show_time=False)
-
-    # Output all quotas with dot separator
-    print(f"{sub_str} · {search_str} · {free_str}")
+    # Output with dot separator
+    if parts:
+        print(f"{' · '.join(parts)}")
+    else:
+        print("%{{F#dc322f}}syn:?%{{F-}}")
 
 except (KeyError, TypeError, ZeroDivisionError):
     print("%{{F#dc322f}}syn:?%{{F-}}")
