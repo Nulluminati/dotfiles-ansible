@@ -15,7 +15,7 @@ function firepass --description "Run AI CLI tools with Fireworks AI Kimi Models"
     end
 
     # Fireworks AI model for Kimi
-    set -l model accounts/fireworks/routers/kimi-k2p5-turbo
+    set -l model accounts/fireworks/routers/kimi-k2p6-turbo
 
     # Execute with Fireworks AI environment variables
     ANTHROPIC_DEFAULT_OPUS_MODEL=$model \

@@ -79,14 +79,15 @@ try:
 
     entitlement = premium.get("entitlement", 0)
     remaining = premium.get("remaining", 0)
-    used = entitlement - remaining
+    overage_count = premium.get("overage_count", 0)
+    used = entitlement - remaining + overage_count
 
     if entitlement == 0:
         print("%{F#dc322f}?%{F-}")
         sys.exit(1)
 
-    # Calculate percentage remaining
-    percentage = (remaining / entitlement) * 100
+    # Use GitHub's calculated percentage to account for model-specific credit costs
+    percentage = premium.get("percent_remaining", 0)
 
     # Determine color based on percentage
     if percentage > 50:

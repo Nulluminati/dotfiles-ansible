@@ -43,10 +43,10 @@ function happy --description "Happy Coder CLI with provider selection"
 
         case firepass fireworks
             set provider_args \
-                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
-                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
-                --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
-                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=accounts/fireworks/routers/kimi-k2p5-turbo" \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=accounts/fireworks/routers/kimi-k2p6-turbo" \
+                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=accounts/fireworks/routers/kimi-k2p6-turbo" \
+                --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=accounts/fireworks/routers/kimi-k2p6-turbo" \
+                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=accounts/fireworks/routers/kimi-k2p6-turbo" \
                 --claude-env "ANTHROPIC_BASE_URL=https://api.fireworks.ai/inference" \
                 --claude-env "ANTHROPIC_AUTH_TOKEN=$FIREWORKS_API_KEY" \
                 --claude-env "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1"
