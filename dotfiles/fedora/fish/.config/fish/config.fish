@@ -33,3 +33,4 @@ enable_transience
 
 # bun
 set -gx BUN_INSTALL "$HOME/.bun"
+set -gx PATH $HOME/.local/bin $PATH
