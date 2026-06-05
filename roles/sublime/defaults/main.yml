@@ -31,7 +31,6 @@ sublime_packages:
   - name: "https://github.com/SublimeText/Mermaid.git"
   - name: "https://github.com/SublimeText/Origami.git"
   - name: "https://github.com/SublimeText/Terraform.git"
-  - name: "https://github.com/TerminalFi/LSP-copilot.git"
   - name: "https://github.com/titoBouzout/SideBarEnhancements.git"
     version: "st3"
  # Themes

@@ -1,8 +1,10 @@
 ---
+# Pi extensions repository
+pi_extensions_repo: "https://github.com/natekift/pi-extensions.git"
+
 # Bun packages to install globally
 bun_tools:
   - "@openai/codex@latest"
-  - "@github/copilot@latest"
   - "@let-it-cook/cli"
   - happy-coder
   - ralph-tui
