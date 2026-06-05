@@ -19,6 +19,4 @@
   tags:
     - skills
 
-# Pi AI CLI tool extensions
-- name: Install Pi extensions
-  import_tasks: pi.yml
+# Pi is installed globally via bun_tools in defaults/main.yml

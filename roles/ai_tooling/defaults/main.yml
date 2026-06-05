@@ -1,13 +1,10 @@
 ---
-# Pi extensions repository
-pi_extensions_repo: "https://github.com/natekift/pi-extensions.git"
-
 # Bun packages to install globally
 bun_tools:
+  - "@mariozechner/pi-coding-agent"
   - "@openai/codex@latest"
   - "@let-it-cook/cli"
   - happy-coder
-  - ralph-tui
   - skills
 
 # Agent skills to install globally via skills CLI
@@ -19,10 +16,6 @@ agent_skills:
   - "softaworks/agent-toolkit@agent-md-refactor"
   - "wshobson/agents@uv-package-manager"
   - "wshobson/agents@code-review-excellence"
-  - "subsy/ralph-tui@ralph-tui-create-beads-rust"
-  - "subsy/ralph-tui@ralph-tui-create-beads"
-  - "subsy/ralph-tui@ralph-tui-create-json"
-  - "subsy/ralph-tui@ralph-tui-prd"
 
 mcp_servers:
   - name: brave-search
