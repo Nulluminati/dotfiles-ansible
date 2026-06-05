@@ -45,6 +45,7 @@ secrets.yml
 
 # Claude Code files
 /.claude/settings.local.json
+/.claude/worktrees
 CLAUDE.local.md
 
 # Node
