@@ -1,0 +1,22 @@
+{
+  "lastChangelogVersion": "0.78.1",
+  "defaultProvider": "fireworks",
+  "defaultModel": "accounts/fireworks/routers/kimi-k2p6-turbo",
+  "enabledModels": [
+    "fireworks/accounts/fireworks/routers/kimi-k2p6-turbo",
+    "zai/glm-5.1",
+    "zai/glm-5-turbo",
+    "zai/glm-4.7",
+    "zai/glm-4.5-air",
+    "synthetic/hf:MiniMaxAI/MiniMax-M2.5",
+    "synthetic/hf:moonshotai/Kimi-K2.6",
+    "synthetic/hf:zai-org/GLM-5.1",
+    "synthetic/hf:zai-org/GLM-4.7",
+    "synthetic/hf:zai-org/GLM-4.7-Flash"
+  ],
+  "defaultThinkingLevel": "high",
+  "hideThinkingBlock": true,
+  "packages": [
+    "~/Projects/pi-extensions"
+  ]
+}
