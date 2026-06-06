@@ -42,6 +42,7 @@ cli_dnf_packages:
   - rust
   - rustfmt
   - starship
+  - rust-analyzer
   - sublime-text
   - terraform
   - tig

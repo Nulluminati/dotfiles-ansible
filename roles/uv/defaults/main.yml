@@ -5,7 +5,8 @@ add_python_versions:
 packages:
   - virtualfish                           # https://github.com/justinmayer/virtualfish
   - yt-dlp                                # https://github.com/yt-dlp/yt-dlp
-  - tldr                                  # 
+  - tldr                                  # https://github.com/tldr-pages/tldr
+  - basedpyright                          # https://github.com/DetachHead/basedpyright
 
 fedora_packages:
   - pywal                                 # https://github.com/dylanaraps/pywal
