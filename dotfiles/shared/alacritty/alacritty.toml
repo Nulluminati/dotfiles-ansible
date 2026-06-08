@@ -1,5 +1,5 @@
 [general]
-import = ["/home/natekift/.cache/wal/colors-alacritty.toml"]
+import = ["~/.cache/wal/colors-alacritty.toml", "~/.config/alacritty-local.toml"]
 live_config_reload = true
 working_directory = "None"
 
@@ -13,9 +13,6 @@ draw_bold_text_with_bright_colors = true
 [cursor]
 style = "Block"
 unfocused_hollow = true
-
-[font]
-size = 12.0
 
 [font.bold]
 style = "Bold"
