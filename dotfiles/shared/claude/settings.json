@@ -27,8 +27,10 @@
       "Read(**/credentials/*)",
       "Read(**/.aws/**)",
       "Read(**/.ssh/**)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -84,5 +86,5 @@
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
   "teammateMode": "tmux",
-  "model": "opus[1m]"
+  "skipAutoPermissionPrompt": true
 }
