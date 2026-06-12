@@ -1,6 +1,6 @@
 #!/bin/bash
 
-updates=$(dnf updateinfo -q list | wc -l)
+updates=$(dnf repoquery -q --upgrades | wc -l)
 
 if [ "$updates" -gt 0 ]; then
     echo "󰏔  $updates"
