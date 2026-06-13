@@ -1,6 +1,6 @@
 function firepass --description "Run AI CLI tools with Fireworks AI Kimi Models"
-    # Default to claude if no command specified
-    set -l cmd "claude"
+    # Default to pi if no command specified
+    set -l cmd "pi"
     set -l args $argv
 
     if test (count $argv) -gt 0
@@ -17,13 +17,16 @@ function firepass --description "Run AI CLI tools with Fireworks AI Kimi Models"
     # Fireworks AI model for Kimi
     set -l model accounts/fireworks/routers/kimi-k2p6-turbo
 
-    # Execute with Fireworks AI environment variables
-    ANTHROPIC_DEFAULT_OPUS_MODEL=$model \
-    ANTHROPIC_DEFAULT_SONNET_MODEL=$model \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL=$model \
-    CLAUDE_CODE_SUBAGENT_MODEL=$model \
-    ANTHROPIC_BASE_URL=https://api.fireworks.ai/inference \
-    ANTHROPIC_AUTH_TOKEN="$FIREWORKS_API_KEY" \
-    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
-    command $cmd $args
+    if test "$cmd" = "pi"
+        command pi --provider fireworks --model $model $args
+    else
+        ANTHROPIC_DEFAULT_OPUS_MODEL=$model \
+        ANTHROPIC_DEFAULT_SONNET_MODEL=$model \
+        ANTHROPIC_DEFAULT_HAIKU_MODEL=$model \
+        CLAUDE_CODE_SUBAGENT_MODEL=$model \
+        ANTHROPIC_BASE_URL=https://api.fireworks.ai/inference \
+        ANTHROPIC_AUTH_TOKEN="$FIREWORKS_API_KEY" \
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+        command $cmd $args
+    end
 end

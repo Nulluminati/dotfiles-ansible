@@ -1,6 +1,6 @@
 function zai --description "Run AI CLI tools with Z.AI GLM Models"
-    # Default to claude if no command specified
-    set -l cmd "claude"
+    # Default to pi if no command specified
+    set -l cmd "pi"
     set -l args $argv
 
     if test (count $argv) -gt 0
@@ -14,24 +14,38 @@ function zai --description "Run AI CLI tools with Z.AI GLM Models"
         return 1
     end
 
-    # Available Z.AI models for the coding plan
-    set -l models GLM-5.1 GLM-5 GLM-5-Turbo GLM-4.7
+    # Model list depends on the consumer: pi uses lowercase registry IDs,
+    # Claude Code uses the Anthropic-style PascalCase IDs.
+    # Declare at function scope so it survives the if-block.
+    set -l models
+    if test "$cmd" = "pi"
+        # Query pi for the current zai model list so this stays in sync with
+        # pi releases without needing to update this file.
+        set models (pi --list-models | awk 'NR > 1 && $1 == "zai" {print $2}')
+        if test -z "$models"
+            echo "Error: No zai models found via 'pi --list-models'" >&2
+            return 1
+        end
+    else
+        set models GLM-5.1 GLM-5 GLM-5-Turbo GLM-4.7
+    end
 
-    # Use fzf to select model
     set -l selected_model (printf '%s\n' $models | fzf --prompt='Select model: ' --height=~50%)
 
-    # Exit if user cancelled (Ctrl+C/Esc) or didn't select anything
     if test $status -ne 0 -o -z "$selected_model"
         return 1
     end
 
-    # Execute with Z.AI environment variables
-    ANTHROPIC_DEFAULT_OPUS_MODEL=$selected_model \
-    ANTHROPIC_DEFAULT_SONNET_MODEL=$selected_model \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL=GLM-4.5-Air \
-    CLAUDE_CODE_SUBAGENT_MODEL=$selected_model \
-    ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic \
-    ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
-    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
-    command $cmd $args
+    if test "$cmd" = "pi"
+        command pi --provider zai --model $selected_model $args
+    else
+        ANTHROPIC_DEFAULT_OPUS_MODEL=$selected_model \
+        ANTHROPIC_DEFAULT_SONNET_MODEL=$selected_model \
+        ANTHROPIC_DEFAULT_HAIKU_MODEL=GLM-4.5-Air \
+        CLAUDE_CODE_SUBAGENT_MODEL=$selected_model \
+        ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic \
+        ANTHROPIC_AUTH_TOKEN="$ZAI_API_KEY" \
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+        command $cmd $args
+    end
 end
