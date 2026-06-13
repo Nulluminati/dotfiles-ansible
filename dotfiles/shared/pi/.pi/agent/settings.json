@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.79.2",
-  "defaultProvider": "synthetic",
-  "defaultModel": "hf:MiniMaxAI/MiniMax-M3",
+  "lastChangelogVersion": "0.79.3",
+  "defaultProvider": "opencode-go",
+  "defaultModel": "mimo-v2.5-pro",
   "enabledModels": [
     "zai/glm-5.1",
     "synthetic/hf:MiniMaxAI/MiniMax-M3",
@@ -17,7 +17,7 @@
     "opencode-go/kimi-k2.6"
   ],
   "defaultThinkingLevel": "high",
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "packages": [
     "~/Projects/pi-extensions"
   ]

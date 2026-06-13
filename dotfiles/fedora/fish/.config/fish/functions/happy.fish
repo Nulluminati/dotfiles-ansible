@@ -19,10 +19,10 @@ function happy --description "Happy Coder CLI with provider selection"
     switch $provider
         case zai
             set provider_args \
-                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=GLM-5-turbo" \
-                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=GLM-4.7" \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=GLM-5.1" \
+                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=GLM-5.1" \
                 --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=GLM-4.5-Air" \
-                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=GLM-4.7" \
+                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=GLM-5.1" \
                 --claude-env "ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic" \
                 --claude-env "ANTHROPIC_AUTH_TOKEN=$ZAI_API_KEY" \
                 --claude-env "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1"
@@ -31,10 +31,10 @@ function happy --description "Happy Coder CLI with provider selection"
             set provider_args \
                 --claude-env "ANTHROPIC_BASE_URL=https://api.synthetic.new/anthropic" \
                 --claude-env "ANTHROPIC_AUTH_TOKEN=$SYNTHETIC_API_KEY" \
-                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
-                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
+                --claude-env "ANTHROPIC_DEFAULT_OPUS_MODEL=hf:moonshotai/Kimi-K2.6" \
+                --claude-env "ANTHROPIC_DEFAULT_SONNET_MODEL=hf:moonshotai/Kimi-K2.6" \
                 --claude-env "ANTHROPIC_DEFAULT_HAIKU_MODEL=hf:zai-org/GLM-4.7-Flash" \
-                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=hf:nvidia/Kimi-K2.5-NVFP4" \
+                --claude-env "CLAUDE_CODE_SUBAGENT_MODEL=hf:moonshotai/Kimi-K2.6" \
                 --claude-env "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1"
 
         case claude ""
