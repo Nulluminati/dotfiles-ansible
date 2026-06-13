@@ -216,7 +216,7 @@ exec = uv run ~/.config/scripts/polybar/synthetic-quota.py 2>/dev/null
 interval = 300
 format = <label>
 format-prefix-font = 3
-format-prefix = "󱚡  "
+format-prefix = "󰰡  "
 format-prefix-foreground = ${colors.color6}
 label-foreground = ${colors.foreground}
 label-font = 2
@@ -233,6 +233,18 @@ format-prefix-foreground = ${colors.color5}
 label-foreground = ${colors.foreground}
 label-font = 2
 click-left = firefox --new-tab --url "https://z.ai/manage-apikey/subscription"
+
+[module/opencode-go-usage]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/opencode-go-usage.py 2>/dev/null
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󰟓  "
+format-prefix-foreground = ${colors.color2}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://console.opencode.ai/"
 
 [module/openrouter-balance]
 type = custom/script

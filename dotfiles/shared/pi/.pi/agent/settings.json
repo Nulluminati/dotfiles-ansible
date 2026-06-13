@@ -1,21 +1,23 @@
 {
-  "lastChangelogVersion": "0.79.0",
-  "defaultProvider": "fireworks",
-  "defaultModel": "accounts/fireworks/routers/kimi-k2p6-turbo",
+  "lastChangelogVersion": "0.79.2",
+  "defaultProvider": "synthetic",
+  "defaultModel": "hf:MiniMaxAI/MiniMax-M3",
   "enabledModels": [
-    "fireworks/accounts/fireworks/routers/kimi-k2p6-turbo",
     "zai/glm-5.1",
-    "zai/glm-5-turbo",
-    "zai/glm-4.7",
-    "zai/glm-4.5-air",
-    "synthetic/hf:MiniMaxAI/MiniMax-M2.5",
+    "synthetic/hf:MiniMaxAI/MiniMax-M3",
     "synthetic/hf:moonshotai/Kimi-K2.6",
     "synthetic/hf:zai-org/GLM-5.1",
-    "synthetic/hf:zai-org/GLM-4.7",
-    "synthetic/hf:zai-org/GLM-4.7-Flash"
+    "opencode-go/glm-5.1",
+    "opencode-go/minimax-m3",
+    "opencode-go/kimi-k2.7-code",
+    "opencode-go/deepseek-v4-pro",
+    "opencode-go/deepseek-v4-flash",
+    "opencode-go/qwen3.7-max",
+    "opencode-go/mimo-v2.5-pro",
+    "opencode-go/kimi-k2.6"
   ],
   "defaultThinkingLevel": "high",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "packages": [
     "~/Projects/pi-extensions"
   ]

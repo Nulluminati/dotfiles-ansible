@@ -125,9 +125,12 @@
 - name: Set API keys as fish universal variables
   shell: |
     set -Ux BRAVE_API_KEY {{ api_keys.brave }}
+    set -Ux CLAUDE_API_KEY {{api_keys.claude}}
     set -Ux FIREWORKS_API_KEY {{ api_keys.fireworks }}
-    set -Ux OPENWEATHER_API_KEY {{ api_keys.openweather }}
+    set -Ux OPENAI_API_KEY {{ api_keys.openai }}
+    set -Ux OPENCODE_API_KEY {{ api_keys.opencode }}
     set -Ux OPENROUTER_API_KEY {{ api_keys.openrouter }}
+    set -Ux OPENWEATHER_API_KEY {{ api_keys.openweather }}
     set -Ux SYNTHETIC_API_KEY {{ api_keys.synthetic }}
     set -Ux ZAI_API_KEY {{ api_keys.zai }}
   args:
