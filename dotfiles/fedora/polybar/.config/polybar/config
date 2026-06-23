@@ -244,7 +244,8 @@ format-prefix = "󰟓  "
 format-prefix-foreground = ${colors.color2}
 label-foreground = ${colors.foreground}
 label-font = 2
-click-left = firefox --new-tab --url "https://console.opencode.ai/"
+click-right = ~/.config/scripts/polybar/opencode-go-usage-setup.sh
+click-left = firefox --new-tab --url "https://opencode.ai/"
 
 [module/openrouter-balance]
 type = custom/script
