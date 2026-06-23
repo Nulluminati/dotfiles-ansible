@@ -1,24 +1,47 @@
 {
-  "lastChangelogVersion": "0.79.3",
-  "defaultProvider": "opencode-go",
-  "defaultModel": "mimo-v2.5-pro",
+  "lastChangelogVersion": "0.79.10",
+  "defaultProvider": "zai",
+  "defaultModel": "glm-5.2",
   "enabledModels": [
-    "zai/glm-5.1",
+    "opencode-go/deepseek-v4-flash",
+    "opencode-go/deepseek-v4-pro",
+    "opencode-go/glm-5.1",
+    "opencode-go/kimi-k2.6",
+    "opencode-go/kimi-k2.7-code",
+    "opencode-go/mimo-v2.5-pro",
+    "opencode-go/minimax-m3",
+    "opencode-go/qwen3.7-max",
     "synthetic/hf:MiniMaxAI/MiniMax-M3",
     "synthetic/hf:moonshotai/Kimi-K2.6",
     "synthetic/hf:zai-org/GLM-5.1",
-    "opencode-go/glm-5.1",
-    "opencode-go/minimax-m3",
-    "opencode-go/kimi-k2.7-code",
-    "opencode-go/deepseek-v4-pro",
-    "opencode-go/deepseek-v4-flash",
-    "opencode-go/qwen3.7-max",
-    "opencode-go/mimo-v2.5-pro",
-    "opencode-go/kimi-k2.6"
+    "zai/glm-5.1",
+    "zai/glm-5.2",
+    "synthetic/hf:zai-org/GLM-5.2",
+    "synthetic/syn:large:vision",
+    "synthetic/syn:small:vision",
+    "synthetic/syn:large:text",
+    "synthetic/syn:small:text",
+    "neuralwatt/glm-5.2",
+    "neuralwatt/kimi-k2.6",
+    "neuralwatt/kimi-k2.6-fast",
+    "neuralwatt/kimi-k2.7-code",
+    "neuralwatt/glm-5.2-fast"
   ],
   "defaultThinkingLevel": "high",
   "hideThinkingBlock": true,
   "packages": [
-    "~/Projects/pi-extensions"
-  ]
+    "~/Projects/pi-extensions",
+    "npm:@wierdbytes/pi-peon"
+  ],
+  "theme": "dark",
+  "terminal": {
+    "clearOnShrink": true
+  },
+  "editorPaddingX": 0,
+  "quietStartup": true,
+  "enableInstallTelemetry": false,
+  "defaultProjectTrust": "always",
+  "warnings": {
+    "anthropicExtraUsage": true
+  }
 }
