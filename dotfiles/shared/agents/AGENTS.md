@@ -14,8 +14,9 @@
 ### Starting a new project
 
 When working on a new project or adding significant functionality:
-- If a CLAUDE.md doesn't exist, write one that captures project-specific context
-- Use the claude-md-improver skill to audit and improve existing CLAUDE.md files
+- If a AGENTS.md OR CLAUDE.md doesn't exist, write an AGENTS.md that captures project-specific context
+- Prefer AGENTS.md with a CLAUDE.md containing only `@AGENTS.md` for projects that do not yet have one.
+- Use the agent-md-refactor skill to audit and improve existing AGENTS.md or CLAUDE.md files
 - Focus on what makes THIS project unique - don't repeat global guidelines
 
 
