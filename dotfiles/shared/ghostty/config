@@ -1,9 +1,10 @@
 # Ghostty Terminal Configuration
 # Based on Alacritty preferences
 
-# Font configuration (matches Alacritty: Hack Nerd Font, size 12)
+# Font configuration (matches Alacritty: Hack Nerd Font, size 10 per alacritty-local.toml)
 font-family = Hack Nerd Font
-font-size = 12
+font-style = Regular
+font-size = 10
 
 # Cursor style (matches Alacritty: Block)
 cursor-style = block
