@@ -127,6 +127,7 @@
     set -Ux BRAVE_API_KEY {{ api_keys.brave }}
     set -Ux CLAUDE_API_KEY {{api_keys.claude}}
     set -Ux FIREWORKS_API_KEY {{ api_keys.fireworks }}
+    set -Ux NEURALWATT_API_KEY {{ api_keys.neuralwatt }}
     set -Ux OPENAI_API_KEY {{ api_keys.openai }}
     set -Ux OPENCODE_API_KEY {{ api_keys.opencode }}
     set -Ux OPENROUTER_API_KEY {{ api_keys.openrouter }}
