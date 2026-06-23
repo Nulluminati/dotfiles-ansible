@@ -28,11 +28,11 @@ set $right  l
 
 
 # define names for workspaces
-set $ws1    "1:   Terminal"
+set $ws1    "1:   Terminal "
 set $ws2    "2:   Code "
-set $ws3    "3:   Firefox "
-set $ws4    "4:   Passwords "
-set $ws5    "5:   General "
+set $ws3    "3:   General "
+set $ws4    "4:   Firefox "
+set $ws5    "5:   Passwords "
 set $ws6    "6:   General "
 set $ws7    "7:   General "
 set $ws8    "8:   General "
@@ -185,8 +185,8 @@ mode "  " {
 # assign program to workspace
 assign [class="terminal"]           → $ws1
 assign [class="Sublime Text"]       → $ws2
-assign [class="Firefox"]            → $ws3
-assign [class="KeePassXC"]          → $ws4
+assign [class="Firefox"]            → $ws4
+assign [class="KeePassXC"]          → $ws5
 
 # i3-Gaps
 
