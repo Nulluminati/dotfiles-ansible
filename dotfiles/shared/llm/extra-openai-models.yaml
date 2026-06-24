@@ -1,36 +1,207 @@
-- model_id: zai/GLM-4.7-Flash
-  model_name: GLM-4.7-Flash
+# Additional OpenAI-API-compatible models for llm
+# https://llm.datasette.io/en/stable/other-models.html#openai-compatible-models
+
+# Z.ai (GLM Coding Plan) — https://api.z.ai/api/coding/paas/v4
+- model_id: zai/GLM-5.2
+  model_name: glm-5.2
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
-- model_id: zai/GLM-4.7-FlashX
-  model_name: GLM-4.7-FlashX
+- model_id: zai/GLM-5.1
+  model_name: glm-5.1
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
+- model_id: zai/GLM-5
+  model_name: glm-5
+  api_base: "https://api.z.ai/api/coding/paas/v4"
+  api_key_name: zai
+- model_id: zai/GLM-5-Turbo
+  model_name: glm-5-turbo
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
 - model_id: zai/GLM-4.7
-  model_name: GLM-4.7
+  model_name: glm-4.7
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
 - model_id: zai/GLM-4.6
-  model_name: GLM-4.6
+  model_name: glm-4.6
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
 - model_id: zai/GLM-4.5
-  model_name: GLM-4.5
+  model_name: glm-4.5
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
-- model_id: zai/GLM-4.5-air
-  model_name: GLM-4.5-air
+- model_id: zai/GLM-4.5-Air
+  model_name: glm-4.5-air
   api_base: "https://api.z.ai/api/coding/paas/v4"
   api_key_name: zai
-- model_id: synthetic/Kimi-K2.5
-  model_name: hf:moonshotai/Kimi-K2.5 
+
+# Synthetic — https://api.synthetic.new/openai/v1
+- model_id: synthetic/GLM-5.2
+  model_name: hf:zai-org/GLM-5.2
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/GLM-5.1
+  model_name: hf:zai-org/GLM-5.1
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/Kimi-K2.6
+  model_name: hf:moonshotai/Kimi-K2.6
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+  vision: true
+- model_id: synthetic/Qwen3.6-27B
+  model_name: hf:Qwen/Qwen3.6-27B
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+  vision: true
+- model_id: synthetic/MiniMax-M3
+  model_name: hf:MiniMaxAI/MiniMax-M3
   api_base: "https://api.synthetic.new/openai/v1"
   api_key_name: synthetic
 - model_id: synthetic/GLM-4.7
   model_name: hf:zai-org/GLM-4.7
   api_base: "https://api.synthetic.new/openai/v1"
   api_key_name: synthetic
-- model_id: synthetic/MiniMax-M2.1
-  model_name: hf:MiniMaxAI/MiniMax-M2.1
+- model_id: synthetic/GLM-4.7-Flash
+  model_name: hf:zai-org/GLM-4.7-Flash
   api_base: "https://api.synthetic.new/openai/v1"
   api_key_name: synthetic
+- model_id: synthetic/Nemotron-3-Super
+  model_name: hf:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+# syn: aliases auto-route to the latest recommended model in each tier
+- model_id: synthetic/syn-large
+  model_name: syn:large:text
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/syn-small
+  model_name: syn:small:text
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+- model_id: synthetic/syn-large-vision
+  model_name: syn:large:vision
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+  vision: true
+- model_id: synthetic/syn-small-vision
+  model_name: syn:small:vision
+  api_base: "https://api.synthetic.new/openai/v1"
+  api_key_name: synthetic
+  vision: true
+
+# OpenCode Go — https://opencode.ai/zen/go/v1
+# Some Qwen models (e.g. qwen3.7-max) are Anthropic-compat only and
+# intentionally omitted from this OpenAI-compat list.
+- model_id: opencode-go/GLM-5.2
+  model_name: glm-5.2
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/GLM-5.1
+  model_name: glm-5.1
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/GLM-5
+  model_name: glm-5
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/MiniMax-M3
+  model_name: minimax-m3
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/MiniMax-M2.7
+  model_name: minimax-m2.7
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/MiniMax-M2.5
+  model_name: minimax-m2.5
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/Kimi-K2.7
+  model_name: kimi-k2.7-code
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/Kimi-K2.6
+  model_name: kimi-k2.6
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/Kimi-K2.5
+  model_name: kimi-k2.5
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/DeepSeek-V4-Pro
+  model_name: deepseek-v4-pro
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/DeepSeek-V4-Flash
+  model_name: deepseek-v4-flash
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/Qwen3.7-Plus
+  model_name: qwen3.7-plus
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/Qwen3.6-Plus
+  model_name: qwen3.6-plus
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/MiMo-V2.5-Pro
+  model_name: mimo-v2.5-pro
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/MiMo-V2.5
+  model_name: mimo-v2.5
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+- model_id: opencode-go/HY3-Preview
+  model_name: hy3-preview
+  api_base: "https://opencode.ai/zen/go/v1"
+  api_key_name: opencode
+
+# Neuralwatt — https://api.neuralwatt.com/v1
+# Energy consumption is captured server-side and returned in the response.
+- model_id: neuralwatt/GLM-5.2
+  model_name: glm-5.2
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+- model_id: neuralwatt/GLM-5.2-Fast
+  model_name: glm-5.2-fast
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+- model_id: neuralwatt/GLM-5.2-Short
+  model_name: glm-5.2-short
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+- model_id: neuralwatt/Kimi-K2.7-Code
+  model_name: kimi-k2.7-code
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+  vision: true
+- model_id: neuralwatt/Kimi-K2.6
+  model_name: kimi-k2.6
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+  vision: true
+- model_id: neuralwatt/Kimi-K2.6-Fast
+  model_name: kimi-k2.6-fast
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+  vision: true
+- model_id: neuralwatt/Qwen3.6-35B
+  model_name: qwen3.6-35b
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+  vision: true
+- model_id: neuralwatt/Qwen3.6-35B-Fast
+  model_name: qwen3.6-35b-fast
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+  vision: true
+- model_id: neuralwatt/Qwen3.5-397B
+  model_name: qwen3.5-397b
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
+- model_id: neuralwatt/Qwen3.5-397B-Fast
+  model_name: qwen3.5-397b-fast
+  api_base: "https://api.neuralwatt.com/v1"
+  api_key_name: neuralwatt
