@@ -76,6 +76,15 @@ bun_packages:
 gh_extensions:
   - dlvhdr/gh-dash
 
+# Flatpak applications to install from Flathub.
+# Add reverse-DNS app IDs here (see https://flathub.org). The Flathub remote
+# is registered automatically by the cli role on first run.
+flatpak_packages:
+  - md.obsidian.Obsidian
+
+# Flathub repository file used to register the Flathub remote.
+flathub_repo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
 fedora_repositories:
   - name: docker-ce-stable
     description: Docker CE Stable - $basearch

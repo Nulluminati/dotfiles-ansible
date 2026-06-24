@@ -63,6 +63,46 @@
   tags:
     - packages
 
+# Flatpak applications (e.g. Obsidian) are installed from Flathub.
+# Add app IDs to flatpak_packages in defaults/main.yml.
+- name: Ensure flatpak is installed
+  become: true
+  dnf:
+    name: flatpak
+    state: present
+  tags:
+    - flatpak
+
+- name: Add Flathub remote
+  become: true
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: "{{ flathub_repo_url }}"
+    method: system
+  tags:
+    - flatpak
+
+- name: Install Flatpak applications from Flathub
+  become: true
+  community.general.flatpak:
+    name: "{{ flatpak_packages }}"
+    remote: flathub
+    state: present
+    method: system
+  tags:
+    - flatpak
+
+# Some Flatpak apps bundle a CLI that registers itself under ~/.local/bin on
+# first run (e.g. the Obsidian CLI). Ensure that directory exists and is on PATH.
+- name: Ensure local bin directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: '0755'
+  tags:
+    - flatpak
+
 # Docker
 # Add user to docker group
 - name: Add user to docker group
