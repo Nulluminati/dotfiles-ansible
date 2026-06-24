@@ -259,6 +259,18 @@ label-foreground = ${colors.foreground}
 label-font = 2
 click-left = firefox --new-tab --url "https://openrouter.ai/keys"
 
+[module/neuralwatt-credits]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/neuralwatt-credits.py 2>/dev/null
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "󰉁  "
+format-prefix-foreground = ${colors.color3}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://portal.neuralwatt.com/docs/api/quota"
+
 [module/claude-credits]
 type = custom/script
 exec = uv run ~/.config/scripts/polybar/claude-credits.py 2>/dev/null
