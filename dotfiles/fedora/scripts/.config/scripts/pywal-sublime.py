@@ -281,6 +281,119 @@ def generate_sublime_color_scheme() -> dict:
     return result_scheme
 
 
+def _mix(c1: str, c2: str, ratio: float) -> str:
+    """Mix two hex colors. ratio=0 returns c1, ratio=1 returns c2."""
+    c1 = c1.lstrip("#")
+    c2 = c2.lstrip("#")
+    r = round(int(c1[0:2], 16) * (1 - ratio) + int(c2[0:2], 16) * ratio)
+    g = round(int(c1[2:4], 16) * (1 - ratio) + int(c2[4:6], 16) * ratio)
+    b = round(int(c1[4:6], 16) * (1 - ratio) + int(c2[4:6], 16) * ratio)
+    return f"#{r:02x}{g:02x}{b:02x}"
+
+
+def generate_sublime_theme_variables(wal_scheme: dict) -> dict:
+    """
+    Generate Sublime Text theme variables from pywal colors.
+
+    Returns a variables dict suitable for a .sublime-theme file that extends
+    Adaptive.sublime-theme. Colors are derived from the pywal palette so the
+    sidebar, tabs, panels, and status bar match the active terminal theme.
+    """
+    wal_colors = [wal_scheme["colors"][f"color{i}"] for i in range(16)]
+    bg = wal_scheme["special"]["background"]
+    fg = wal_scheme["special"]["foreground"]
+    cursor = wal_scheme["special"]["cursor"]
+
+    border = _mix(bg, fg, 0.15)
+    bg_lighter = _mix(bg, fg, 0.05)
+    bg_lightest = _mix(bg, fg, 0.10)
+    fg_muted = _mix(bg, fg, 0.60)
+    fg_dim = _mix(bg, fg, 0.45)
+
+    green = wal_colors[2]
+    red = wal_colors[1]
+    blue = wal_colors[4]
+    orange = wal_colors[9]
+    cyan = wal_colors[6]
+
+    accent = cursor
+
+    return {
+        "accent": accent,
+        "background": bg,
+        "foreground": fg,
+        "fontSizeSm": 11,
+        "fontSizeMd": 12,
+        "fontSizeLg": 14,
+        "fontSizeHuge": 24,
+        "fontFace": "system",
+        "titleBarBackground": bg,
+        "titleBarForeground": fg_dim,
+        "tooltipBackground": blue,
+        "tooltipForeground": bg,
+        "sidebarBackground": bg,
+        "sidebarBorder": border,
+        "sidebarHeadingForeground": fg_muted,
+        "sidebarLabelForeground": fg,
+        "sidebarLabelHoverForeground": fg,
+        "sidebarLabelSelectedForeground": fg,
+        "sidebarFolderForeground": fg_muted,
+        "sidebarFolderExpandedForeground": accent,
+        "treeActiveSelectionBackground": bg_lightest,
+        "tabInactiveBackground": bg,
+        "tabBorder": border,
+        "tabActiveForeground": fg,
+        "tabActiveBackground": bg_lighter,
+        "tabSelectedBorderBorder": accent,
+        "tabButtonForeground": fg,
+        "gridBorder": border,
+        "overlayBorder": bg_lighter,
+        "panelControlBackground": bg,
+        "panelControlForeground": fg,
+        "panelControlBorder": border,
+        "panelRowBackground": bg,
+        "panelRowForeground": fg,
+        "panelRowLabelForeground": fg_muted,
+        "panelRowSelectedBackground": f"color({fg} alpha(0.15))",
+        "panelRowSelectedForeground": fg,
+        "panelRowMatchForeground": blue,
+        "panelRowSelectedMatchForeground": blue,
+        "panelRowLinkForeground": accent,
+        "autoCompleteBackground": bg,
+        "autoCompleteForeground": fg,
+        "autoCompleteSelectedBackground": f"color({accent} alpha(0.25))",
+        "autoCompleteSelectedForeground": fg,
+        "autoCompleteMatchForeground": accent,
+        "autoCompleteSelectedMatchForeground": accent,
+        "inputBackground": bg,
+        "inputBorder": border,
+        "inputForeground": fg,
+        "buttonForeground": fg,
+        "buttonBackground": f"color({fg} alpha(0.02))",
+        "buttonBorder": border,
+        "buttonHoverBackground": f"color({fg} alpha(0.1))",
+        "buttonPressedBackground": f"color({fg} alpha(0.2))",
+        "buttonSelectedBackground": f"color({fg} alpha(0.08))",
+        "buttonIconForeground": fg,
+        "buttonIconSelectedForeground": accent,
+        "statusBarForeground": fg_dim,
+        "statusBarHoverForeground": fg,
+        "statusBarBackground": bg_lighter,
+        "statusBarBorder": border,
+        "progressBarBackground": accent,
+        "scrollBar": f"color({fg} alpha(0.2))",
+        "scrollTrack": f"color({fg} alpha(0.1))",
+        "vcsAnnotationBorder": border,
+        "vcsUntracked": green,
+        "vcsModified": blue,
+        "vcsDeleted": red,
+        "vcsIgnored": fg_dim,
+        "vcsUnmerged": orange,
+        "vcsStaged": cyan,
+        "vcsMissing": orange,
+    }
+
+
 def main():
     """Generate and write the Sublime Text color scheme."""
     scheme = generate_sublime_color_scheme()
@@ -307,6 +420,27 @@ def main():
         json.dump(scheme, file, indent=4)
 
     print(f"Generated Sublime Text color scheme: {theme_path}")
+
+    # Update the PyWal.sublime-theme variables so the sidebar, tabs, panels,
+    # and status bar match the active pywal color scheme.
+    wal_path = os.path.join(os.environ["HOME"], ".cache/wal/colors.json")
+    with open(wal_path, encoding="utf-8") as file:
+        wal_scheme = json.load(file)
+
+    sublime_theme_path = os.path.join(sublime_user_path, "PyWal.sublime-theme")
+
+    if os.path.exists(sublime_theme_path):
+        with open(sublime_theme_path, encoding="utf-8") as file:
+            theme = json.load(file)
+    else:
+        theme = {"extends": "Adaptive.sublime-theme", "variables": {}, "rules": []}
+
+    theme["variables"] = generate_sublime_theme_variables(wal_scheme)
+
+    with open(sublime_theme_path, "w", encoding="utf-8") as file:
+        json.dump(theme, file, indent=4)
+
+    print(f"Updated Sublime Text theme: {sublime_theme_path}")
 
 
 if __name__ == "__main__":
