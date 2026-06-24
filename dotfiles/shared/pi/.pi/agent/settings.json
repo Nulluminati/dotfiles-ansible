@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.79.10",
-  "defaultProvider": "zai",
-  "defaultModel": "glm-5.2",
+  "lastChangelogVersion": "0.80.2",
+  "defaultProvider": "synthetic",
+  "defaultModel": "hf:zai-org/GLM-5.2",
   "enabledModels": [
     "opencode-go/deepseek-v4-flash",
     "opencode-go/deepseek-v4-pro",
@@ -27,13 +27,13 @@
     "neuralwatt/kimi-k2.7-code",
     "neuralwatt/glm-5.2-fast"
   ],
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "hideThinkingBlock": true,
   "packages": [
     "~/Projects/pi-extensions",
     "npm:@wierdbytes/pi-peon"
   ],
-  "theme": "dark",
+  "theme": "terminal",
   "terminal": {
     "clearOnShrink": true
   },
