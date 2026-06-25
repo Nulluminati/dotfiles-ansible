@@ -1,4 +1,7 @@
 # Ignore all skills installed via skills CLI (from .skill-lock.json)
 *
-# Keep quick-wins (managed in this repo)
+# Keep skills managed in this repo (not installed via skills CLI)
 !quick-wins/
+!quick-wins/**
+!speak/
+!speak/**
