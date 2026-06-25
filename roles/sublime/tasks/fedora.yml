@@ -122,11 +122,20 @@
     - sublime
     - helm-ls
 
+# community.general.gem checks installed state via `gem query`, which was
+# removed in RubyGems 4. Use `gem list -e` directly to stay compatible.
+- name: Check if ruby-lsp gem is installed
+  ansible.builtin.command: gem list -e ruby-lsp
+  register: ruby_lsp_check
+  changed_when: false
+  check_mode: false
+  tags:
+    - sublime
+    - ruby-lsp
+
 - name: Install ruby-lsp gem
-  community.general.gem:
-    name: ruby-lsp
-    state: present
-    user_install: true
+  ansible.builtin.command: gem install ruby-lsp --user-install
+  when: "'ruby-lsp' not in ruby_lsp_check.stdout"
   tags:
     - sublime
     - ruby-lsp
