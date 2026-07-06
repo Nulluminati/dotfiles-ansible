@@ -22,7 +22,7 @@ Ansible is used to drive the management of my dotfiles as I am often setting up 
 
 Ansible and Stow make up the underlying of this repository and how my dotfiles are deployed. Dotfiles within `dotfiles/fedora` are all managed by stow and after the initial ansible run will be symlinked to their respective config paths.
 
-These dotfiles are intended for use with Fedora. macOS support is planned at some point.
+Fedora is the primary target. macOS is also supported: Homebrew installs the packages and casks, and `dotfiles/mac` is stowed into place.
 
 ## Tools
 

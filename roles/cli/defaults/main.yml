@@ -117,3 +117,69 @@ copr_repositories:
     creates: _copr:copr.fedorainfracloud.org:scottames:ghostty.repo
   - name: "@go-sig/golang-rawhide"
     creates: _copr:copr.fedorainfracloud.org:group_go-sig:golang-rawhide.repo
+
+# Homebrew taps to configure on macOS
+mac_homebrew_taps:
+  - hashicorp/tap # terraform
+  - norwoodj/tap # helm-docs
+  - puma/puma # puma-dev
+  - vectordotdev/brew # vector
+  - warrensbox/tap # tgswitch
+
+# Homebrew cask apps to install on macOS
+mac_cask_packages:
+  - alacritty # Cross-platform, GPU-accelerated terminal emulator
+  - aws-vpn-client # AWS VPN Client
+  - betterdisplay # Display management utility
+  - chatgpt # OpenAI ChatGPT desktop app
+  - claude # Claude desktop app
+  - cursor # AI-first code editor
+  - docker # Docker Desktop
+  - firefox # Mozilla Firefox web browser
+  - font-source-code-pro # Monospaced font family for user interface and coding environments
+  - kap # Screen recorder
+  - keepassxc # Password manager
+  - linearmouse # LinearMouse - Linear mouse acceleration
+  - ngrok # Expose localhost to the internet
+  - notion # Notes and knowledge base
+  - obsidian # Markdown knowledge base
+  - slack # Team messaging
+  - spotify # Music streaming
+  - sublime-text # Text editor
+
+# Homebrew formulae to install on macOS
+mac_brew_packages:
+  - awscli # Official Amazon AWS command-line interface
+  - bash # Bourne-Again SHell, a UNIX command interpreter
+  - bat # Clone of cat with syntax highlighting and Git integration
+  - check-jsonschema # JSON Schema validator
+  - codex # OpenAI Codex CLI coding agent
+  - dive # Tool for exploring each layer in a docker image
+  - fd # Simple, fast and user-friendly alternative to 'find'
+  - fzf # Command-line fuzzy finder written in Go
+  - git # Distributed revision control system
+  - git-delta # Syntax-highlighting pager for git and diff output
+  - grep # GNU grep, egrep and fgrep
+  - helm # The Kubernetes Package Manager
+  - helm-docs # Generate documentation for your Helm charts
+  - jq # Lightweight and flexible command-line JSON processor
+  - kubectx # Faster way to switch between clusters and namespaces in kubectl
+  - kubernetes-cli # Kubernetes command-line interface
+  - make # Utility for directing compilation
+  - minikube # Run a Kubernetes cluster locally
+  - mise # Polyglot runtime manager (asdf-compatible)
+  - neovim # Ambitious Vim-fork focused on extensibility and agility
+  - node # Platform built on V8 to build network applications
+  - pre-commit # Framework for managing multi-language pre-commit hooks
+  - ripgrep # Search tool like grep and The Silver Searcher
+  - starship # Cross-shell prompt for astronauts
+  - tgswitch # Switch between different versions of terraform
+  - tmux # Terminal multiplexer
+  - tree # Display directories as trees (with optional color/HTML output)
+  - vector # High-performance, open-source, observability data pipeline
+  - watch # Executes a program periodically, showing output fullscreen
+  - vim # Vi 'workalike' with many additional features
+  - wget # Internet file retriever
+  - yamllint # Linter for YAML files
+  - yq # Command-line YAML processor - jq wrapper for YAML documents
+  - zsh # UNIX shell (command interpreter)

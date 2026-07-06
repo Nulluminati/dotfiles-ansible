@@ -1,0 +1,54 @@
+---
+
+- name: Setup homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+  loop: "{{ mac_homebrew_taps }}"
+  tags:
+    - homebrew
+    - taps
+
+- name: Install homebrew cask apps
+  community.general.homebrew_cask:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+    accept_external_apps: yes
+  loop: "{{ mac_cask_packages }}"
+  tags:
+    - homebrew
+    - casks
+
+- name: Install homebrew packages
+  community.general.homebrew:
+    name: "{{ item.name|default(item) }}"
+    state: "{{ item.state|default('present') }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+  loop: "{{ mac_brew_packages }}"
+  tags:
+    - homebrew
+    - packages
+
+# Bun - required by the ai_tooling role, which installs its bun tools before
+# any package manager would otherwise provide bun on macOS.
+- name: Install bun
+  ansible.builtin.shell:
+    cmd: "curl -fsSL https://bun.sh/install | bash"
+    creates: "~/.bun/bin/bun"
+  tags:
+    - bun
+
+# oh-my-zsh. KEEP_ZSHRC=yes stops the installer from writing its own ~/.zshrc,
+# leaving the slot free for the stow role to symlink the managed config.
+# macOS already uses zsh as the default login shell, so no chsh is needed.
+- name: Install oh-my-zsh
+  ansible.builtin.shell:
+    cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
+  environment:
+    KEEP_ZSHRC: "yes"
+  args:
+    creates: "~/.oh-my-zsh"
+  tags:
+    - zsh
+    - ohmyzsh
