@@ -1,6 +1,6 @@
 add_newline = false
 
-format = """$username$hostname$directory$git_branch$git_metrics$git_status$cmd_duration$kubernetes$python$aws$docker_context$golang$java$memory_usage$nodejs$ruby$rust$package$line_break$character"""
+format = """$username$hostname$directory$git_branch$git_metrics$git_status$git_state$cmd_duration$aws$kubernetes$terraform$python$docker_context$golang$java$memory_usage$nodejs$ruby$rust$package$jobs$status$line_break$character"""
 
 [line_break]
 disabled = true
@@ -52,7 +52,9 @@ min_time_to_notify = 10000
 
 [aws]
 symbol = "  "
-format = '/ [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
+force_display = true
+style = "bold purple"
+format = '/ [$symbol($profile )(\($region\) )]($style)'
 
 [docker_context]
 symbol = " "
@@ -65,8 +67,18 @@ symbol = " "
 
 [kubernetes]
 disabled = false
-format = '/ [ﴱ $context \($namespace\)](dimmed green) '
-symbol = "ﴱ "
+format = '/ [$symbol$context( \($namespace\))](dimmed green) '
+symbol = "☸ "
+
+# Shorten EKS ARNs (arn:aws:eks:REGION:ACCT:cluster/NAME) to just the cluster name.
+[[kubernetes.contexts]]
+context_pattern = "arn:aws:eks:.*:cluster/(?P<cluster>.*)"
+context_alias = "$cluster"
+
+[terraform]
+# Active workspace (default/staging/prod). $workspace reads .terraform/environment,
+# so this stays fast — no `terraform version` subprocess.
+format = '/ [$symbol$workspace]($style) '
 
 [memory_usage]
 symbol = " "
@@ -80,6 +92,11 @@ Linux = " "
 
 [package]
 disabled = true
+
+[status]
+# Show the previous command's exit code when it fails (hidden on success).
+disabled = false
+symbol = "✖ "
 
 [python]
 disabled = false
