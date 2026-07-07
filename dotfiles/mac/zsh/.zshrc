@@ -1,133 +1,94 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$PATH:$HOME/bin/
+# ~/.zshrc — interactive shell configuration
+# Managed via Ansible + Stow (dotfiles-ansible).
+# Machine-local secrets and overrides go in ~/.zshrc.local (see bottom).
 
-# Path to your oh-my-zsh installation.
+# ── Oh My Zsh ──────────────────────────────────────────────────────────
 export ZSH="$HOME/.oh-my-zsh"
+# Prompt is rendered by Starship (see "Prompt" below), so leave the omz theme empty.
+ZSH_THEME=""
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="eastwood"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
+# Don't mark untracked files under VCS as dirty — much faster status checks
+# in large repositories.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+# Keep this list lean; too many plugins slow down shell startup.
+plugins=(git colored-man-pages colorize pip python brew macos aws heroku helm kubectl terraform kubectx docker docker-compose gh)
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+source "$ZSH/oh-my-zsh.sh"
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages colorize pip python brew macos aws heroku helm kubectl terraform)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias kn='kubectl config set-context --current --namespace '
-
-alias cl='clear'
-
+# ── PATH ───────────────────────────────────────────────────────────────
+export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/.local/bin"
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
+# ── Version & language managers ────────────────────────────────────────
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-eval "$(pyenv init -)"
-
-export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-export PUPPETEER_EXECUTABLE_PATH=`which chromium`
-export DISABLE_SPRING=true
-
-# Machine-local secrets and overrides (never committed to git).
-# Hand-place this file on each machine; see .gitignore.
-[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
-
-export LEFTHOOK_BIN=bin/lefthook
-
-export PATH="$PATH:$HOME/.local/bin"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 eval "$(mise activate zsh)"
 
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
+# Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+# ── Environment ────────────────────────────────────────────────────────
+# Preferred editor; `subl -w` blocks git/kubectl until the Sublime tab closes.
+export EDITOR='subl -w'
+export VISUAL='subl -w'
+export KUBE_EDITOR='subl -w'
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export PUPPETEER_EXECUTABLE_PATH="$(which chromium)"
+export DISABLE_SPRING=true
+export LEFTHOOK_BIN=bin/lefthook
+
+# ── Aliases ────────────────────────────────────────────────────────────
+alias cl='clear'
+alias kn='kubectl config set-context --current --namespace '
 # Run claude with the Opus model by default
 alias claude='claude --model opus'
+
+# Ported from the Fedora fish config (conf.d/abbr.fish + functions/_alias.fish).
+# Note: cat→bat, grep→color, top→htop, vi/vim→nvim, tree→eza intentionally
+# override the originals, matching the fish setup.
+alias cat='bat'
+alias grep='grep --color=auto'
+alias symlink='ln -s'
+alias top='htop'
+alias vi='nvim'
+alias vim='nvim'
+alias nmux='tmux new -s base'
+alias tkill='tmux kill-session -t'
+
+# eza-based listing (modern ls)
+alias l='eza -laghF --git --icons --group-directories-first --sort name'
+alias ll='eza -laghF --git --icons --group-directories-first --sort modified'
+alias la='eza -laF --icons'
+alias tree='eza --tree --icons'
+
+# Directory jumps (paths adjusted for macOS; code lives under ~/personal)
+alias config='cd ~/.config'
+alias dls='cd ~/Downloads'
+alias dots='cd ~/personal/dotfiles-ansible'
+alias projects='cd ~/personal'
+
+# Open changed git files in Sublime Text. No `xargs -r` needed — macOS xargs
+# skips the command on empty input, so a clean tree is a no-op.
+gsubl()  { git ls-files --modified --others --exclude-standard | xargs subl "$@"; }  # modified + untracked
+gsubla() { git status --short | cut -c4- | xargs subl "$@"; }                        # staged + unstaged + untracked
+gsubld() { git diff --name-only HEAD | xargs subl "$@"; }                            # changed vs HEAD
+
+# ── Prompt ─────────────────────────────────────────────────────────────
+# Cross-shell prompt; config at ~/.config/starship.toml (shared/starship).
+eval "$(starship init zsh)"
+
+# ── Machine-local overrides ────────────────────────────────────────────
+# Never committed to git; hand-placed per machine (see .gitignore).
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# ── Interactive UX plugins ─────────────────────────────────────────────
+# Installed via Homebrew (managed by the cli role); guarded so a machine
+# without them yet won't error. Syntax-highlighting MUST be sourced last —
+# it wraps ZLE widgets, so everything else has to be defined first.
+[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
