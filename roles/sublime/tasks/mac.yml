@@ -91,10 +91,22 @@
     - sublime
     - helm-ls
 
+# macOS system Ruby (2.6) is too old for ruby-lsp's prism dependency (needs
+# >= 2.7). Use the newest chruby-managed Ruby's gem instead of bare `gem`.
+- name: Find newest chruby-managed Ruby gem executable
+  ansible.builtin.shell: ls -d {{ ansible_env.HOME }}/.rubies/*/bin/gem | sort -V | tail -1
+  register: chruby_gem
+  changed_when: false
+  check_mode: false
+  failed_when: chruby_gem.rc != 0 or chruby_gem.stdout == ""
+  tags:
+    - sublime
+    - ruby-lsp
+
 # community.general.gem checks installed state via `gem query`, which was
 # removed in RubyGems 4. Use `gem list -e` directly to stay compatible.
 - name: Check if ruby-lsp gem is installed
-  ansible.builtin.command: gem list -e ruby-lsp
+  ansible.builtin.command: "{{ chruby_gem.stdout }} list -e ruby-lsp"
   register: ruby_lsp_check
   changed_when: false
   check_mode: false
@@ -102,8 +114,10 @@
     - sublime
     - ruby-lsp
 
+# Route the executable wrappers into ~/.local/bin (on PATH) so Sublime's LSP
+# config can invoke `ruby-lsp` bare, matching the helm_ls convention above.
 - name: Install ruby-lsp gem
-  ansible.builtin.command: gem install ruby-lsp --user-install
+  ansible.builtin.command: "{{ chruby_gem.stdout }} install ruby-lsp --user-install --bindir {{ ansible_env.HOME }}/.local/bin"
   when: "'ruby-lsp' not in ruby_lsp_check.stdout"
   tags:
     - sublime
