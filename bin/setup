@@ -22,18 +22,28 @@ if ! [ -x "$(command -v python3)" ]; then
     exit 1
 fi
 
-if ! [ -x "$(command -v pip3)" ]; then
-    echo "Error: pip3 is not installed. Exiting..."
+if ! [ -x "$(command -v uv)" ]; then
+    echo "Error: uv is not installed. Install it first: https://docs.astral.sh/uv/"
     exit 1
 fi
 
-if ! [ -x "$(command -v ansible)" ]; then
-	echo "Ansible is not installed. Installing ansible..."
-	python3 -m pip install ansible
+# Install ansible as a uv tool. Pin an explicit modern Python for the tool
+# venv: the controller Python caps how new ansible-core can be (a 3.9 venv
+# locks you to ansible-core 2.15). --with-executables-from exposes the
+# ansible-core CLIs (ansible-playbook, ansible-galaxy) alongside ansible-community.
+if ! [ -x "$(command -v ansible-playbook)" ]; then
+	echo "Ansible is not installed. Installing via uv..."
+	uv tool install --python 3.14 ansible \
+		--with ansible-core \
+		--with-executables-from ansible-core
 fi
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 ROOTPATH="$(dirname $SCRIPTPATH)"
+
+# Install/upgrade required Ansible collections before running the playbook.
+# Keeps the homebrew module current with the installed Homebrew version.
+ansible-galaxy collection install -r "$ROOTPATH/requirements.yml" --upgrade
 
 # Build ansible-playbook command
 ANSIBLE_CMD="ansible-playbook --extra-vars @$ROOTPATH/secrets.yml -i $ROOTPATH/hosts $ROOTPATH/bootstrap.yml --ask-become-pass"

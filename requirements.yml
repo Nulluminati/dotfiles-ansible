@@ -1,0 +1,11 @@
+---
+# Ansible collections required by the roles in this repo.
+# Installed by bin/setup via `ansible-galaxy collection install -r requirements.yml`.
+#
+# community.general carries the homebrew module fixes needed for current
+# Homebrew. Floored at 11.0.0, which requires ansible-core >= 2.16.
+collections:
+  - name: community.general
+    version: ">=11.0.0"
+  - name: ansible.posix
+    version: ">=1.5.0"
