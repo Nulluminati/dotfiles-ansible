@@ -53,17 +53,6 @@
           }
         ]
       }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run ~/.claude/hooks/tts_notification.py --notifications"
-          }
-        ]
-      }
     ]
   },
   "statusLine": {
@@ -87,12 +76,13 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true,
-  "teammateMode": "tmux",
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-ansi",
+  "teammateMode": "tmux",
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
