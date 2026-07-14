@@ -46,7 +46,7 @@ export LEFTHOOK_BIN=bin/lefthook
 alias cl='clear'
 alias kn='kubectl config set-context --current --namespace '
 # Run claude with the Opus model by default
-alias claude='claude --model opus'
+alias claude='claude --model "opus[1m]"'
 
 # Ported from the Fedora fish config (conf.d/abbr.fish + functions/_alias.fish).
 # Note: cat→bat, grep→color, top→htop, vi/vim→nvim, tree→eza intentionally
@@ -78,6 +78,57 @@ gsubl()  { git ls-files --modified --others --exclude-standard | xargs subl "$@"
 gsubla() { git status --short | cut -c4- | xargs subl "$@"; }                        # staged + unstaged + untracked
 gsubld() { git diff --name-only HEAD | xargs subl "$@"; }                            # changed vs HEAD
 
+# Fast-forward the default branch on every repo directly under a directory.
+# Meant for a start-of-day refresh, e.g. `gpullall ~/wrapbook`.
+# It never rewrites history or discards work: a repo is pulled only when it is
+# on its own default branch (origin/HEAD, so master works too) with a clean
+# tracked tree, and the pull is --ff-only so a diverged branch is left untouched.
+# Anything that can't be safely pulled is skipped with the reason why.
+gpullall() {
+  local base="${1:-.}"
+  if [[ ! -d "$base" ]]; then
+    print -u2 "gpullall: '$base' is not a directory"
+    return 1
+  fi
+
+  local repo name branch default before after count
+  for repo in "$base"/*(N/); do
+    git -C "$repo" rev-parse --is-inside-work-tree &>/dev/null || continue
+    name="${repo:t}"
+
+    # Resolve the repo's default branch from origin/HEAD; fall back to main.
+    default="$(git -C "$repo" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)"
+    default="${default#origin/}"
+    : "${default:=main}"
+
+    branch="$(git -C "$repo" symbolic-ref --quiet --short HEAD 2>/dev/null)"
+    if [[ "$branch" != "$default" ]]; then
+      print -P "%F{yellow}⏭  ${name}: on '${branch:-detached HEAD}', not '${default}' — skipped%f"
+      continue
+    fi
+
+    # Uncommitted changes to tracked files would be at risk; untracked files
+    # are safe because a fast-forward won't overwrite them.
+    if ! git -C "$repo" diff --quiet || ! git -C "$repo" diff --cached --quiet; then
+      print -P "%F{yellow}⏭  ${name}: uncommitted changes — skipped%f"
+      continue
+    fi
+
+    before="$(git -C "$repo" rev-parse HEAD)"
+    if git -C "$repo" pull --ff-only --quiet 2>/dev/null; then
+      after="$(git -C "$repo" rev-parse HEAD)"
+      if [[ "$before" == "$after" ]]; then
+        print -P "%F{green}✅ ${name}: already current (${default})%f"
+      else
+        count="$(git -C "$repo" rev-list --count "${before}..${after}")"
+        print -P "%F{green}⬇️  ${name}: pulled ${count} commit(s) into ${default}%f"
+      fi
+    else
+      print -P "%F{red}⚠️  ${name}: cannot fast-forward (diverged or offline) — skipped%f"
+    fi
+  done
+}
+
 # ── Prompt ─────────────────────────────────────────────────────────────
 # Cross-shell prompt; config at ~/.config/starship.toml (shared/starship).
 eval "$(starship init zsh)"
@@ -92,3 +143,9 @@ eval "$(starship init zsh)"
 # it wraps ZLE widgets, so everything else has to be defined first.
 [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# ───────────────────────────────────────────────
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/natekift/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
