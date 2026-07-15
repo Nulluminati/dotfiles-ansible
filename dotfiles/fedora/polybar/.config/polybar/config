@@ -210,6 +210,18 @@ exec = uv run ~/.config/scripts/polybar/weather.py 2>/dev/null
 click-left = firefox --new-tab --url "https://www.theweathernetwork.com/ca/weather/british-columbia/north-vancouver"
 label-font = 2
 
+[module/openai-usage]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/openai-usage.py 2>/dev/null
+interval = 300
+format = <label>
+format-prefix-font = 3
+format-prefix = "  "
+format-prefix-foreground = ${colors.color2}
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://chatgpt.com/codex/settings/usage"
+
 [module/synthetic-quota]
 type = custom/script
 exec = uv run ~/.config/scripts/polybar/synthetic-quota.py 2>/dev/null
