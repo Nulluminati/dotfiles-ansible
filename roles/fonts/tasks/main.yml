@@ -1,8 +1,28 @@
 ---
+- name: Remove legacy Hack Nerd Font files
+  file:
+    path: "{{ fedora_font_dir }}/Hack/{{ item }}"
+    state: absent
+  loop:
+    - Hack Regular Nerd Font Complete.ttf
+    - Hack Bold Nerd Font Complete.ttf
+  when: ansible_distribution == 'Fedora'
+  register: legacy_hack_fonts
+  tags:
+    - fonts
+
 - name: Download Font
   include_tasks: "nerdfonts.yml"
   loop: "{{ fonts }}"
   loop_control:
     loop_var: font
+  tags:
+    - fonts
+
+- name: Refresh font cache after removing legacy fonts
+  command: fc-cache -f
+  when:
+    - ansible_distribution == 'Fedora'
+    - legacy_hack_fonts is changed
   tags:
     - fonts
