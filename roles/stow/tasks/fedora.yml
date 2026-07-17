@@ -29,3 +29,22 @@
   tags:
     - stow
     - dotfiles
+
+# The voice mic bridge unit is deployed by the voice Stow package above.
+- name: Reload systemd user daemon
+  ansible.builtin.systemd:
+    scope: user
+    daemon_reload: true
+  tags:
+    - stow
+    - dotfiles
+
+- name: Enable and start voice-mic-bridge service
+  ansible.builtin.systemd:
+    scope: user
+    name: voice-mic-bridge.service
+    enabled: true
+    state: started
+  tags:
+    - stow
+    - dotfiles

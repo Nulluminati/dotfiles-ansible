@@ -35,6 +35,7 @@ cli_dnf_packages:
   - neofetch
   - neovim
   - picom
+  - pipewire-utils
   - polybar
   - python3-pip
   - ripgrep
@@ -53,6 +54,7 @@ cli_dnf_packages:
   - ruby
   - rubygems
   - unzip
+  - wireplumber
   - xclip
 
 # Fish plugins to install via fisher

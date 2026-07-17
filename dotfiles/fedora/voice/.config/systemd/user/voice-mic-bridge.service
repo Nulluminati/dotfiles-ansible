@@ -1,0 +1,14 @@
+[Unit]
+Description=Voice mic bridge — exposes NoMachine mic as a PipeWire source
+After=pipewire.service pipewire-pulse.service
+Wants=pipewire.service pipewire-pulse.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/voice-mic-bridge-daemon.sh
+Restart=always
+RestartSec=5
+TimeoutStartSec=300
+
+[Install]
+WantedBy=default.target
