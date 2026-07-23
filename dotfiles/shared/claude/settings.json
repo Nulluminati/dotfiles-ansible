@@ -32,17 +32,6 @@
   },
   "model": "opus[1m]",
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "WebSearch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/websearch_to_brave.py"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "matcher": "",
