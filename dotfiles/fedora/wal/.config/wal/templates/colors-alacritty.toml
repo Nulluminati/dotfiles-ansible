@@ -6,7 +6,7 @@ foreground = '{foreground}'
 text = '{foreground}'
 cursor = '{cursor}'
 
-[colors.bright]
+[colors.normal]
 black   = '{color0}'
 red     = '{color1}'
 green   = '{color2}'
@@ -16,7 +16,7 @@ magenta = '{color5}'
 cyan    = '{color6}'
 white   = '{color7}'
 
-[colors.normal]
+[colors.bright]
 black   = '{color8}'
 red     = '{color9}'
 green   = '{color10}'
