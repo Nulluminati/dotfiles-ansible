@@ -73,7 +73,3 @@ decorations = "Transparent"
 dynamic_padding = true
 dynamic_title = true
 startup_mode = "Windowed"
-
-[window.padding]
-x = 10
-y = 10

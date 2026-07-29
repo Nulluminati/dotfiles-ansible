@@ -65,13 +65,14 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
+  "autoCompactEnabled": true,
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true

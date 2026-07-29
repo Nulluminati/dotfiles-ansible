@@ -1,6 +1,10 @@
 [font]
 size = 12
 
+[window.padding]
+x = 10
+y = 25
+
 # Catppuccin Mocha
 # https://github.com/catppuccin/alacritty
 [colors.primary]
