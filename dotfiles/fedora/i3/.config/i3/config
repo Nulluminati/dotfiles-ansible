@@ -184,7 +184,7 @@ mode "  " {
 
 # assign program to workspace
 assign [class="terminal"]           → $ws1
-assign [class="Sublime Text"]       → $ws2
+assign [class="Sublime_text"]       → $ws2
 assign [class="Firefox"]            → $ws4
 assign [class="KeePassXC"]          → $ws5
 
