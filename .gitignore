@@ -62,3 +62,5 @@ dotfiles/fedora/nvim/
 
 # Pi agent credentials (never commit)
 dotfiles/shared/pi/.pi/agent/auth.json
+# TPM plugins must never land in the stowed config dir
+dotfiles/fedora/tmux/.config/tmux/plugins/
