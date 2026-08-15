@@ -1,4 +1,5 @@
 add_newline = false
+scan_timeout = 60
 
 format = """$username$hostname$directory$git_branch$git_metrics$git_status$git_state$cmd_duration$aws$kubernetes$terraform$python$docker_context$golang$java$memory_usage$nodejs$ruby$rust$package$jobs$status$line_break$character"""
 
