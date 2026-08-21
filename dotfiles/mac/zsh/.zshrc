@@ -46,7 +46,7 @@ export LEFTHOOK_BIN=bin/lefthook
 alias cl='clear'
 alias kn='kubectl config set-context --current --namespace '
 # Run claude with the Opus model by default
-alias claude='claude --model "opus[1m]"'
+alias claude='claude --model "claude-opus-4-8[1m]"'
 
 # Ported from the Fedora fish config (conf.d/abbr.fish + functions/_alias.fish).
 # Note: cat→bat, grep→color, top→htop, vi/vim→nvim, tree→eza intentionally
