@@ -4,6 +4,7 @@
 Uses the authenticated Codex CLI app-server so Codex owns OAuth token storage
 and refresh. Usage windows are identified by duration because the API can put a
 weekly window in the primary slot when no five-hour window is active.
+Also shows available rate-limit reset credits (green count when >=1, white 0).
 
 Usage: openai-usage.py
 """
@@ -84,7 +85,23 @@ def format_usage(result, now=None):
             f"{icon} %{{F{color}}}{remaining_percent}%%{{F-}} [{reset_time}]"
         )
 
+    reset_credits = result.get("rateLimitResetCredits") or {}
+    reset_str = format_reset_credits(reset_credits)
+    if reset_str:
+        parts.append(reset_str)
+
     return " · ".join(parts)
+
+
+def format_reset_credits(data, icon="\uf2f1"):
+    """Format available rate-limit reset credits: green count, white 0."""
+    if not data:
+        return ""
+
+    available = data.get("availableCount") or 0
+    if available > 0:
+        return f"{icon} %{{F{GREEN}}}{available}%{{F-}}"
+    return f"{icon} 0"
 
 
 def fetch_usage(timeout=RPC_TIMEOUT):
