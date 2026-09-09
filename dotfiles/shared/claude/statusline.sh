@@ -16,8 +16,13 @@ input=$(cat)
 # echo "$input" | jq '.' >> ~/.claude/statusline-debug.log 2>&1
 # echo "---" >> ~/.claude/statusline-debug.log
 
-# Determine provider from ANTHROPIC_BASE_URL
+# Determine provider from WRAPBOOK_LLM_GATEWAY_ID (set by claude-gateway
+# regardless of which backend it selects) or, failing that, ANTHROPIC_BASE_URL
 get_provider() {
+    if [[ -n "${WRAPBOOK_LLM_GATEWAY_ID:-}" ]]; then
+        echo "Wrapbook AI Gateway"
+        return
+    fi
     case "${ANTHROPIC_BASE_URL:-}" in
         "") echo "Anthropic" ;;
         "https://api.z.ai/api/anthropic") echo "Z.ai" ;;
