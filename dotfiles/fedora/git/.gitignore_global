@@ -26,3 +26,11 @@ desktop.ini
 /.claude/settings.local.json
 CLAUDE.local.md
 
+# Pi agent work state #
+#######################
+.pi/autoresearch/
+.pi/messenger/
+.pi/missions/
+.pi/workers/
+.pi/worktrees/
+
