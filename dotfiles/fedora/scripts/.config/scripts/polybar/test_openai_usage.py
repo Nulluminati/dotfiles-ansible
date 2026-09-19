@@ -71,3 +71,9 @@ def test_format_usage_omits_missing_window():
 
 def test_format_usage_returns_empty_without_windows():
     assert openai_usage.format_usage({"rateLimits": {}}, 1_700_000_000) == ""
+
+
+def test_codex_command_uses_supported_approval_policy():
+    # codex-cli removed the "untrusted" approval policy; passing it now aborts
+    # startup (rc=2) and the monitor times out into a red question mark.
+    assert openai_usage._codex_command() == ["codex", "-s", "read-only", "-a", "never", "app-server"]

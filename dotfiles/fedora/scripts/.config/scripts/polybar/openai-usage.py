@@ -104,10 +104,19 @@ def format_reset_credits(data, icon="\uf2f1"):
     return f"{icon} 0"
 
 
+def _codex_command():
+    """Build the codex app-server invocation.
+
+    codex-cli removed the "untrusted" approval policy (accepted values are now
+    on-request and never); "never" keeps the server non-interactive.
+    """
+    return ["codex", "-s", "read-only", "-a", "never", "app-server"]
+
+
 def fetch_usage(timeout=RPC_TIMEOUT):
     """Fetch rate limits from the authenticated Codex app-server."""
     process = subprocess.Popen(
-        ["codex", "-s", "read-only", "-a", "untrusted", "app-server"],
+        _codex_command(),
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.DEVNULL,
