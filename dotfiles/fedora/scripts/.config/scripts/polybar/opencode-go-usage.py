@@ -6,20 +6,25 @@
 opencode-go-usage.py
 
 Displays OpenCode Go subscription usage (5-hour / weekly / monthly windows).
-Usage windows are not exposed through a public API; they are embedded in the
-authenticated dashboard at https://opencode.ai/workspace/<workspaceId>/go.
+Usage data comes from the console API:
+  GET https://console.opencode.ai/api/go/status
+authenticated with the console session token as a bearer token and the
+workspace ID as the x-org-id header. The dashboard itself is now a
+client-rendered SPA at https://opencode.ai/console, so usage can no longer
+be scraped from server-rendered HTML.
 
 Authentication mirrors the claude-credits monitor: the workspace ID is read
-from a local config file, and the session cookie is pulled from the browser
-(Firefox, then Chrome) via browser_cookie3.
+from a local config file, and the console session token is pulled from the
+browser (Firefox, then Chrome) via browser_cookie3. The API answers 401 once
+the session expires; signing in at https://opencode.ai/console refreshes it.
 
 Credentials are resolved in this order (first non-empty wins):
-  Workspace ID: OPENCODE_GO_WORKSPACE_ID env
-                ~/.config/opencode/workspace_id
-                ~/.config/opencode-bar/opencode-go.json  (cross-tool compat)
-  Auth cookie:  OPENCODE_GO_AUTH_COOKIE env
-                ~/.config/opencode-bar/opencode-go.json  (cross-tool compat)
-                browser cookies for opencode.ai (cookie name "auth")
+  Workspace ID:    OPENCODE_GO_WORKSPACE_ID env
+                   ~/.config/opencode/workspace_id
+                   ~/.config/opencode-bar/opencode-go.json  (cross-tool compat)
+  Session token:   OPENCODE_GO_AUTH_COOKIE env (raw console session token)
+                   ~/.config/opencode-bar/opencode-go.json  (cross-tool compat)
+                   browser cookies for opencode.ai (cookie "__Host-console_session")
 
 Usage: uv run opencode-go-usage.py
 """
@@ -27,7 +32,6 @@ Usage: uv run opencode-go-usage.py
 import glob
 import json
 import os
-import re
 import shutil
 import sqlite3
 import sys
@@ -45,7 +49,8 @@ except Exception:
 # Configuration
 WORKSPACE_ID_PATH = os.path.expanduser("~/.config/opencode/workspace_id")
 OPENCODE_BAR_CONFIG_PATH = os.path.expanduser("~/.config/opencode-bar/opencode-go.json")
-DASHBOARD_URL_TMPL = "https://opencode.ai/workspace/{workspace_id}/go"
+GO_STATUS_URL = "https://console.opencode.ai/api/go/status"
+CONSOLE_SESSION_COOKIE = "__Host-console_session"
 COOKIE_NAME = "auth"
 # Domains whose session cookies must be sent together for the authenticated
 # dashboard request. opencode.ai holds the Iron-sealed session cookie;
@@ -210,76 +215,100 @@ def get_cookie_jar():
 
 
 # --------------------------------------------------------------------------- #
-# Dashboard HTML parsing
+# Console API (go/status)
 #
-# Ports the parser from opgginc/opencode-bar's OpenCodeGoProvider. The dashboard
-# is a Next.js/Solid app that embeds JSON-like blobs in <script> tags. Usage
-# windows appear either as escaped JSON strings ("rollingUsage":{"usagePercent":...})
-# or as Solid resource refs ($R[31]={...rollingUsage:$R[31]={status:"ok",...}}).
+# The console SPA fetches usage from console.opencode.ai with the console
+# session token as a bearer token and the workspace ID as x-org-id. The
+# payload carries per-meter spend in micro-cents:
+#   access.meters.{fiveHour,week,month}.{limitMicroCents,usedMicroCents,resetsAt}
 # --------------------------------------------------------------------------- #
-def normalize_html(html):
-    """Decode HTML entities and escaped quotes so the regexes can match both forms."""
-    for encoded, decoded in (
-        ("&quot;", '"'),
-        ("&#34;", '"'),
-        ("&#x27;", "'"),
-        ("&#39;", "'"),
-        ("&amp;", "&"),
-        ('\\"', '"'),
-        ("\\u0022", '"'),
-    ):
-        html = html.replace(encoded, decoded)
-    return html
+def _console_session_token(jar):
+    """Resolve the console API bearer token from a cookie jar.
+
+    The console session cookie (__Host-console_session) doubles as the API
+    bearer token. Env/config-provided values arrive as the "auth" cookie;
+    accept those when they carry a console session token (st_ prefix).
+    """
+    for cookie in jar:
+        if cookie.name == CONSOLE_SESSION_COOKIE and cookie.value:
+            return cookie.value
+    for cookie in jar:
+        if cookie.name == COOKIE_NAME and (cookie.value or "").startswith("st_"):
+            return cookie.value
+    return None
 
 
-def _capture_object_body(text, field_name):
-    """Capture the flat object body following `field_name:` (handles $R[n]= prefix)."""
-    pattern = (
-        r'''["']?''' + re.escape(field_name) + r'''["']?\s*:\s*(?:\$R\[\d+\]\s*=\s*)?\{([^{}]*)\}'''
-    )
-    match = re.search(pattern, text, re.DOTALL)
-    return match.group(1) if match else None
+def fetch_status(workspace_id, bearer_token, timeout=15):
+    """Fetch the Go subscription status from the console API.
 
-
-def _capture_number(body, field_name):
-    """Capture a numeric value (quoted or unquoted) from a parsed object body."""
-    pattern = r'''["']?''' + re.escape(field_name) + r'''["']?\s*:\s*"?(-?\d+(?:\.\d+)?)"?'''
-    match = re.search(pattern, body)
-    if not match:
-        return None
-    try:
-        return float(match.group(1))
-    except ValueError:
-        return None
-
-
-def _capture_status(body):
-    """Capture the status string if present (e.g. "ok", "rate-limited")."""
-    match = re.search(r'''["']?status["']?\s*:\s*"([^"]*)"''', body)
-    return match.group(1) if match else None
-
-
-def parse_window(text, field_name):
-    """Parse a single usage window object from the normalized dashboard text."""
-    body = _capture_object_body(text, field_name)
-    if body is None:
-        return None
-
-    usage_percent = _capture_number(body, "usagePercent")
-    reset_in_sec = _capture_number(body, "resetInSec")
-    if usage_percent is None or reset_in_sec is None:
-        return None
-
-    return {
-        "usagePercent": usage_percent,
-        "resetInSec": max(0, int(reset_in_sec)),
-        "status": _capture_status(body),
+    Returns None when the session token was rejected (401), which means the
+    user needs to sign in to https://opencode.ai/console again.
+    """
+    headers = {
+        "Accept": "application/json",
+        "Authorization": f"Bearer {bearer_token}",
+        "x-org-id": workspace_id,
+        "Referer": "https://opencode.ai/console/",
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+        ),
     }
+    response = requests.get(GO_STATUS_URL, headers=headers, timeout=timeout)
+    if response.status_code == 401:
+        return None
+    response.raise_for_status()
+    return response.json()
 
 
-def parse_use_balance(text):
-    """Detect whether the workspace has "use Zen balance" enabled."""
-    return bool(re.search(r'''["']?useBalance["']?\s*:\s*(?:true|!0)''', text))
+def _iso_to_reset_seconds(iso_ts, now):
+    """Seconds from now until an ISO-8601 timestamp (None when absent)."""
+    if not iso_ts:
+        return None
+    reset_at = datetime.fromisoformat(iso_ts.replace("Z", "+00:00"))
+    return max(0, int((reset_at - now).total_seconds()))
+
+
+# Meter order and icons: clock -> 5-hour, calendar -> weekly,
+# calendar-o -> monthly (matches the previous dashboard presentation).
+METERS = (
+    ("fiveHour", "\uf017"),
+    ("week", "\uf073"),
+    ("month", "\uf133"),
+)
+
+
+def parse_status(data, now=None):
+    """Extract usage windows from the go/status payload."""
+    if now is None:
+        now = datetime.now(timezone.utc)
+
+    meters = ((data.get("access") or {}).get("meters")) or {}
+    windows = []
+    for meter_name, icon in METERS:
+        meter = meters.get(meter_name)
+        if not meter:
+            continue
+        limit = float(meter.get("limitMicroCents") or 0)
+        used = float(meter.get("usedMicroCents") or 0)
+        if limit <= 0:
+            continue
+        usage_percent = max(0.0, min(100.0, used / limit * 100))
+        windows.append({
+            "icon": icon,
+            "usagePercent": usage_percent,
+            "resetInSec": _iso_to_reset_seconds(meter.get("resetsAt"), now),
+        })
+    return windows
+
+
+def format_status(data, now=None):
+    """Format the go/status payload for polybar."""
+    parts = [format_window(window, icon=window["icon"])
+             for window in parse_status(data, now)]
+    if data.get("useBalance"):
+        parts.append("\uf155")  # dollar icon -> Zen balance fallback enabled
+    return " \u00b7 ".join(parts)  # middle-dot separator, like zai/synthetic
 
 
 # --------------------------------------------------------------------------- #
@@ -319,38 +348,21 @@ def format_window(window, icon=""):
         return ""
 
     usage_percent = window["usagePercent"]
-    status = window.get("status") or "ok"
     remaining_percent = max(0, 100 - usage_percent)
     prefix = f"{icon} " if icon else ""
 
-    # When rate-limited there is no meaningful reset time; flag it red.
-    if status != "ok":
-        return f"{prefix}%{{F{RED}}}{int(remaining_percent)}%%{{F-}} [lim]"
-
     color = color_for_percent(remaining_percent)
-    time_str = format_time_remaining(window["resetInSec"])
-    return f"{prefix}%{{F{color}}}{int(remaining_percent)}%%{{F-}} [{time_str}]"
+    percent = f"%{{F{color}}}{int(remaining_percent)}%%{{F-}}"
+    reset_in_sec = window.get("resetInSec")
+    if reset_in_sec is None:
+        # Meters without a reset timestamp (monthly) show percent only.
+        return f"{prefix}{percent}"
+    return f"{prefix}{percent} [{format_time_remaining(reset_in_sec)}]"
 
 
 # --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
-def _is_login_redirect(url):
-    """Detect a dashboard response that landed on a login/auth page.
-
-    A rejected session cookie redirects either to the OpenAuth host
-    (auth.opencode.ai) or to the console login page on opencode.ai itself.
-    """
-    return url.startswith("https://auth.opencode.ai/") or (
-        url.startswith("https://opencode.ai/")
-        and (
-            "/auth/authorize" in url
-            or "/console/login" in url
-            or "/login" in url
-        )
-    )
-
-
 def main():
     workspace_id = get_workspace_id()
     if not workspace_id:
@@ -359,35 +371,14 @@ def main():
         sys.exit(0)
 
     cookie_jar = get_cookie_jar()
-    if cookie_jar is None:
+    bearer_token = _console_session_token(cookie_jar) if cookie_jar else None
+    if not bearer_token:
         print("Login")
         sys.exit(0)
 
-    # Fetch the authenticated dashboard HTML.
+    # Fetch usage from the console API.
     try:
-        headers = {
-            "Accept": "text/html,application/xhtml+xml",
-            "Referer": "https://opencode.ai/",
-            "User-Agent": (
-                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-            ),
-        }
-        session = requests.Session()
-        session.cookies = cookie_jar
-        response = session.get(
-            DASHBOARD_URL_TMPL.format(workspace_id=workspace_id),
-            headers=headers,
-            timeout=15,
-        )
-        # A redirect onto a login page means the session cookie was rejected
-        # (expired, rotated, or stale). Surface that specifically rather than a
-        # generic parse failure.
-        if _is_login_redirect(response.url):
-            print(f"%{{F{RED}}}Expired%{{F-}}")
-            sys.exit(0)
-        response.raise_for_status()
-        html = response.text
+        data = fetch_status(workspace_id, bearer_token)
     except requests.HTTPError as exc:
         if exc.response is not None and exc.response.status_code in (401, 403):
             print(f"%{{F{RED}}}Expired%{{F-}}")
@@ -398,32 +389,16 @@ def main():
         print(f"%{{F{RED}}}?%{{F-}}")
         sys.exit(0)
 
-    # Parse usage windows from the embedded dashboard JSON.
-    try:
-        text = normalize_html(html)
-
-        parts = []
-        for field_name, icon in (
-            ("rollingUsage", "\uf017"),   # clock  -> 5-hour window
-            ("weeklyUsage", "\uf073"),    # calendar -> weekly window
-            ("monthlyUsage", "\uf133"),   # calendar-o -> monthly window
-        ):
-            window = parse_window(text, field_name)
-            if window:
-                parts.append(format_window(window, icon=icon))
-
-        if parse_use_balance(text):
-            parts.append("\uf155")  # dollar icon -> Zen balance fallback enabled
-
-        if not parts:
-            print(f"%{{F{RED}}}?%{{F-}}")
-            sys.exit(0)
-
-        print(" \u00b7 ".join(parts))  # middle-dot separator, like zai/synthetic
-
-    except (KeyError, TypeError, ValueError):
-        print(f"%{{F{RED}}}?%{{F-}}")
+    # A None result means the console session token was rejected.
+    if data is None:
+        print(f"%{{F{RED}}}Expired%{{F-}}")
         sys.exit(0)
+
+    try:
+        output = format_status(data)
+    except (KeyError, TypeError, ValueError):
+        output = ""
+    print(output or f"%{{F{RED}}}?%{{F-}}")
 
 
 if __name__ == "__main__":

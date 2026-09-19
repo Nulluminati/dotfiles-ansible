@@ -3,7 +3,7 @@
 # Called when the user right-clicks the polybar module.
 #
 # The workspace ID looks like "wrk_01ABCDEF0123456789ABCDEFG" and appears in the
-# dashboard URL: https://opencode.ai/workspace/<workspaceId>/go
+# dashboard URL: https://opencode.ai/console/workspace/<workspaceId>/go
 #
 # The auth session cookie is read from the browser automatically, so make sure
 # you are signed in to opencode.ai in Firefox.
@@ -18,7 +18,7 @@ chmod 700 "$CONFIG_DIR"
 # Get Workspace ID via rofi
 WORKSPACE_ID=$(rofi -dmenu \
     -p " Workspace" \
-    -mesg "Paste your OpenCode workspace ID (e.g. wrk_01ABC...) from opencode.ai/dashboard URL" \
+    -mesg "Paste your OpenCode workspace ID (e.g. wrk_01ABC...) from the opencode.ai/console workspace URL" \
     -theme-str 'mainbox { children: [ message, inputbar ]; }' \
     -theme-str 'message { background-color: @background; text-color: @foreground; padding: 8px; }' \
     -theme-str 'inputbar { children: [ prompt, entry ]; }' \
