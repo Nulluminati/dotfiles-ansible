@@ -36,6 +36,6 @@
     dest: "{{ fonts_dir }}/{{ font_dir }}/{{ font|basename }}"
     group: "{{ ansible_user_gid }}"
     owner: "{{ ansible_user_id }}"
-    url: "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/{{ font | regex_replace(' ', '%20') }}"
+    url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ nerdfonts_version }}/patched-fonts/{{ font | regex_replace(' ', '%20') }}"
   tags:
     - fonts

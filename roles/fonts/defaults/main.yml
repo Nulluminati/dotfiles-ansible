@@ -2,7 +2,10 @@
 fedora_font_dir: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts"
 mac_font_dir: "{{ ansible_env.HOME }}/Library/Fonts"
 
+# Repo path layout: patched-fonts/<Font>/<Font>-<Style>.ttf since nerd-fonts v3.
+nerdfonts_version: v3.5.1
+
 fonts: 
-  - 'Hack/Regular/HackNerdFont-Regular.ttf'
-  - 'Hack/Bold/HackNerdFont-Bold.ttf'
-  - 'Hack/Italic/HackNerdFont-Italic.ttf'
+  - 'Hack/HackNerdFont-Regular.ttf'
+  - 'Hack/HackNerdFont-Bold.ttf'
+  - 'Hack/HackNerdFont-Italic.ttf'
