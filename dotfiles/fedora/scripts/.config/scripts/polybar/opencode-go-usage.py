@@ -335,6 +335,22 @@ def format_window(window, icon=""):
 # --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
+def _is_login_redirect(url):
+    """Detect a dashboard response that landed on a login/auth page.
+
+    A rejected session cookie redirects either to the OpenAuth host
+    (auth.opencode.ai) or to the console login page on opencode.ai itself.
+    """
+    return url.startswith("https://auth.opencode.ai/") or (
+        url.startswith("https://opencode.ai/")
+        and (
+            "/auth/authorize" in url
+            or "/console/login" in url
+            or "/login" in url
+        )
+    )
+
+
 def main():
     workspace_id = get_workspace_id()
     if not workspace_id:
@@ -364,10 +380,10 @@ def main():
             headers=headers,
             timeout=15,
         )
-        # A redirect onto the auth host means the session cookie was rejected
+        # A redirect onto a login page means the session cookie was rejected
         # (expired, rotated, or stale). Surface that specifically rather than a
         # generic parse failure.
-        if response.url.startswith("https://auth.opencode.ai/"):
+        if _is_login_redirect(response.url):
             print(f"%{{F{RED}}}Expired%{{F-}}")
             sys.exit(0)
         response.raise_for_status()
