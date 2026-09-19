@@ -28,6 +28,26 @@
     - llm
     - uv
 
+- name: Locate uv tools directory
+  command: uv tool dir
+  register: uv_tools_dir
+  changed_when: false
+  tags:
+    - llm
+    - plugins
+
+# llm >= 0.35 and its SDK dependencies (openai, anthropic) use the renamed
+# httpx2 package, so the legacy httpx module is no longer pulled in
+# transitively. Several plugins (llm-docs, llm-openrouter, llm-hacker-news,
+# the fragments/templates plugins) still import httpx directly.
+- name: Install legacy httpx into the llm tool environment
+  command: uv pip install --python {{ uv_tools_dir.stdout }}/llm/bin/python httpx
+  register: llm_httpx_install
+  changed_when: "'Installed' in llm_httpx_install.stdout"
+  tags:
+    - llm
+    - plugins
+
 - name: Install additional llm models & plugins
   shell: llm install -U {{ item }}
   loop: "{{ llm_plugins }}"
