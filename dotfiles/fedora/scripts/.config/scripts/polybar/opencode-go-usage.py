@@ -283,7 +283,11 @@ def parse_status(data, now=None):
     if now is None:
         now = datetime.now(timezone.utc)
 
-    meters = ((data.get("access") or {}).get("meters")) or {}
+    access = data.get("access") or {}
+    meters = access.get("meters") or {}
+    # Only fiveHour/week carry resetsAt; the monthly meter has no date fields
+    # in the API schema and resets at the end of the billing cycle instead.
+    cycle_reset = access.get("endsAt")
     windows = []
     for meter_name, icon in METERS:
         meter = meters.get(meter_name)
@@ -297,7 +301,9 @@ def parse_status(data, now=None):
         windows.append({
             "icon": icon,
             "usagePercent": usage_percent,
-            "resetInSec": _iso_to_reset_seconds(meter.get("resetsAt"), now),
+            "resetInSec": _iso_to_reset_seconds(
+                meter.get("resetsAt") or cycle_reset, now
+            ),
         })
     return windows
 

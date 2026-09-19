@@ -60,7 +60,8 @@ def test_parse_status_extracts_all_meters():
     assert [int(w["usagePercent"]) for w in windows] == [20, 22, 11]
     assert windows[0]["resetInSec"] == 5 * 3600  # fiveHour: 16:06 -> 21:06
     assert windows[1]["resetInSec"] == 31 * 3600 + 53 * 60 + 18  # week: -> Sun 00:00
-    assert windows[2]["resetInSec"] is None  # month carries no resetsAt
+    # month carries no resetsAt of its own; it resets at the billing cycle end.
+    assert windows[2]["resetInSec"] == 23 * 86400 + 10 * 3600 + 60 + 57
 
 
 def test_parse_status_without_access_is_empty():
@@ -72,7 +73,7 @@ def test_format_status_renders_windows_and_balance_icon():
     assert opencode_go_usage.format_status(SAMPLE_STATUS, NOW) == (
         f"\uf017 %{{F{GREEN}}}79%%{{F-}} [5h 0m]"
         f" · \uf073 %{{F{GREEN}}}77%%{{F-}} [1d 7h]"
-        f" · \uf133 %{{F{GREEN}}}88%%{{F-}}"
+        f" · \uf133 %{{F{GREEN}}}88%%{{F-}} [23d 10h]"
     )
 
 
@@ -81,7 +82,8 @@ def test_format_status_appends_balance_icon_when_enabled():
     assert opencode_go_usage.format_status(data, NOW).endswith(" · \uf155")
 
 
-def test_format_status_skips_bracket_without_reset():
+def test_format_status_percent_only_without_any_reset_source():
+    # A meter without resetsAt and no billing-cycle end to fall back on.
     data = {"access": {"meters": {"month": {
         "limitMicroCents": "6000000000", "usedMicroCents": "5400000000"}}}}
     assert opencode_go_usage.format_status(data, NOW) == f"\uf133 %{{F{RED}}}10%%{{F-}}"
