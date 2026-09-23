@@ -173,6 +173,7 @@
     set -Ux OPENROUTER_API_KEY {{ api_keys.openrouter }}
     set -Ux OPENWEATHER_API_KEY {{ api_keys.openweather }}
     set -Ux SYNTHETIC_API_KEY {{ api_keys.synthetic }}
+    set -Ux TYPESAFEAI_API_KEY {{ api_keys.typesafeai }}
     set -Ux ZAI_API_KEY {{ api_keys.zai }}
   args:
     executable: /usr/bin/fish
