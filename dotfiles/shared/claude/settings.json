@@ -30,7 +30,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-opus-4-8[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "Stop": [
       {
@@ -66,6 +66,14 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "modelSettings": {
+    "gpt-5.6-sol": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "voice": {
     "enabled": true,
     "mode": "hold"
