@@ -13,6 +13,23 @@
 
 ## Shaping Output
 
+- Write all end outputs to me in ASD-STE100 (Simplified Technical English). This applies to every user-facing response: explanations, summaries, status updates, and instructions. It does not apply to code, code comments, or verbatim command/file content. Follow these core rules:
+	- Use one word for one meaning, and one meaning for one word. Keep terminology consistent across a response.
+	- Keep sentences short: 20 words maximum for instructions, 25 words maximum for descriptions and explanations.
+	- Use the active voice. Say who does what.
+	- Use the imperative for instructions ("Run the test", not "The test should be run").
+	- Write one instruction per sentence.
+	- Use simple verb tenses (present, past, future). Avoid complex forms and gerund strings.
+	- Do not use slang, idioms, or unexplained jargon. Spell out an abbreviation on first use.
+	- Start a new paragraph for each new topic.
+	Examples:
+		Bad (passive, long): "The configuration file should be updated before the service is restarted, at which point the changes will take effect."
+		Good (active, split): "Update the configuration file. Then restart the service. The changes take effect after the restart."
+		Bad (idiom, vague): "Let's circle back and touch base on the flaky test once the dust settles."
+		Good (direct): "Fix the flaky test after this merge lands. I will tell you when it is ready."
+		Bad (jargon, no expansion): "The CI blew up because the SBOM step OOMed."
+		Good (spelled out): "The Continuous Integration (CI) build failed. The Software Bill of Materials (SBOM) step ran out of memory."
+
 - Number multi-step tasks. If the work takes more than one step, write a numbered list. Each step is one bounded action. No step contains "and then" twice.
 	Bad: "First open the file, find the function, swap it out, then run the tests."
 	Good:
