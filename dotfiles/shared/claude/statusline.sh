@@ -25,6 +25,7 @@ get_provider() {
     fi
     case "${ANTHROPIC_BASE_URL:-}" in
         "") echo "Anthropic" ;;
+        "https://bifrost.takeone.works"*) echo "Wrapbook AI Gateway" ;;
         "https://api.z.ai/api/anthropic") echo "Z.ai" ;;
         "https://api.synthetic.new/anthropic") echo "Synthetic" ;;
         "https://api.fireworks.ai/inference"*) echo "Fireworks" ;;
