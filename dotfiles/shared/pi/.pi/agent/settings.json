@@ -27,7 +27,7 @@
   "defaultThinkingLevel": "high",
   "hideThinkingBlock": true,
   "packages": [
-    "~/personal/pi-extensions",
+    "~/Projects/pi-extensions",
     "npm:@wierdbytes/pi-peon"
   ],
   "theme": "terminal",
