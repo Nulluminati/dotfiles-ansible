@@ -3,6 +3,10 @@
 - name: Install Claude Code and MCP servers
   import_tasks: claude_code.yml
 
+# Herdr agent runtime
+- name: Install Herdr
+  import_tasks: herdr.yml
+
 # Bun tools (AI CLI tools and skills CLI)
 - name: Install bun tools
   ansible.builtin.shell:

@@ -1,0 +1,22 @@
+# Herdr agent runtime (https://herdr.dev)
+
+- name: Check if herdr is installed
+  ansible.builtin.shell:
+    cmd: "command -v herdr"
+  register: herdr_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - install
+    - herdr
+
+- name: Install Herdr
+  ansible.builtin.shell:
+    cmd: "curl -fsSL https://herdr.dev/install.sh | sh"
+  when: herdr_check.rc != 0
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/herdr"
+  tags:
+    - install
+    - herdr
