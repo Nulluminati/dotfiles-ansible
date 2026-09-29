@@ -24,7 +24,7 @@
 - name: Set mcp_server_list for Fedora
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + fedora_mcp_servers | default([]) }}"
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts.distribution == "Fedora"
   tags:
     - mcp
     - config
@@ -32,7 +32,7 @@
 - name: Set mcp_server_list for macOS
   ansible.builtin.set_fact:
     mcp_server_list: "{{ mcp_servers | default([]) + mac_mcp_servers | default([]) }}"
-  when: ansible_distribution == "MacOSX"
+  when: ansible_facts.distribution == "MacOSX"
   tags:
     - mcp
     - config

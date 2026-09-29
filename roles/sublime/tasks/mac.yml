@@ -5,7 +5,7 @@
 
 - name: Check Sublime installed package directory
   stat:
-    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
+    path: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
   register: check_sublime_installed_packages_dir
   tags:
     - sublime
@@ -13,7 +13,7 @@
 
 - name: Create Sublime installed package directory
   file:
-    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
+    path: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Installed Packages"
     state: directory
   when: check_sublime_installed_packages_dir.stat.exists == False
   tags:
@@ -22,7 +22,7 @@
 
 - name: Check Sublime package directory
   stat:
-    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages"
+    path: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Packages"
   register: check_sublime_packages_dir
   tags:
     - sublime
@@ -30,7 +30,7 @@
 
 - name: Create Sublime Package directory
   file:
-    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages"
+    path: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Packages"
     state: directory
   when: check_sublime_packages_dir.stat.exists == False
   tags:
@@ -43,7 +43,7 @@
 - name: Install package control for Sublime
   get_url:
     url: "https://packagecontrol.io/Package%20Control.sublime-package"
-    dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Installed Packages/Package Control.sublime-package"
+    dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Installed Packages/Package Control.sublime-package"
   tags:
     - sublime
     - packagecontrol
@@ -54,7 +54,7 @@
   git:
     repo: "{{ item.name | default(item) }}"
     version: "{{ item.version | default('master') }}"
-    dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
+    dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
     accept_hostkey: "yes"
   with_items: "{{ sublime_packages }}"
   tags:
@@ -65,7 +65,7 @@
 
 - name: Ensure local bin directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ ansible_facts.env.HOME }}/.local/bin"
     state: directory
     mode: '0755'
   tags:
@@ -75,7 +75,7 @@
 - name: Download helm-ls
   ansible.builtin.get_url:
     url: "https://github.com/mrjosh/helm-ls/releases/download/master/helm_ls_darwin_amd64"
-    dest: "{{ ansible_env.HOME }}/.local/bin/helm_ls"
+    dest: "{{ ansible_facts.env.HOME }}/.local/bin/helm_ls"
     mode: '0755'
     timeout: 30
   tags:
@@ -94,7 +94,7 @@
 # macOS system Ruby (2.6) is too old for ruby-lsp's prism dependency (needs
 # >= 2.7). Use the newest chruby-managed Ruby's gem instead of bare `gem`.
 - name: Find newest chruby-managed Ruby gem executable
-  ansible.builtin.shell: ls -d {{ ansible_env.HOME }}/.rubies/*/bin/gem | sort -V | tail -1
+  ansible.builtin.shell: ls -d {{ ansible_facts.env.HOME }}/.rubies/*/bin/gem | sort -V | tail -1
   register: chruby_gem
   changed_when: false
   check_mode: false
@@ -117,7 +117,7 @@
 # Route the executable wrappers into ~/.local/bin (on PATH) so Sublime's LSP
 # config can invoke `ruby-lsp` bare, matching the helm_ls convention above.
 - name: Install ruby-lsp gem
-  ansible.builtin.command: "{{ chruby_gem.stdout }} install ruby-lsp --user-install --bindir {{ ansible_env.HOME }}/.local/bin"
+  ansible.builtin.command: "{{ chruby_gem.stdout }} install ruby-lsp --user-install --bindir {{ ansible_facts.env.HOME }}/.local/bin"
   when: "'ruby-lsp' not in ruby_lsp_check.stdout"
   tags:
     - sublime
@@ -125,7 +125,7 @@
 
 - name: Ensure Sublime User directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/User"
+    path: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Packages/User"
     state: directory
     mode: '0755'
   tags:
@@ -135,7 +135,7 @@
 - name: Configure LSP settings for helm-ls
   ansible.builtin.template:
     src: templates/LSP.sublime-settings.j2
-    dest: "{{ ansible_env.HOME }}/Library/Application Support/Sublime Text/Packages/User/LSP.sublime-settings"
+    dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/Sublime Text/Packages/User/LSP.sublime-settings"
     mode: '0644'
   tags:
     - sublime

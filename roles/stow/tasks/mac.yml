@@ -34,7 +34,7 @@
   environment:
     STOW_DIR: "dotfiles/mac"
   ansible.builtin.shell: |
-    stow -v -t {{ ansible_env.HOME }} {{ item.path | basename }}
+    stow -v -t {{ ansible_facts.env.HOME }} {{ item.path | basename }}
   register: output
   changed_when: '"LINK" in output.stderr'
   tags:

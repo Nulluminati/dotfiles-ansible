@@ -56,19 +56,19 @@
     - plugins
 
 - name: Set llm api keys for fedora
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts.distribution == "Fedora"
   template:
     src: templates/llm_keys.json.j2
-    dest: "{{ ansible_env.HOME }}/.config/io.datasette.llm/keys.json"
+    dest: "{{ ansible_facts.env.HOME }}/.config/io.datasette.llm/keys.json"
   tags:
     - llm
     - config
 
 - name: Set llm api keys for mac
-  when: ansible_distribution == "MacOSX"
+  when: ansible_facts.distribution == "MacOSX"
   template:
     src: templates/llm_keys.json.j2
-    dest: "{{ ansible_env.HOME }}/Library/Application Support/io.datasette.llm/keys.json"
+    dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/io.datasette.llm/keys.json"
   tags:
     - llm
     - config

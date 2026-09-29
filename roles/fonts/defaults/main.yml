@@ -1,6 +1,6 @@
 ---
-fedora_font_dir: "{{ ansible_env.HOME }}/.local/share/fonts/NerdFonts"
-mac_font_dir: "{{ ansible_env.HOME }}/Library/Fonts"
+fedora_font_dir: "{{ ansible_facts.env.HOME }}/.local/share/fonts/NerdFonts"
+mac_font_dir: "{{ ansible_facts.env.HOME }}/Library/Fonts"
 
 # Repo path layout: patched-fonts/<Font>/<Font>-<Style>.ttf since nerd-fonts v3.
 nerdfonts_version: v3.5.1

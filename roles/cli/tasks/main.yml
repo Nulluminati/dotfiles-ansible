@@ -1,8 +1,8 @@
 ---
 - name: Install command line tools in Fedora
   import_tasks: fedora.yml
-  when: ansible_distribution == "Fedora"
+  when: ansible_facts.distribution == "Fedora"
 
 - name: Install command line tools in macOS
   import_tasks: mac.yml
-  when: ansible_distribution == "MacOSX"
+  when: ansible_facts.distribution == "MacOSX"

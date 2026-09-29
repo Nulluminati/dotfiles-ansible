@@ -1,15 +1,15 @@
 ---
 - name: Set fonts directory
   set_fact:
-    fonts_dir: "{{ (ansible_distribution == 'Fedora')|ternary(fedora_font_dir, mac_font_dir) }}"
+    fonts_dir: "{{ (ansible_facts.distribution == 'Fedora')|ternary(fedora_font_dir, mac_font_dir) }}"
   tags:
     - fonts
 
 - name: Ensure Fonts directory exists.
-  become: "{{ (ansible_distribution == 'Fedora')|ternary('yes', 'no') }}"
+  become: "{{ (ansible_facts.distribution == 'Fedora')|ternary('yes', 'no') }}"
   file:
-    group: "{{ ansible_user_gid }}"
-    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
+    owner: "{{ ansible_facts.user_id }}"
     path: "{{ fonts_dir }}"
     recurse: true
     state: directory
@@ -24,8 +24,8 @@
 
 - name: Create directory for {{ font_dir }} fonts.
   file:
-    group: "{{ ansible_user_gid }}"
-    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
+    owner: "{{ ansible_facts.user_id }}"
     path: "{{ fonts_dir }}/{{ font_dir }}"
     state: directory
   tags:
@@ -34,8 +34,8 @@
 - name: Download {{ font|basename }}.
   get_url:
     dest: "{{ fonts_dir }}/{{ font_dir }}/{{ font|basename }}"
-    group: "{{ ansible_user_gid }}"
-    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_facts.user_gid }}"
+    owner: "{{ ansible_facts.user_id }}"
     url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ nerdfonts_version }}/patched-fonts/{{ font | regex_replace(' ', '%20') }}"
   tags:
     - fonts

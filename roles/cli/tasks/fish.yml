@@ -12,7 +12,7 @@
 - name: Set default shell to fish
   become: yes
   user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts.user_id }}"
     shell: /usr/bin/fish
   tags:
     - fish

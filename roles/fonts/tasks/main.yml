@@ -6,7 +6,7 @@
   loop:
     - Hack Regular Nerd Font Complete.ttf
     - Hack Bold Nerd Font Complete.ttf
-  when: ansible_distribution == 'Fedora'
+  when: ansible_facts.distribution == 'Fedora'
   register: legacy_hack_fonts
   tags:
     - fonts
@@ -22,7 +22,7 @@
 - name: Refresh font cache after removing legacy fonts
   command: fc-cache -f
   when:
-    - ansible_distribution == 'Fedora'
+    - ansible_facts.distribution == 'Fedora'
     - legacy_hack_fonts is changed
   tags:
     - fonts

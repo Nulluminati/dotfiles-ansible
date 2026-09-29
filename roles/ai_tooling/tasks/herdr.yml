@@ -16,7 +16,7 @@
     cmd: "curl -fsSL https://herdr.dev/install.sh | sh"
   when: herdr_check.rc != 0
   args:
-    creates: "{{ ansible_env.HOME }}/.local/bin/herdr"
+    creates: "{{ ansible_facts.env.HOME }}/.local/bin/herdr"
   tags:
     - install
     - herdr
