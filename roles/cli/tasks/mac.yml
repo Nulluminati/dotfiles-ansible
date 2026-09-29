@@ -16,6 +16,12 @@
     install_options: "{{ item.install_options | default(omit) }}"
     accept_external_apps: yes
   loop: "{{ mac_cask_packages }}"
+  register: cask_result
+  # Homebrew 7 prefixes this error with the cask name ("Error: <cask>: It seems..."),
+  # which the module's accept_external_apps regex does not match.
+  failed_when:
+    - cask_result.failed
+    - "'It seems there is already an App at' not in cask_result.msg | default('')"
   tags:
     - homebrew
     - casks
