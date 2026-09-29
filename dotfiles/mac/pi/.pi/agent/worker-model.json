@@ -1,5 +1,5 @@
 {
-  "provider": "zai",
-  "model": "glm-5.3-flash",
+  "provider": "anthropic",
+  "model": "claude-sonnet-5-5",
   "thinkingLevel": "high"
 }
