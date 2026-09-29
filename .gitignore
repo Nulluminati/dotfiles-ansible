@@ -62,6 +62,8 @@ dotfiles/fedora/nvim/
 
 # Pi agent credentials (never commit)
 dotfiles/shared/pi/.pi/agent/auth.json
+dotfiles/fedora/pi/.pi/agent/auth.json
+dotfiles/mac/pi/.pi/agent/auth.json
 
 # Pi agent work state
 .pi/autoresearch/

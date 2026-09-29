@@ -1,0 +1,43 @@
+{
+  "lastChangelogVersion": "0.99.1",
+  "defaultProvider": "synthetic",
+  "defaultModel": "hf:zai-org/GLM-5.3-Flash",
+  "enabledModels": [
+    "opencode-go/deepseek-v4.1-flash",
+    "opencode-go/glm-5.3",
+    "opencode-go/glm-5.3-flash",
+    "opencode-go/kimi-k3",
+    "opencode-go/mimo-v2.6-flash",
+    "opencode-go/mimo-v2.6-pro",
+    "openai-codex/gpt-6-sol",
+    "openai-codex/gpt-6.1-sol",
+    "openai-codex/gpt-6-astra",
+    "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash",
+    "synthetic/hf:zai-org/GLM-5.2",
+    "synthetic/hf:zai-org/GLM-5.3-Flash",
+    "synthetic/hf:moonshotai/Kimi-K3",
+    "zai/glm-5.3",
+    "zai/glm-5.3-flash",
+    "zai/glm-5.3-highspeed"
+  ],
+  "defaultThinkingLevel": "high",
+  "hideThinkingBlock": true,
+  "packages": [
+    "~/Projects/pi-extensions",
+    "npm:@wierdbytes/pi-peon"
+  ],
+  "theme": "terminal",
+  "terminal": {
+    "clearOnShrink": true
+  },
+  "editorPaddingX": 0,
+  "quietStartup": true,
+  "enableInstallTelemetry": false,
+  "defaultProjectTrust": "always",
+  "warnings": {
+    "anthropicExtraUsage": true
+  },
+  "env": {
+    "PI_VOICE_SOURCE": "pi_voice_mic"
+  }
+}
