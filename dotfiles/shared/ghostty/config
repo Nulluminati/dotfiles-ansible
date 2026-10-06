@@ -17,9 +17,11 @@ config-file = ~/.cache/wal/ghostty.conf
 bold-color = bright
 
 # Window configuration (matches Alacritty decorations and padding)
+# Padding matches ~/.config/alacritty-local.toml; balance matches dynamic_padding
 window-decoration = false
 window-padding-x = 10
-window-padding-y = 25
+window-padding-y = 8
+window-padding-balance = true
 
 # Scrolling (matches Alacritty: history 10000, multiplier 3)
 scrollback-limit = 10000
