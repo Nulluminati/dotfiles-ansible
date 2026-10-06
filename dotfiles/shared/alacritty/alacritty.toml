@@ -49,7 +49,7 @@ key = "N"
 mods = "Control"
 
 [[keyboard.bindings]]
-chars = "\u001B\r"
+chars = "\u001B[13;2u"
 key = "Return"
 mods = "Shift"
 
