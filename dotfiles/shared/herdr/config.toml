@@ -1,0 +1,21 @@
+onboarding = false
+
+[ui]
+status_indicators = "dots"
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "agent"],
+  ["$pi_session_name"],
+  ["$pi_messenger"],
+  ["$pi_mission", "$pi_mission_status"],
+  ["$pi_workers", "$pi_cost"],
+  ["$pi_todos", "$pi_goal"],
+]
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[ui.toast]
+delivery = "herdr"
