@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.99.1",
-  "defaultProvider": "synthetic",
-  "defaultModel": "hf:zai-org/GLM-5.3-Flash",
+  "lastChangelogVersion": "1.0.4",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
   "enabledModels": [
     "opencode-go/deepseek-v4.1-flash",
     "opencode-go/glm-5.3",
