@@ -28,6 +28,10 @@
       "Read(**/.aws/**)",
       "Read(**/.ssh/**)"
     ],
+    "ask": [
+       "mcp__claude_ai_Slack__slack_send_message",
+      "Bash(gh pr close *)"
+    ],
     "defaultMode": "auto"
   },
   "model": "opus[1m]",
