@@ -32,17 +32,6 @@
   },
   "model": "opus[1m]",
   "hooks": {
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run ~/.claude/hooks/tts_notification.py --tts --notifications"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "^(startup|resume|clear|compact|fork)$",
