@@ -2,6 +2,8 @@ onboarding = false
 
 [ui]
 status_indicators = "dots"
+pane_borders = "always"
+pane_outer_borders = true
 
 [ui.sidebar.agents]
 rows = [
