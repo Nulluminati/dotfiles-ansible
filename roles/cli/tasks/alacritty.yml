@@ -58,12 +58,12 @@
     url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.info"
     dest: "/tmp/alacritty-v{{ alacritty_latest_version }}.info"
     mode: '0644'
+  register: alacritty_terminfo_download
   tags:
     - alacritty
 
 - name: Install Alacritty terminfo
   ansible.builtin.command: tic -x -o {{ ansible_facts.env.HOME }}/.terminfo -e alacritty,alacritty-direct /tmp/alacritty-v{{ alacritty_latest_version }}.info
-  args:
-    creates: "{{ ansible_facts.env.HOME }}/.terminfo/61/alacritty"
+  when: alacritty_terminfo_download.changed
   tags:
     - alacritty
