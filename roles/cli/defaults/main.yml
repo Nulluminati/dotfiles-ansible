@@ -130,7 +130,6 @@ mac_homebrew_taps:
 
 # Homebrew cask apps to install on macOS
 mac_cask_packages:
-  - alacritty # Cross-platform, GPU-accelerated terminal emulator
   - aws-vpn-client # AWS VPN Client
   - betterdisplay # Display management utility
   - chatgpt # OpenAI ChatGPT desktop app

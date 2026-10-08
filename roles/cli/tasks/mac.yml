@@ -26,6 +26,10 @@
     - homebrew
     - casks
 
+# Alacritty
+- name: Install Alacritty
+  import_tasks: alacritty.yml
+
 - name: Install homebrew packages
   community.general.homebrew:
     name: "{{ item.name|default(item) }}"

@@ -1,0 +1,69 @@
+---
+# Alacritty from the official GitHub release. Homebrew disabled the cask
+# because the ad-hoc signed app fails the Gatekeeper check. Files fetched by
+# get_url carry no quarantine attribute, so Gatekeeper does not block the app.
+
+- name: Look up latest Alacritty release
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/alacritty/alacritty/releases/latest
+    return_content: true
+  register: alacritty_latest_release
+  check_mode: false
+  tags:
+    - alacritty
+
+- name: Set latest Alacritty version
+  ansible.builtin.set_fact:
+    alacritty_latest_version: "{{ alacritty_latest_release.json.tag_name | regex_replace('^v', '') }}"
+  tags:
+    - alacritty
+
+- name: Check installed Alacritty version
+  ansible.builtin.command: defaults read /Applications/Alacritty.app/Contents/Info.plist CFBundleShortVersionString
+  register: alacritty_installed_version
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - alacritty
+
+- name: Install Alacritty app
+  when: alacritty_installed_version.stdout != alacritty_latest_version
+  tags:
+    - alacritty
+  block:
+    - name: Download Alacritty disk image
+      ansible.builtin.get_url:
+        url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/Alacritty-v{{ alacritty_latest_version }}.dmg"
+        dest: "/tmp/Alacritty-v{{ alacritty_latest_version }}.dmg"
+        mode: '0644'
+
+    - name: Mount Alacritty disk image
+      ansible.builtin.command: hdiutil attach -nobrowse -readonly -mountpoint /tmp/alacritty-dmg /tmp/Alacritty-v{{ alacritty_latest_version }}.dmg
+
+    - name: Remove previous Alacritty app
+      ansible.builtin.file:
+        path: /Applications/Alacritty.app
+        state: absent
+
+    - name: Copy Alacritty app to Applications
+      ansible.builtin.command: ditto /tmp/alacritty-dmg/Alacritty.app /Applications/Alacritty.app
+  always:
+    - name: Unmount Alacritty disk image
+      ansible.builtin.command: hdiutil detach /tmp/alacritty-dmg
+      failed_when: false
+
+- name: Download Alacritty terminfo source
+  ansible.builtin.get_url:
+    url: "https://github.com/alacritty/alacritty/releases/download/v{{ alacritty_latest_version }}/alacritty.info"
+    dest: "/tmp/alacritty-v{{ alacritty_latest_version }}.info"
+    mode: '0644'
+  tags:
+    - alacritty
+
+- name: Install Alacritty terminfo
+  ansible.builtin.command: tic -x -o {{ ansible_facts.env.HOME }}/.terminfo -e alacritty,alacritty-direct /tmp/alacritty-v{{ alacritty_latest_version }}.info
+  args:
+    creates: "{{ ansible_facts.env.HOME }}/.terminfo/61/alacritty"
+  tags:
+    - alacritty
