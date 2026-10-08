@@ -1,7 +1,7 @@
 onboarding = false
 
 [ui]
-status_indicators = "dots"
+status_indicators = "symbols"
 pane_borders = "always"
 pane_outer_borders = true
 
@@ -32,3 +32,6 @@ auto_switch = false
 
 [ui.toast]
 delivery = "herdr"
+
+[ui.sound]
+enabled = true
