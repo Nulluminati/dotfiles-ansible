@@ -71,6 +71,15 @@ TOTAL_OUTPUT=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 CACHE_CREATE=$(echo "$input" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0')
 CACHE_READ=$(echo "$input" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0')
 
+# Subscription rate limits (claude.ai Pro/Max only, absent until first API response)
+RL_5H=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+RL_5H_RESET=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
+RL_7D=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
+
+# Session display values for the herdr sidebar
+SESSION_NAME=$(echo "$input" | jq -r '.session_name // empty')
+COST_USD=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+
 # Get current directory from workspace
 CWD=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // "."')
 
@@ -104,6 +113,44 @@ get_token_breakdown() {
 
     # Colored labels with formatted values
     echo "$(fg_cyan)I:$(reset)$(fmt_num $TOTAL_INPUT) $(fg_green)O:$(reset)$(fmt_num $TOTAL_OUTPUT) $(fg_yellow)W:$(reset)$(fmt_num $CACHE_CREATE) $(fg_magenta)R:$(reset)$(fmt_num $CACHE_READ) $(fg_white)T:$(reset)$(fmt_num $total)"
+}
+
+# Format seconds until a reset as XhYm or Ym; prints nothing once passed
+fmt_countdown() {
+    local seconds=$(( $1 - $(date +%s) ))
+    (( seconds <= 0 )) && return
+    local hours=$(( seconds / 3600 ))
+    local minutes=$(( seconds % 3600 / 60 ))
+    if (( hours > 0 )); then
+        echo "${hours}h${minutes}m"
+    else
+        echo "${minutes}m"
+    fi
+}
+
+# One rate limit window: "<label>: N% left", colored by percent used
+rate_limit_window() {
+    local label=$1
+    local used=$2
+    local reset=$3
+    local left=$(printf '%.0f' "$(echo "100 - $used" | bc -l)")
+    (( left < 0 )) && left=0
+
+    echo -n "$(fg_white)${label}:$(reset) $(context_color "$used")${left}% left$(reset)"
+    if [[ -n "$reset" ]]; then
+        local countdown=$(fmt_countdown "$reset")
+        [[ -n "$countdown" ]] && echo -n " $(dim)(${countdown})$(reset)"
+    fi
+}
+
+# Remaining subscription usage for the 5-hour and 7-day windows
+rate_limit_info() {
+    local parts=()
+    [[ -n "$RL_5H" ]] && parts+=("$(rate_limit_window 5h "$RL_5H" "$RL_5H_RESET")")
+    [[ -n "$RL_7D" ]] && parts+=("$(rate_limit_window 7d "$RL_7D")")
+
+    local IFS=' '
+    echo -n "${parts[*]}"
 }
 
 # Git information gathering
@@ -185,6 +232,7 @@ git_info() {
 provider_section="$(bold)$(fg_yellow)$(get_provider)$(reset)"
 model_section="$(bold)$(fg_cyan)${MODEL_ID}$(reset)"
 context_section="$(fg_white)Ctx:$(reset) $(context_color "$CONTEXT_PERCENT")${CONTEXT_PERCENT}%$(reset)"
+rate_limit_section=$(rate_limit_info)
 token_section="$(get_token_breakdown)"
 git_section=$(git_info)
 
@@ -193,7 +241,32 @@ status_line=""
 status_line+="${provider_section}"
 status_line+="${SEP}${model_section}"
 status_line+="${SEP}${context_section}"
+[[ -n "$rate_limit_section" ]] && status_line+="${SEP}${rate_limit_section}"
 status_line+="${SEP}${token_section}"
 [[ -n "$git_section" ]] && status_line+="${SEP}${git_section}"
 
 printf '%s' "$status_line"
+
+# Publish session name, context and cost as herdr sidebar tokens
+# ($claude_session_name, $claude_context, $claude_cost). Tokens without a
+# TTL persist until replaced or the pane closes.
+report_herdr_metadata() {
+    [[ "${HERDR_ENV:-}" == "1" && -n "${HERDR_PANE_ID:-}" ]] || return 0
+
+    local args=(
+        pane report-metadata "$HERDR_PANE_ID"
+        --source user:claude-statusline
+        --seq "$(date +%s%N)"
+        --token "claude_context=ctx ${CONTEXT_PERCENT}%"
+        --token "claude_cost=\$$(printf '%.3f' "$COST_USD")"
+    )
+    if [[ -n "$SESSION_NAME" ]]; then
+        args+=(--token "claude_session_name=${SESSION_NAME}")
+    else
+        args+=(--clear-token claude_session_name)
+    fi
+
+    "${HERDR_BIN_PATH:-herdr}" "${args[@]}" >/dev/null 2>&1 || true
+}
+
+report_herdr_metadata

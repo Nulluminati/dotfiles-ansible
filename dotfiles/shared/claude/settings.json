@@ -2,17 +2,12 @@
   "env": {
     "API_TIMEOUT_MS": "3000000",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "0",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-    "EDITOR": "subl",
-    "ENABLE_TOOL_SEARCH": "true"
+    "EDITOR": "subl"
   },
   "attribution": {
     "commit": "",
     "pr": ""
   },
-  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "mcp__brave-search__*",
@@ -29,12 +24,11 @@
       "Read(**/.ssh/**)"
     ],
     "ask": [
-       "mcp__claude_ai_Slack__slack_send_message",
+      "mcp__claude_ai_Slack__slack_send_message",
       "Bash(gh pr close *)"
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -49,44 +43,46 @@
       }
     ]
   },
+  "worktree": {
+    "baseRef": "fresh"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh",
     "padding": 0
   },
   "enabledPlugins": {
-    "codex@openai-codex": true,
-    "pr-review-toolkit@claude-plugins-official": false,
     "sumologic@wrapbook-claude-code-marketplace": true,
-    "code-review@wrapbook-claude-code-marketplace": true,
-    "performance-review@wrapbook-claude-code-marketplace": true
+    "code-review@wrapbook-claude-code-marketplace": true
   },
-  "extraKnownMarketplaces": {
-    "openai-codex": {
-      "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      }
-    }
-  },
-  "alwaysThinkingEnabled": true,
+  "extraKnownMarketplaces": {},
   "effortLevel": "high",
   "modelSettings": {
     "gpt-5.6-sol": {
       "effortLevel": "medium"
     },
     "claude-opus-5-5": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     }
   },
+  "pluginConfigs": {
+    "cc-plugin-agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-or-agents-md"
+      }
+    }
+  },
+  "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
+  "timeFormat": "auto",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
+  "editorMode": "normal",
   "autoCompactEnabled": true,
+  "autoContinueAtUsageLimit": false,
   "teammateMode": "tmux",
-  "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "skipAutoPermissionPrompt": true
 }
