@@ -283,6 +283,15 @@ label-foreground = ${colors.foreground}
 label-font = 2
 click-left = firefox --new-tab --url "https://portal.neuralwatt.com/docs/api/quota"
 
+[module/claude-quota]
+type = custom/script
+exec = uv run ~/.config/scripts/polybar/claude-quota.py 2>/dev/null
+interval = 300
+format = <label>
+label-foreground = ${colors.foreground}
+label-font = 2
+click-left = firefox --new-tab --url "https://claude.ai/settings/usage"
+
 [module/claude-credits]
 type = custom/script
 exec = uv run ~/.config/scripts/polybar/claude-credits.py 2>/dev/null
