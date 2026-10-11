@@ -12,18 +12,20 @@ rows = [
 ]
 
 [ui.sidebar.agents.rows_by_agent]
+# Shared rows first, in the same order for every agent; agent-only rows follow.
 pi = [
   ["state_icon", "agent"],
   ["$pi_session_name"],
+  ["$pi_context", "$pi_cost"],
+  ["$pi_todos"],
   ["$pi_messenger"],
   ["$pi_mission", "$pi_mission_status"],
-  ["$pi_workers", "$pi_cost"],
-  ["$pi_todos", "$pi_goal"],
+  ["$pi_workers", "$pi_goal"],
 ]
 claude = [
-  ["state_icon", "agent", "state_text"],
-  ["terminal_title_stripped"],
-  ["workspace", "tab"],
+  ["state_icon", "agent"],
+  ["$claude_session_name"],
+  ["$claude_context", "$claude_cost"],
 ]
 
 [theme]
@@ -35,3 +37,51 @@ delivery = "herdr"
 
 [ui.sound]
 enabled = true
+
+[[keys.command]]
+key = "prefix+up"
+type = "plugin_action"
+command = "cloudmanic.herdr-plus.projects"
+description = "Open project workflows"
+
+[[keys.command]]
+key = "prefix+down"
+type = "plugin_action"
+command = "cloudmanic.herdr-plus.quick-actions"
+description = "Open Quick Actions"
+
+[[keys.command]]
+key = "prefix+shift+h"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review"
+description = "hunk: review changes"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.send-review"
+description = "hunk: send review to agent"
+
+[[keys.command]]
+key = "prefix+shift+c"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:commit"
+description = "hunk: review the last commit"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "plugin_action"
+command = "jhochenbaum.hunkdiff.review:staged"
+description = "hunk: review staged changes"
+
+[[keys.command]]
+key = "prefix+shift+p"
+type = "plugin_action"
+command = "nulluminati.peer-review.request"
+description = "peer review: ask the other agent to review uncommitted changes"
+
+[[keys.command]]
+key = "prefix+shift+b"
+type = "plugin_action"
+command = "nulluminati.herdboard.board"
+description = "herdboard: open the kanban board"

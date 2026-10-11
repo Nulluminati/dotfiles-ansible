@@ -16,6 +16,8 @@ agent_skills:
   - "softaworks/agent-toolkit@agent-md-refactor"
   - "wshobson/agents@uv-package-manager"
   - "wshobson/agents@code-review-excellence"
+  - "Nulluminati/herdr-extensions@peer-review"
+  - "Nulluminati/herdr-extensions@herdboard"
 
 mcp_servers:
   - name: brave-search

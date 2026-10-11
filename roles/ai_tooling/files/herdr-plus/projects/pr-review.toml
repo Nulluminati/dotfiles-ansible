@@ -1,0 +1,21 @@
+name = "pr-review"
+description = "Review a GitHub pull request without checkout"
+working_dir = "{prompt}"
+
+[[tabs]]
+name = "review"
+
+[[tabs.panes]]
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-agent pr-review pi'"""
+
+[[tabs.panes]]
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-hunk pr-review'"""
+split = "right"
+ratio = 0.5
+
+[[tabs]]
+name = "claude"
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-agent pr-review claude'"""
+
+[[tabs]]
+name = "shell"

@@ -1,0 +1,25 @@
+name = "implementation"
+description = "Pi and Claude Code with Hunk and the herdboard board"
+working_dir = "{prompt}"
+
+[[tabs]]
+name = "implement"
+
+[[tabs.panes]]
+command = "pi"
+
+[[tabs.panes]]
+command = "hunk diff --watch"
+split = "right"
+ratio = 0.5
+
+[[tabs]]
+name = "claude"
+command = "claude"
+
+[[tabs]]
+name = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[tabs]]
+name = "shell"

@@ -1,0 +1,49 @@
+---
+- name: Deploy Herdr Plus project templates
+  when: >-
+    not ansible_check_mode or
+    (herdr_plus_plugins is not skipped and
+    (herdr_plus_plugins.stdout | from_json).result.plugins | length > 0)
+  block:
+    - name: Find the Herdr Plus configuration directory
+      ansible.builtin.command:
+        argv:
+          - herdr
+          - plugin
+          - config-dir
+          - cloudmanic.herdr-plus
+      register: herdr_plus_config_dir
+      changed_when: false
+      check_mode: false
+
+    - name: Deploy the project templates
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/herdr-plus/projects/"
+        dest: "{{ herdr_plus_config_dir.stdout | trim }}/projects/"
+        mode: "0644"
+        directory_mode: "0755"
+      register: herdr_plus_layouts
+
+    - name: Deploy the workflow launcher
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/herdr-plus/bin/herdr_workflow.py"
+        dest: "{{ herdr_plus_config_dir.stdout | trim }}/bin/"
+        mode: "0644"
+        directory_mode: "0755"
+      register: herdr_plus_launcher
+
+    - name: Deploy the Quick Actions
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/herdr-plus/quick-actions/"
+        dest: "{{ herdr_plus_config_dir.stdout | trim }}/quick-actions/"
+        mode: "0644"
+        directory_mode: "0755"
+      register: herdr_plus_quick_actions
+
+    - name: Deploy the review instructions
+      ansible.builtin.copy:
+        src: "{{ role_path }}/files/herdr-plus/prompts/"
+        dest: "{{ herdr_plus_config_dir.stdout | trim }}/prompts/"
+        mode: "0644"
+        directory_mode: "0755"
+      register: herdr_plus_prompts

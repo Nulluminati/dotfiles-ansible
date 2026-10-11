@@ -1,0 +1,4 @@
+name = "Create project"
+description = "Create an empty local Git repository and open Implementation"
+type = "command"
+command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" create-project'

@@ -1,0 +1,25 @@
+---
+# Herdr workspace templates and quick actions (https://github.com/cloudmanic/herdr-plus)
+- name: Check whether Herdr Plus is installed
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - list
+      - --plugin
+      - cloudmanic.herdr-plus
+      - --json
+  register: herdr_plus_plugins
+  changed_when: false
+  check_mode: false
+  when: herdr_check.rc == 0 or not ansible_check_mode
+
+- name: Install Herdr Plus
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - install
+      - cloudmanic/herdr-plus
+      - --yes
+  when: herdr_plus_plugins is skipped or (herdr_plus_plugins.stdout | from_json).result.plugins | length == 0

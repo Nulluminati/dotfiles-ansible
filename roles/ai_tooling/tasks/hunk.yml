@@ -1,0 +1,38 @@
+---
+# Hunk diff review and GitHub review submission (https://hunk.dev)
+- name: Install Hunk
+  ansible.builtin.command:
+    argv:
+      - "{{ ansible_facts.env.HOME }}/.bun/bin/bun"
+      - install
+      - -g
+      - hunkdiff
+    creates: "{{ ansible_facts.env.HOME }}/.bun/bin/hunk"
+
+- name: Check the Hunk executable
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.bun/bin/hunk"
+  register: hunk_binary
+
+- name: List installed Hunk extensions
+  ansible.builtin.command:
+    argv:
+      - "{{ ansible_facts.env.HOME }}/.bun/bin/hunk"
+      - extension
+      - list
+  register: hunk_extensions
+  changed_when: false
+  check_mode: false
+  when: hunk_binary.stat.exists
+
+- name: Install the Hunk GitHub review extension
+  ansible.builtin.command:
+    argv:
+      - "{{ ansible_facts.env.HOME }}/.bun/bin/hunk"
+      - extension
+      - install
+      - phl28/hunk-gh-review
+      - --yes
+  when:
+    - hunk_binary.stat.exists
+    - "'phl28/hunk-gh-review' not in hunk_extensions.stdout"

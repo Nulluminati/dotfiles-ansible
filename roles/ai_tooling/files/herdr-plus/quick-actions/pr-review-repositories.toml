@@ -1,0 +1,5 @@
+name = "Pull request review in a repository"
+description = "Select or enter a directory, then enter the pull request in Hunk"
+type = "select"
+options_command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" list-repositories'
+command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" open pr-review'

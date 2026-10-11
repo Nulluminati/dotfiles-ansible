@@ -6,6 +6,30 @@
 # Herdr agent runtime
 - name: Install Herdr
   import_tasks: herdr.yml
+  tags:
+    - herdr-plus
+    - hunk
+
+- name: Install Herdr Plus
+  import_tasks: herdr_plus.yml
+  tags:
+    - install
+    - herdr
+    - herdr-plus
+
+- name: Configure Herdr Plus project templates
+  import_tasks: herdr_plus_layouts.yml
+  tags:
+    - install
+    - herdr
+    - herdr-plus
+
+- name: Install herdr-hunk-diff
+  import_tasks: herdr_hunk_diff.yml
+  tags:
+    - install
+    - herdr
+    - hunk
 
 # Bun tools (AI CLI tools and skills CLI)
 - name: Install bun tools
@@ -15,6 +39,13 @@
   tags:
     - bun_tools
     - bun
+
+# Hunk and its GitHub review extension
+- name: Install Hunk review tools
+  import_tasks: hunk.yml
+  tags:
+    - install
+    - hunk
 
 - name: Install skills globally
   ansible.builtin.shell:

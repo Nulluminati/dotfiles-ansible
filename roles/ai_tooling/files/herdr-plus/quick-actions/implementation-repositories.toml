@@ -1,0 +1,5 @@
+name = "Implementation in a repository"
+description = "Select a recent repository or enter a directory with Tab completion"
+type = "select"
+options_command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" list-repositories'
+command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" open implementation'

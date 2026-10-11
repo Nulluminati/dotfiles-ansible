@@ -1,0 +1,4 @@
+name = "Implementation here"
+description = "Open or focus implementation in the current repository"
+type = "command"
+command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" open implementation'
