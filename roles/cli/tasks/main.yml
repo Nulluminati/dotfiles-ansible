@@ -6,3 +6,9 @@
 - name: Install command line tools in macOS
   import_tasks: mac.yml
   when: ansible_facts.distribution == "MacOSX"
+
+- name: Install zoxide directory history
+  import_tasks: zoxide.yml
+  tags:
+    - install
+    - zoxide

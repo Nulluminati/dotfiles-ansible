@@ -34,3 +34,8 @@ enable_transience
 # bun
 set -gx BUN_INSTALL "$HOME/.bun"
 set -gx PATH $HOME/.local/bin $PATH
+
+# Directory history; keep the Fish z plugin's commands unchanged.
+if type -q zoxide
+    zoxide init fish --cmd zx | source
+end

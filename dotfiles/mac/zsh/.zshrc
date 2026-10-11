@@ -135,6 +135,18 @@ gpullall() {
 # Cross-shell prompt; config at ~/.config/starship.toml (shared/starship).
 eval "$(starship init zsh)"
 
+# ───────────────────────────────────────────────
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/natekift/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# ── Directory history ──────────────────────────────────────────────────
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh --cmd zx)"
+fi
+
 # ── Machine-local overrides ────────────────────────────────────────────
 # Never committed to git; hand-placed per machine (see .gitignore).
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
@@ -145,9 +157,3 @@ eval "$(starship init zsh)"
 # it wraps ZLE widgets, so everything else has to be defined first.
 [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# ───────────────────────────────────────────────
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/natekift/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions

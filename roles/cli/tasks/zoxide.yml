@@ -1,0 +1,29 @@
+---
+- name: Check whether zoxide is installed
+  ansible.builtin.command:
+    argv:
+      - zoxide
+      - --version
+  register: zoxide_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Install zoxide on Fedora
+  become: true
+  ansible.builtin.dnf:
+    name: zoxide
+    state: present
+  register: zoxide_fedora_package
+  when:
+    - ansible_facts.distribution == "Fedora"
+    - zoxide_check.rc != 0
+
+- name: Install zoxide on macOS
+  community.general.homebrew:
+    name: zoxide
+    state: present
+  register: zoxide_mac_package
+  when:
+    - ansible_facts.distribution == "MacOSX"
+    - zoxide_check.rc != 0
