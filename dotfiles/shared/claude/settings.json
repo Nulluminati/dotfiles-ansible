@@ -84,5 +84,6 @@
   "autoCompactEnabled": true,
   "autoContinueAtUsageLimit": false,
   "teammateMode": "tmux",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "agentPushNotifEnabled": true
 }
