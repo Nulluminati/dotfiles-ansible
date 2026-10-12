@@ -49,7 +49,6 @@ Font is Hack Nerd Font.
 
 Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --tags "fonts"`
 
-For Hunk and GitHub pull request review, see [the Hunk setup guide](docs/hunk.md).
 
 
 ## Previews

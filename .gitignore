@@ -54,8 +54,7 @@ package-lock.json
 
 # WIP files
 TODO.md
-docs/*
-!docs/hunk.md
+docs/
 dotfiles/fedora/nvim/
 
 # Machine-local shell secrets (never commit)
