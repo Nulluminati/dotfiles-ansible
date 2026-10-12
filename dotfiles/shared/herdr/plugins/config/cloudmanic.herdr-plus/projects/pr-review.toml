@@ -13,9 +13,10 @@ command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && e
 split = "right"
 ratio = 0.5
 
-[[tabs]]
-name = "claude"
-command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-agent pr-review claude'"""
+[[tabs.panes]]
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" layout-claude pr-review'"""
+split = "down"
+ratio = 0.5
 
 [[tabs]]
 name = "shell"

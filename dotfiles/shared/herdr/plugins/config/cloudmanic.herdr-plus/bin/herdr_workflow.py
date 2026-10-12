@@ -21,6 +21,7 @@ CONFIG_DIR = Path(__file__).resolve().parent.parent
 PLUGIN_ID = "cloudmanic.herdr-plus"
 DIRECTORY_VARIABLE = "HERDR_WORKFLOW_DIRECTORY"
 DIRECTORY_PROMPT = "Enter another directory..."
+WORKFLOW_PROFILES = ("implementation", "local-review", "pr-review")
 
 
 class WorkflowError(RuntimeError):
@@ -206,9 +207,13 @@ def render_template(text: str, label: str) -> str:
     return rendered
 
 
-def herdr_result(arguments: list[str]) -> dict:
+def herdr_command(arguments: list[str]):
     executable = os.environ.get("HERDR_BIN_PATH") or "herdr"
-    output = command([executable, *arguments]).stdout
+    return command([executable, *arguments])
+
+
+def herdr_result(arguments: list[str]) -> dict:
+    output = herdr_command(arguments).stdout
     try:
         result = json.loads(output)["result"]
         if not isinstance(result, dict):
@@ -216,6 +221,52 @@ def herdr_result(arguments: list[str]) -> dict:
         return result
     except (json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
         raise WorkflowError("Herdr returned an invalid response") from error
+
+
+def herdr_workspaces() -> list[dict]:
+    workspaces = herdr_result(["workspace", "list"]).get("workspaces")
+    if not isinstance(workspaces, list):
+        raise WorkflowError("Herdr did not return a workspace list")
+    return workspaces
+
+
+def report_sidebar(workspace_id: str, profile: str, directory: Path) -> None:
+    if profile not in WORKFLOW_PROFILES:
+        return
+    herdr_command([
+        "workspace", "report-metadata", workspace_id,
+        "--source", "herdr-workflow",
+        "--token", f"workflow_project={directory.name or display_path(directory)}",
+        "--token", f"workflow_profile={profile}",
+    ])
+
+
+def refresh_sidebar() -> int:
+    if os.environ.get("HERDR_ENV") != "1":
+        raise WorkflowError("Run workflow actions inside Herdr")
+    count = 0
+    for workspace in herdr_workspaces():
+        label = workspace.get("label")
+        workspace_id = workspace.get("workspace_id")
+        if not isinstance(label, str) or not workspace_id:
+            continue
+        profile, separator, value = label.partition(" · ")
+        if not separator or profile not in WORKFLOW_PROFILES:
+            continue
+        if any(ord(character) < 32 or ord(character) == 127 for character in value):
+            continue
+        try:
+            directory = Path(value).expanduser()
+            if not directory.is_absolute():
+                continue
+            directory = directory.resolve()
+        except (OSError, RuntimeError):
+            continue
+        if workspace_label(profile, directory) != label:
+            continue
+        report_sidebar(workspace_id, profile, directory)
+        count += 1
+    return count
 
 
 def workflow_template(profile: str) -> str:
@@ -239,11 +290,10 @@ def open_workflow(profile: str, directory: Path | None = None) -> str:
     repository = repository_root(directory if directory is not None else current_directory())
     label = workspace_label(profile, repository)
     rendered = render_template(text, label)
-    workspaces = herdr_result(["workspace", "list"]).get("workspaces")
-    if not isinstance(workspaces, list):
-        raise WorkflowError("Herdr did not return a workspace list")
+    workspaces = herdr_workspaces()
     for workspace in workspaces:
         if workspace.get("label") == label and workspace.get("workspace_id"):
+            report_sidebar(workspace["workspace_id"], profile, repository)
             herdr_result(["workspace", "focus", workspace["workspace_id"]])
             command(["zoxide", "add", "--", str(repository)])
             return label
@@ -269,6 +319,14 @@ def open_workflow(profile: str, directory: Path | None = None) -> str:
         env = dict(os.environ, HERDR_PLUGIN_CONFIG_DIR=str(config))
         env[DIRECTORY_VARIABLE] = str(repository)
         command([str(executable), "open", label], env)
+    if profile in WORKFLOW_PROFILES:
+        previous_ids = {workspace.get("workspace_id") for workspace in workspaces}
+        created = [workspace for workspace in herdr_workspaces()
+                   if workspace.get("label") == label and workspace.get("workspace_id")
+                   and workspace["workspace_id"] not in previous_ids]
+        if len(created) != 1:
+            raise WorkflowError("Workflow opened, but Herdr did not identify its new workspace")
+        report_sidebar(created[0]["workspace_id"], profile, repository)
     command(["zoxide", "add", "--", str(repository)])
     return label
 
@@ -277,6 +335,11 @@ def create_project(directory: Path) -> str:
     if not shutil.which("git"):
         raise WorkflowError("Git is required to create a project")
     workflow_template("implementation")
+    # These variables can redirect Git metadata outside the new project.
+    for variable in ("GIT_DIR", "GIT_WORK_TREE", "GIT_COMMON_DIR", "GIT_INDEX_FILE",
+                     "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_NAMESPACE"):
+        if variable in os.environ:
+            raise WorkflowError(f"Unset {variable} before creating a project")
     directory = directory.expanduser()
     if not directory.is_absolute():
         directory = current_directory() / directory
@@ -330,6 +393,57 @@ def launch_review_agent(profile: str, agent: str) -> int:
     return 0
 
 
+def stack_claude_pane() -> None:
+    if os.environ.get("HERDR_ENV") != "1":
+        raise WorkflowError("Run layout startup inside Herdr")
+    current = herdr_result(["pane", "current", "--current"]).get("pane")
+    if not isinstance(current, dict) or not current.get("pane_id"):
+        raise WorkflowError("Herdr did not identify the Claude startup pane")
+    layout = herdr_result(["pane", "layout", "--pane", current["pane_id"]]).get("layout")
+    if not isinstance(layout, dict):
+        raise WorkflowError("Herdr did not return the startup pane layout")
+    area, panes = layout.get("area"), layout.get("panes")
+    if (not isinstance(area, dict) or not isinstance(panes, list) or len(panes) != 3
+            or not layout.get("tab_id") or layout["tab_id"] != current.get("tab_id")
+            or layout.get("workspace_id") != current.get("workspace_id")):
+        raise WorkflowError("Claude startup needs the three-pane workflow tab")
+    if any(not isinstance(pane, dict) or not isinstance(pane.get("rect"), dict) for pane in panes):
+        raise WorkflowError("Herdr returned invalid pane geometry")
+    targets = [pane for pane in panes if pane.get("pane_id") != current["pane_id"]
+               and pane["rect"].get("x") == area.get("x")
+               and pane["rect"].get("y") == area.get("y")]
+    sources = [pane for pane in panes if pane.get("pane_id") == current["pane_id"]]
+    if len(targets) != 1 or not targets[0].get("pane_id") or len(sources) != 1:
+        raise WorkflowError("Herdr did not identify Pi and Claude's startup panes")
+    target, source = targets[0], sources[0]
+    if source["rect"].get("x") == target["rect"].get("x"):
+        return
+    # Herdr Plus splits from the previous pane, and Herdr's same-tab move is a
+    # no-op. Detach Claude into a temporary tab, then stack it below Pi. Moving
+    # it back closes the empty temporary tab and preserves the pane process.
+    detached = herdr_result([
+        "pane", "move", current["pane_id"], "--new-tab",
+        "--workspace", current["workspace_id"], "--label", "Workflow layout startup", "--no-focus",
+    ]).get("move_result", {}).get("pane", {})
+    if not isinstance(detached, dict) or not detached.get("pane_id"):
+        raise WorkflowError("Herdr did not identify the detached Claude pane")
+    herdr_result([
+        "pane", "move", detached["pane_id"], "--tab", layout["tab_id"],
+        "--split", "down", "--target-pane", target["pane_id"],
+        "--ratio", "0.5", "--no-focus",
+    ])
+
+
+def launch_layout_claude(profile: str) -> int:
+    if profile not in WORKFLOW_PROFILES:
+        raise WorkflowError("Unknown workflow profile")
+    stack_claude_pane()
+    if profile == "implementation":
+        os.execvp("claude", ["claude"])
+        return 0
+    return launch_review_agent(profile, "claude")
+
+
 def launch_review_hunk(profile: str, reference: str | None = None) -> int:
     if profile not in ("local-review", "pr-review"):
         raise WorkflowError("Unknown review profile")
@@ -365,12 +479,15 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="action", required=True)
     commands.add_parser("list-repositories")
     commands.add_parser("create-project")
+    commands.add_parser("refresh-sidebar")
     open_parser = commands.add_parser("open")
     open_parser.add_argument("profile")
     open_parser.add_argument("directory", nargs="?", type=Path)
     agent_parser = commands.add_parser("review-agent")
     agent_parser.add_argument("profile", choices=("local-review", "pr-review"))
     agent_parser.add_argument("agent", choices=("pi", "claude"))
+    claude_parser = commands.add_parser("layout-claude")
+    claude_parser.add_argument("profile", choices=WORKFLOW_PROFILES)
     hunk_parser = commands.add_parser("review-hunk")
     hunk_parser.add_argument("profile", choices=("local-review", "pr-review"))
     hunk_parser.add_argument("reference", nargs="?")
@@ -381,6 +498,8 @@ def main(argv: list[str] | None = None) -> int:
             for index, repository in enumerate(list_repositories()):
                 description = "Current or visited repository" if index == 0 else "Visited repository"
                 print(f"{display_path(repository)}\t{description}")
+        elif args.action == "refresh-sidebar":
+            print(f"Updated sidebar entries: {refresh_sidebar()}")
         elif args.action == "create-project":
             directory = prompt_directory("New project directory (Tab completes parents; empty cancels): ")
             if directory is None:
@@ -391,6 +510,8 @@ def main(argv: list[str] | None = None) -> int:
             return launch_review_agent(args.profile, args.agent)
         elif args.action == "review-hunk":
             return launch_review_hunk(args.profile, args.reference)
+        elif args.action == "layout-claude":
+            return launch_layout_claude(args.profile)
         else:
             directory = args.directory
             if directory is not None and str(directory) == DIRECTORY_PROMPT:

@@ -13,9 +13,10 @@ command = "hunk diff --watch"
 split = "right"
 ratio = 0.5
 
-[[tabs]]
-name = "claude"
-command = "claude"
+[[tabs.panes]]
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" layout-claude implementation'"""
+split = "down"
+ratio = 0.5
 
 [[tabs]]
 name = "board"

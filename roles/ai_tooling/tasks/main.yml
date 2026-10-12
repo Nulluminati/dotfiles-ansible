@@ -17,13 +17,6 @@
     - herdr
     - herdr-plus
 
-- name: Configure Herdr Plus project templates
-  import_tasks: herdr_plus_layouts.yml
-  tags:
-    - install
-    - herdr
-    - herdr-plus
-
 - name: Install herdr-hunk-diff
   import_tasks: herdr_hunk_diff.yml
   tags:

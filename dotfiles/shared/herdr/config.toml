@@ -5,6 +5,17 @@ status_indicators = "symbols"
 pane_borders = "always"
 pane_outer_borders = true
 
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "$workflow_project", { token = "workspace", rules = [
+    { starts_with = "implementation · ", hide = true },
+    { starts_with = "local-review · ", hide = true },
+    { starts_with = "pr-review · ", hide = true },
+  ] }],
+  ["$workflow_profile"],
+  ["branch", "git_status"],
+]
+
 [ui.sidebar.agents]
 rows = [
   ["state_icon", "agent", "state_text"],
@@ -13,8 +24,10 @@ rows = [
 
 [ui.sidebar.agents.rows_by_agent]
 # Shared rows first, in the same order for every agent; agent-only rows follow.
+# $herdboard_card: the herdboard card that `herdboard start` gave the agent.
 pi = [
   ["state_icon", "agent"],
+  ["$herdboard_card"],
   ["$pi_session_name"],
   ["$pi_context", "$pi_cost"],
   ["$pi_todos"],
@@ -24,6 +37,7 @@ pi = [
 ]
 claude = [
   ["state_icon", "agent"],
+  ["$herdboard_card"],
   ["$claude_session_name"],
   ["$claude_context", "$claude_cost"],
 ]
