@@ -50,7 +50,6 @@ Font is Hack Nerd Font.
 Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --tags "fonts"`
 
 
-
 ## Previews
 🧛
 ![](https://github.com/nulluminati/dotfiles-ansible/blob/main/previews/preview.png?raw=true)
