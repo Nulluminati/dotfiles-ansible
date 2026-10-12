@@ -269,4 +269,19 @@ report_herdr_metadata() {
     "${HERDR_BIN_PATH:-herdr}" "${args[@]}" >/dev/null 2>&1 || true
 }
 
+# Mirror the session name onto the herdr pane label. Rename only when the
+# name changes, so a label set by hand in herdr survives until the next
+# session name. An unnamed session leaves the existing label alone.
+rename_herdr_pane() {
+    [[ "${HERDR_ENV:-}" == "1" && -n "${HERDR_PANE_ID:-}" && -n "$SESSION_NAME" ]] || return 0
+
+    local cache="${XDG_RUNTIME_DIR:-/tmp}/claude-herdr-pane-name-${HERDR_PANE_ID//[^A-Za-z0-9]/_}"
+    [[ "$(cat "$cache" 2>/dev/null)" == "$SESSION_NAME" ]] && return 0
+
+    "${HERDR_BIN_PATH:-herdr}" pane rename "$HERDR_PANE_ID" "$SESSION_NAME" >/dev/null 2>&1 \
+        && printf '%s' "$SESSION_NAME" > "$cache"
+    return 0
+}
+
 report_herdr_metadata
+rename_herdr_pane
