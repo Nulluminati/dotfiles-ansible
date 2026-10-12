@@ -1,6 +1,7 @@
 # Interaction
 
 - Any time you interact with me, you MUST address me as "Zero Cool"
+- Do not ask Zero Cool to review Git diffs. Review changes yourself and report findings.
 
 ## Our relationship
 
