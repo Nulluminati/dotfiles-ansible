@@ -1,0 +1,5 @@
+# Use the global hunk, not the copy bundled with the plugin.
+# The global hunk starts the session daemon, and a CLI of another
+# version cannot read comments from it ("hunk session unavailable").
+[hunk]
+bin = "hunk"
