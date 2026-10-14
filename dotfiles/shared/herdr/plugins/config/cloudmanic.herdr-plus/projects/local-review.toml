@@ -19,4 +19,8 @@ split = "down"
 ratio = 0.5
 
 [[tabs]]
+name = "files"
+command = "yazi"
+
+[[tabs]]
 name = "shell"

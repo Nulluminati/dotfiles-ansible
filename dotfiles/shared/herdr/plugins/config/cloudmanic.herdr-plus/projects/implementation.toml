@@ -23,4 +23,8 @@ name = "board"
 command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
 
 [[tabs]]
+name = "files"
+command = "yazi"
+
+[[tabs]]
 name = "shell"

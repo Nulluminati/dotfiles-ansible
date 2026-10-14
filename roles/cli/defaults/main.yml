@@ -56,6 +56,7 @@ cli_dnf_packages:
   - unzip
   - wireplumber
   - xclip
+  - yazi
   - zoxide
 
 # Fish plugins to install via fisher
@@ -120,6 +121,8 @@ copr_repositories:
     creates: _copr:copr.fedorainfracloud.org:scottames:ghostty.repo
   - name: "@go-sig/golang-rawhide"
     creates: _copr:copr.fedorainfracloud.org:group_go-sig:golang-rawhide.repo
+  - name: lihaohong/yazi
+    creates: _copr:copr.fedorainfracloud.org:lihaohong:yazi.repo
 
 # Homebrew taps to configure on macOS
 mac_homebrew_taps:
@@ -186,6 +189,7 @@ mac_brew_packages:
   - vim # Vi 'workalike' with many additional features
   - wget # Internet file retriever
   - yamllint # Linter for YAML files
+  - yazi # Blazing fast terminal file manager written in Rust
   - yq # Command-line YAML processor - jq wrapper for YAML documents
   - zoxide # Directory history and interactive directory selection
   - zsh # UNIX shell (command interpreter)
