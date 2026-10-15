@@ -1,0 +1,1 @@
+../../../../../shared/fish/completions/ai.fish

@@ -1,1 +1,1 @@
-set -x fish_user_paths $HOME/.local/bin $HOME/go/bin $HOME/.bun/bin
+../../../../../shared/fish/conf.d/user_paths.fish

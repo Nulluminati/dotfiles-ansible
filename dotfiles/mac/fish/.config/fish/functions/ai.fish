@@ -1,0 +1,1 @@
+../../../../../shared/fish/functions/ai.fish

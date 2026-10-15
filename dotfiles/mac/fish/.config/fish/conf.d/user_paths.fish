@@ -1,0 +1,1 @@
+../../../../../shared/fish/conf.d/user_paths.fish

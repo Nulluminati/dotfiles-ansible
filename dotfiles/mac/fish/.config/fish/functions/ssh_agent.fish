@@ -1,0 +1,1 @@
+../../../../../shared/fish/functions/ssh_agent.fish
