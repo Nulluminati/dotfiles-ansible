@@ -1,17 +1,17 @@
 name = "top-level"
-description = "Herdboard board with Pi and a shell for worktree-first work"
+description = "Herdboard board over a thin shell, with a file explorer tab"
 working_dir = "{prompt}"
 
 [[tabs]]
 name = "board"
-command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
-
-[[tabs]]
-name = "work"
 
 [[tabs.panes]]
-command = "pi"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
 
 [[tabs.panes]]
 split = "down"
-ratio = 0.5
+ratio = 0.15
+
+[[tabs]]
+name = "files"
+command = "yazi"
