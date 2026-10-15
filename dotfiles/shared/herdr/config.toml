@@ -9,6 +9,7 @@ pane_outer_borders = true
 rows = [
   ["state_icon", "$workflow_project", { token = "workspace", rules = [
     { starts_with = "implementation · ", hide = true },
+    { starts_with = "top-level · ", hide = true },
     { starts_with = "local-review · ", hide = true },
     { starts_with = "pr-review · ", hide = true },
   ] }],

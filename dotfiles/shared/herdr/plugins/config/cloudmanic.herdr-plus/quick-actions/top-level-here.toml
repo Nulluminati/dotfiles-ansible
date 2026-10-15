@@ -1,0 +1,4 @@
+name = "Top level here"
+description = "Open or focus the top-level board layout in the current repository"
+type = "command"
+command = 'uv run --no-project --script "$HERDR_PLUGIN_CONFIG_DIR/bin/herdr_workflow.py" open top-level'

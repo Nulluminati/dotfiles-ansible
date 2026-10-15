@@ -21,7 +21,7 @@ CONFIG_DIR = Path(__file__).resolve().parent.parent
 PLUGIN_ID = "cloudmanic.herdr-plus"
 DIRECTORY_VARIABLE = "HERDR_WORKFLOW_DIRECTORY"
 DIRECTORY_PROMPT = "Enter another directory..."
-WORKFLOW_PROFILES = ("implementation", "local-review", "pr-review")
+WORKFLOW_PROFILES = ("implementation", "top-level", "local-review", "pr-review")
 
 
 class WorkflowError(RuntimeError):
