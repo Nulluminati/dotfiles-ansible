@@ -6,9 +6,11 @@
 """\
 zai-quota.py
 
-Displays remaining API quota and time until reset for zai (api.z.ai).
-Shows TOKENS_LIMIT and TIME_LIMIT quotas, plus available quota reset
-cards for the 5-hour and weekly pools (green count when >= 1).
+Displays remaining zai (api.z.ai) coding-plan quota in polybar.
+Shows the 5-hour and weekly token windows (clock and calendar icons,
+percentage remaining, time until reset), the monthly search-tool rate
+limit (magnifier icon), and available quota reset cards per pool
+(green count when >= 1).
 Intended for use in polybar.
 
 Usage: zai-quota.py
@@ -25,26 +27,34 @@ RED = "#dc322f"
 QUOTA_URL = "https://api.z.ai/api/monitor/usage/quota/limit"
 RESETS_URL = "https://api.z.ai/api/biz/customer-package-reset/list?targetType=PERSONAL"
 
-# Clock marks the 5-hour reset pool, calendar the weekly pool,
-# matching the window icons used by openai-usage.py.
-FIVE_HOUR_RESET_ICON = "\uf017"
-WEEK_RESET_ICON = "\uf073"
+# The two token pools use the same window icons as openai-usage.py.
+FIVE_HOUR_ICON = "\uf017"
+WEEK_ICON = "\uf073"
+SEARCH_ICON = "\uf002"
+
+# Token window units from the quota API: 3 = hours (the 5-hour pool),
+# 6 = weeks (the weekly pool). Verified against live responses.
+UNIT_HOURS = 3
+UNIT_WEEKS = 6
 
 
 def format_time_remaining(minutes_remaining):
-    """Format time remaining in compact form (e.g., '4h 30m', '45m')."""
+    """Format time remaining in compact form (e.g., '4d 13h', '4h 30m', '45m')."""
     if minutes_remaining is None:
         return ""
     if minutes_remaining <= 0:
         return "now"
 
-    hours = int(minutes_remaining // 60)
-    minutes = int(minutes_remaining % 60)
+    total_minutes = int(minutes_remaining)
+    days = total_minutes // (24 * 60)
+    hours = (total_minutes % (24 * 60)) // 60
+    minutes = total_minutes % 60
 
+    if days > 0:
+        return f"{days}d {hours}h"
     if hours > 0:
         return f"{hours}h {minutes}m"
-    else:
-        return f"{minutes}m"
+    return f"{minutes}m"
 
 
 def get_time_to_reset(next_reset_timestamp_ms):
@@ -70,14 +80,9 @@ def get_color(percentage_remaining):
 
 
 def format_limit(limit_data, icon="", show_time=True):
-    """Format a single limit for display."""
-    if not limit_data:
-        if icon:
-            return f"%{{F{RED}}}{icon}?%{{F-}}"
-        return f"%{{F{RED}}}?%{{F-}}"
-
+    """Format a single limit window for display."""
     percentage_used = limit_data.get("percentage", 0)
-    percentage_remaining = 100 - percentage_used
+    percentage_remaining = max(0, min(100, 100 - percentage_used))
     color = get_color(percentage_remaining)
 
     next_reset_ms = limit_data.get("nextResetTime")
@@ -89,6 +94,36 @@ def format_limit(limit_data, icon="", show_time=True):
         return f"{prefix}%{{F{color}}}{int(percentage_remaining)}%%{{F-}} [{time_remaining}]"
     else:
         return f"{prefix}%{{F{color}}}{int(percentage_remaining)}%%{{F-}}"
+
+
+def find_limits(limits):
+    """Split limits into (five_hour, week, search) by type and unit.
+
+    Token windows are identified by unit; when units are missing or
+    unknown, the window that resets sooner is treated as the 5-hour pool.
+    """
+    search = next((l for l in limits if l.get("type") == "TIME_LIMIT"), None)
+    token_limits = [l for l in limits if l.get("type") == "TOKENS_LIMIT"]
+
+    five_hour = next((l for l in token_limits if l.get("unit") == UNIT_HOURS), None)
+    week = next((l for l in token_limits if l.get("unit") == UNIT_WEEKS), None)
+
+    if five_hour is None and week is None:
+        by_reset = sorted(token_limits, key=lambda l: l.get("nextResetTime") or 0)
+        if len(by_reset) == 1:
+            five_hour = by_reset[0]
+        elif len(by_reset) >= 2:
+            five_hour, week = by_reset[0], by_reset[-1]
+    else:
+        identified = [l for l in (five_hour, week) if l is not None]
+        others = [l for l in token_limits if all(l is not x for x in identified)]
+        if len(others) == 1:
+            if five_hour is None:
+                five_hour = others[0]
+            else:
+                week = others[0]
+
+    return five_hour, week, search
 
 
 def count_available(cards):
@@ -109,8 +144,8 @@ def format_resets(reset_data):
 
     parts = []
     for icon, key in [
-        (FIVE_HOUR_RESET_ICON, "fiveHourResets"),
-        (WEEK_RESET_ICON, "weekResets"),
+        (FIVE_HOUR_ICON, "fiveHourResets"),
+        (WEEK_ICON, "weekResets"),
     ]:
         count = count_available(reset_data.get(key))
         if count > 0:
@@ -137,28 +172,24 @@ def fetch_resets(api_key):
 
 
 def format_output(quota_data, reset_data):
-    """Format quota limits plus reset card counts as a polybar label."""
+    """Format token windows, search limit and reset cards as a polybar label."""
     limits = quota_data.get("data", {}).get("limits", [])
 
-    # Find limits by type
-    tokens_limit = None
-    time_limit = None
-    for item in limits:
-        if item.get("type") == "TOKENS_LIMIT":
-            tokens_limit = item
-        elif item.get("type") == "TIME_LIMIT":
-            time_limit = item
-
-    if tokens_limit is None and time_limit is None:
+    five_hour_limit, week_limit, search_limit = find_limits(limits)
+    if five_hour_limit is None and week_limit is None and search_limit is None:
         raise ValueError("no usable limits in quota response")
 
-    # Format main token limit (no icon, with time)
-    tokens_str = format_limit(tokens_limit, icon="", show_time=True)
+    parts = []
+    for limit, icon in [
+        (five_hour_limit, FIVE_HOUR_ICON),
+        (week_limit, WEEK_ICON),
+    ]:
+        if limit is not None:
+            parts.append(format_limit(limit, icon=icon))
 
-    # Format time limit (search icon for web tool rate limits, no time)
-    time_str = format_limit(time_limit, icon="\uf002", show_time=False)
-
-    parts = [tokens_str, time_str]
+    if search_limit is not None:
+        # Search-tool rate limit resets monthly; a countdown is just noise.
+        parts.append(format_limit(search_limit, icon=SEARCH_ICON, show_time=False))
 
     # Append reset card counts (best effort - omitted when unavailable)
     reset_str = format_resets(reset_data)
