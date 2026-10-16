@@ -8,9 +8,8 @@ zai-quota.py
 
 Displays remaining zai (api.z.ai) coding-plan quota in polybar.
 Shows the 5-hour and weekly token windows (clock and calendar icons,
-percentage remaining, time until reset), the monthly search-tool rate
-limit (magnifier icon), and available quota reset cards per pool
-(green count when >= 1).
+percentage remaining, time until reset), and available quota reset
+cards per pool (green count when >= 1).
 Intended for use in polybar.
 
 Usage: zai-quota.py
@@ -30,7 +29,6 @@ RESETS_URL = "https://api.z.ai/api/biz/customer-package-reset/list?targetType=PE
 # The two token pools use the same window icons as openai-usage.py.
 FIVE_HOUR_ICON = "\uf017"
 WEEK_ICON = "\uf073"
-SEARCH_ICON = "\uf002"
 
 # Token window units from the quota API: 3 = hours (the 5-hour pool),
 # 6 = weeks (the weekly pool). Verified against live responses.
@@ -97,12 +95,12 @@ def format_limit(limit_data, icon="", show_time=True):
 
 
 def find_limits(limits):
-    """Split limits into (five_hour, week, search) by type and unit.
+    """Split the token windows into (five_hour, week) by unit.
 
     Token windows are identified by unit; when units are missing or
     unknown, the window that resets sooner is treated as the 5-hour pool.
+    Search-tool TIME_LIMIT entries are ignored.
     """
-    search = next((l for l in limits if l.get("type") == "TIME_LIMIT"), None)
     token_limits = [l for l in limits if l.get("type") == "TOKENS_LIMIT"]
 
     five_hour = next((l for l in token_limits if l.get("unit") == UNIT_HOURS), None)
@@ -123,7 +121,7 @@ def find_limits(limits):
             else:
                 week = others[0]
 
-    return five_hour, week, search
+    return five_hour, week
 
 
 def count_available(cards):
@@ -172,11 +170,11 @@ def fetch_resets(api_key):
 
 
 def format_output(quota_data, reset_data):
-    """Format token windows, search limit and reset cards as a polybar label."""
+    """Format the token windows and reset cards as a polybar label."""
     limits = quota_data.get("data", {}).get("limits", [])
 
-    five_hour_limit, week_limit, search_limit = find_limits(limits)
-    if five_hour_limit is None and week_limit is None and search_limit is None:
+    five_hour_limit, week_limit = find_limits(limits)
+    if five_hour_limit is None and week_limit is None:
         raise ValueError("no usable limits in quota response")
 
     parts = []
@@ -186,10 +184,6 @@ def format_output(quota_data, reset_data):
     ]:
         if limit is not None:
             parts.append(format_limit(limit, icon=icon))
-
-    if search_limit is not None:
-        # Search-tool rate limit resets monthly; a countdown is just noise.
-        parts.append(format_limit(search_limit, icon=SEARCH_ICON, show_time=False))
 
     # Append reset card counts (best effort - omitted when unavailable)
     reset_str = format_resets(reset_data)
