@@ -9,10 +9,7 @@
     "pr": ""
   },
   "permissions": {
-    "allow": [
-      "mcp__brave-search__*",
-      "mcp__context7__*"
-    ],
+    "allow": [],
     "deny": [
       "Bash(rm -rf /)",
       "Read(**/.env*)",
@@ -53,7 +50,8 @@
   },
   "enabledPlugins": {
     "sumologic@wrapbook-claude-code-marketplace": true,
-    "code-review@wrapbook-claude-code-marketplace": true
+    "code-review@wrapbook-claude-code-marketplace": true,
+    "cc-plugin-you-should-know@builtin": true
   },
   "extraKnownMarketplaces": {},
   "effortLevel": "high",
@@ -84,6 +82,6 @@
   "autoCompactEnabled": true,
   "autoContinueAtUsageLimit": false,
   "teammateMode": "tmux",
-  "skipAutoPermissionPrompt": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
