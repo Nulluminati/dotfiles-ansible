@@ -1,13 +1,15 @@
 ---
+herdr_extensions_dir: "{{ ansible_facts.env.HOME }}/Projects/herdr-extensions"
+
 herdr_plugins:
   - id: nulluminati.agent-icons
-    source: Nulluminati/herdr-extensions/plugins/agent-icons
+    path: "{{ herdr_extensions_dir }}/plugins/agent-icons"
     tags: [install, herdr]
   - id: nulluminati.herdboard
-    source: Nulluminati/herdr-extensions/plugins/herdboard
+    path: "{{ herdr_extensions_dir }}/plugins/herdboard"
     tags: [install, herdr]
   - id: nulluminati.peer-review
-    source: Nulluminati/herdr-extensions/plugins/peer-review
+    path: "{{ herdr_extensions_dir }}/plugins/peer-review"
     tags: [install, herdr]
   # Herdr workspace templates and quick actions (https://github.com/cloudmanic/herdr-plus)
   - id: cloudmanic.herdr-plus

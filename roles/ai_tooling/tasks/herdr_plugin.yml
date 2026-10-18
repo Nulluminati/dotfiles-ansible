@@ -13,6 +13,20 @@
   check_mode: false
   when: herdr_check.rc == 0 or not ansible_check_mode
 
+- name: Link {{ herdr_plugin.id }} from local clone
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - link
+      - "{{ herdr_plugin.path }}"
+  when:
+    - herdr_plugin.path is defined
+    - >-
+      herdr_installed_plugin is skipped or
+      (herdr_installed_plugin.stdout | from_json).result.plugins |
+      selectattr('plugin_root', 'equalto', herdr_plugin.path) | list | length == 0
+
 - name: Install {{ herdr_plugin.id }} from GitHub
   ansible.builtin.command:
     argv:
@@ -21,7 +35,9 @@
       - install
       - "{{ herdr_plugin.source }}"
       - --yes
-  when: >-
-    herdr_installed_plugin is skipped or
-    (herdr_installed_plugin.stdout | from_json).result.plugins |
-    selectattr('source.kind', 'equalto', 'github') | list | length == 0
+  when:
+    - herdr_plugin.source is defined
+    - >-
+      herdr_installed_plugin is skipped or
+      (herdr_installed_plugin.stdout | from_json).result.plugins |
+      selectattr('source.kind', 'equalto', 'github') | list | length == 0
