@@ -1,5 +1,5 @@
 ---
-herdr_extensions_dir: "{{ ansible_facts.env.HOME }}/Projects/herdr-extensions"
+herdr_extensions_dir: "{{ ansible_facts.env.HOME }}/{{ (ansible_facts.distribution == 'MacOSX') | ternary('personal', 'Projects') }}/herdr-extensions"
 
 herdr_plugins:
   - id: nulluminati.agent-icons
