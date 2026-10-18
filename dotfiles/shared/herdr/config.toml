@@ -19,7 +19,7 @@ rows = [
 
 [ui.sidebar.agents]
 rows = [
-  ["state_icon", "agent", "state_text"],
+  ["state_icon", "$agent_icon", "agent", "state_text"],
   ["workspace", "tab"],
 ]
 
@@ -27,7 +27,7 @@ rows = [
 # Shared rows first, in the same order for every agent; agent-only rows follow.
 # $herdboard_card: the herdboard card that `herdboard start` gave the agent.
 pi = [
-  ["state_icon", "agent"],
+  ["state_icon", "$agent_icon", "agent"],
   ["$herdboard_card"],
   ["$pi_session_name"],
   ["$pi_context", "$pi_cost"],
@@ -37,7 +37,7 @@ pi = [
   ["$pi_workers", "$pi_goal"],
 ]
 claude = [
-  ["state_icon", "agent"],
+  ["state_icon", { token = "$agent_icon", fg = "#D97757" }, "agent"],
   ["$herdboard_card"],
   ["$claude_session_name"],
   ["$claude_context", "$claude_cost"],
@@ -48,7 +48,7 @@ name = "terminal"
 auto_switch = false
 
 [ui.toast]
-delivery = "herdr"
+delivery = "system"
 
 [ui.sound]
 enabled = true

@@ -6,6 +6,9 @@ font-family = Hack Nerd Font
 font-style = Regular
 font-size = 10
 
+# Herdr sidebar agent logos (agent-icons plugin)
+font-codepoint-map = U+E1A0-U+E1BA=Herdr Agent Icons Max
+
 # Cursor style (matches Alacritty: Block)
 cursor-style = block
 cursor-style-blink = false
