@@ -1,0 +1,27 @@
+---
+- name: Check whether {{ herdr_plugin.id }} is installed
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - list
+      - --plugin
+      - "{{ herdr_plugin.id }}"
+      - --json
+  register: herdr_installed_plugin
+  changed_when: false
+  check_mode: false
+  when: herdr_check.rc == 0 or not ansible_check_mode
+
+- name: Install {{ herdr_plugin.id }} from GitHub
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - install
+      - "{{ herdr_plugin.source }}"
+      - --yes
+  when: >-
+    herdr_installed_plugin is skipped or
+    (herdr_installed_plugin.stdout | from_json).result.plugins |
+    selectattr('source.kind', 'equalto', 'github') | list | length == 0

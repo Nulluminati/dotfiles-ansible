@@ -10,24 +10,19 @@
     - herdr-plus
     - hunk
 
-- name: Set up Herdr agent icons
-  import_tasks: herdr_agent_icons.yml
-  tags:
-    - install
-    - herdr
-
-- name: Install Herdr Plus
-  import_tasks: herdr_plus.yml
+- name: Install Herdr plugins
+  include_tasks:
+    file: herdr_plugin.yml
+    apply:
+      tags: "{{ herdr_plugin.tags }}"
+  loop: "{{ herdr_plugins }}"
+  loop_control:
+    loop_var: herdr_plugin
+    label: "{{ herdr_plugin.id }}"
   tags:
     - install
     - herdr
     - herdr-plus
-
-- name: Install herdr-hunk-diff
-  import_tasks: herdr_hunk_diff.yml
-  tags:
-    - install
-    - herdr
     - hunk
 
 # Bun tools (AI CLI tools and skills CLI)

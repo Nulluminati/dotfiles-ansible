@@ -1,6 +1,16 @@
 ---
-# Local clone used by the Herdr agent icons plugin.
-herdr_agent_icons_plugin_path: "{{ ansible_facts.env.HOME }}/Projects/herdr-extensions/plugins/agent-icons"
+herdr_plugins:
+  - id: nulluminati.agent-icons
+    source: Nulluminati/herdr-extensions/plugins/agent-icons
+    tags: [install, herdr]
+  # Herdr workspace templates and quick actions (https://github.com/cloudmanic/herdr-plus)
+  - id: cloudmanic.herdr-plus
+    source: cloudmanic/herdr-plus
+    tags: [install, herdr, herdr-plus]
+  # Review agent diffs in Hunk and send inline comments back to the agent (https://github.com/jhochenbaum/herdr-hunk-diff)
+  - id: jhochenbaum.hunkdiff
+    source: jhochenbaum/herdr-hunk-diff
+    tags: [install, herdr, hunk]
 
 # Bun packages to install globally
 bun_tools:
