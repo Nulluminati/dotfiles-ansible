@@ -1,0 +1,26 @@
+---
+- name: Check whether Herdr agent icons is installed
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - list
+      - --plugin
+      - nulluminati.agent-icons
+      - --json
+  register: herdr_agent_icons_plugins
+  changed_when: false
+  check_mode: false
+  when: herdr_check.rc == 0 or not ansible_check_mode
+
+- name: Link local Herdr agent icons plugin
+  ansible.builtin.command:
+    argv:
+      - herdr
+      - plugin
+      - link
+      - "{{ herdr_agent_icons_plugin_path }}"
+  when: >-
+    herdr_agent_icons_plugins is skipped or
+    (herdr_agent_icons_plugins.stdout | from_json).result.plugins |
+    selectattr('plugin_root', 'equalto', herdr_agent_icons_plugin_path) | list | length == 0

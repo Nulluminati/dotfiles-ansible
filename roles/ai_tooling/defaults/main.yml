@@ -1,4 +1,7 @@
 ---
+# Local clone used by the Herdr agent icons plugin.
+herdr_agent_icons_plugin_path: "{{ ansible_facts.env.HOME }}/Projects/herdr-extensions/plugins/agent-icons"
+
 # Bun packages to install globally
 bun_tools:
   - "@mariozechner/pi-coding-agent"

@@ -1,0 +1,4 @@
+---
+- name: Refresh Herdr agent icon font cache
+  command: fc-cache -f
+  when: ansible_facts.distribution == 'Fedora'

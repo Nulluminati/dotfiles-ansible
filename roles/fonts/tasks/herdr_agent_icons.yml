@@ -1,0 +1,13 @@
+---
+- name: Ensure Herdr agent icon font directory exists
+  file:
+    path: "{{ herdr_agent_icons_font_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Download Herdr agent icon font
+  get_url:
+    url: "{{ herdr_agent_icons_font_url }}"
+    dest: "{{ herdr_agent_icons_font_dir }}/HerdrAgentIconsMax-Regular.ttf"
+    mode: '0644'
+  notify: Refresh Herdr agent icon font cache

@@ -10,6 +10,12 @@
     - herdr-plus
     - hunk
 
+- name: Set up Herdr agent icons
+  import_tasks: herdr_agent_icons.yml
+  tags:
+    - install
+    - herdr
+
 - name: Install Herdr Plus
   import_tasks: herdr_plus.yml
   tags:

@@ -2,6 +2,9 @@
 fedora_font_dir: "{{ ansible_facts.env.HOME }}/.local/share/fonts/NerdFonts"
 mac_font_dir: "{{ ansible_facts.env.HOME }}/Library/Fonts"
 
+herdr_agent_icons_font_dir: "{{ (ansible_facts.distribution == 'Fedora') | ternary(ansible_facts.env.HOME + '/.local/share/fonts', mac_font_dir) }}"
+herdr_agent_icons_font_url: "https://raw.githubusercontent.com/hhdebb/herdr-radar/v1.4.5/dist/HerdrAgentIconsMax-Regular.ttf"
+
 # Repo path layout: patched-fonts/<Font>/<Font>-<Style>.ttf since nerd-fonts v3.
 nerdfonts_version: v3.5.1
 

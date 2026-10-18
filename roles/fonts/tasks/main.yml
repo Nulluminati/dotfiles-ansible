@@ -11,6 +11,12 @@
   tags:
     - fonts
 
+- name: Install Herdr agent icon font
+  import_tasks: herdr_agent_icons.yml
+  tags:
+    - fonts
+    - herdr
+
 - name: Download Font
   include_tasks: "nerdfonts.yml"
   loop: "{{ fonts }}"
