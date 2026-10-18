@@ -3,6 +3,12 @@ herdr_plugins:
   - id: nulluminati.agent-icons
     source: Nulluminati/herdr-extensions/plugins/agent-icons
     tags: [install, herdr]
+  - id: nulluminati.herdboard
+    source: Nulluminati/herdr-extensions/plugins/herdboard
+    tags: [install, herdr]
+  - id: nulluminati.peer-review
+    source: Nulluminati/herdr-extensions/plugins/peer-review
+    tags: [install, herdr]
   # Herdr workspace templates and quick actions (https://github.com/cloudmanic/herdr-plus)
   - id: cloudmanic.herdr-plus
     source: cloudmanic/herdr-plus
