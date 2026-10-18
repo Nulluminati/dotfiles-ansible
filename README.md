@@ -49,27 +49,6 @@ Font is Hack Nerd Font.
 
 Individual ansible tasks can be run with tags `ansible-playbook bootstrap.yml --tags "fonts"`
 
-### Herdr sidebar agent icons (Fedora)
-
-An unmanaged `~/.config/fontconfig/conf.d/50-herdr-agent-icons.conf` causes a Stow conflict.
-If this file exists, move it outside `~/.config/fontconfig` before setup. Keep it as a backup.
-
-1. Clone `Nulluminati/herdr-extensions` into `~/Projects/herdr-extensions`.
-2. Run `./bin/setup -t "herdr,fonts,stow"`.
-3. Open a new terminal window to load the font fallback.
-4. Run `herdr server reload-config` in Herdr.
-5. Run `herdr plugin action invoke nulluminati.agent-icons.refresh` in Herdr.
-
-Ansible downloads the version-pinned Herdr Agent Icons Max font and refreshes the font cache when the download changes.
-The Fedora Fontconfig package gives Alacritty the correct fallback font. Ghostty and Herdr already contain the icon settings.
-Ansible links the plugin from the local clone. Override `herdr_agent_icons_plugin_path` if the clone is elsewhere.
-The clone must contain `plugins/agent-icons`; Ansible does not clone it.
-
-Run the isolated regression test without changing your installed fonts or Herdr plugins:
-
-```bash
-ANSIBLE_ROLES_PATH=roles ansible-playbook -i localhost, tests/herdr_agent_icons.yml
-```
 
 ## Previews
 🧛
