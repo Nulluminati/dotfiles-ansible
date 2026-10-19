@@ -6,19 +6,19 @@
 opencode-go-usage.py
 
 Displays OpenCode Go subscription usage (5-hour / weekly / monthly windows).
-Usage data comes from the console API:
-  GET https://console.opencode.ai/api/go/status
-authenticated with the console session token as a bearer token and the
-workspace ID as the x-org-id header. The dashboard itself is now a
-client-rendered SPA at https://opencode.ai/console, so usage can no longer
-be scraped from server-rendered HTML.
+Usage data comes from one of two endpoints, depending on the credentials.
 
-Authentication mirrors the claude-credits monitor: the workspace ID is read
-from a local config file, and the console session token is pulled from the
-browser (Firefox, then Chrome) via browser_cookie3. The API answers 401 once
-the session expires; signing in at https://opencode.ai/console refreshes it.
+Two usage sources exist, tried in this order:
+  1. API key      GET https://opencode.ai/zen/go/v1/usage (Bearer OPENCODE_API_KEY).
+                  This is the route the CLI uses. The key does not expire, so no
+                  browser session is needed. Preferred source.
+  2. Console API  GET https://console.opencode.ai/api/go/status (browser cookie).
+                  Used only when no API key is set. The console session cookie
+                  lives 30 days and the API answers 401 after it expires.
 
-Credentials are resolved in this order (first non-empty wins):
+API key resolution:  OPENCODE_API_KEY, then OPENCODE_GO_API_KEY
+
+Console fallback credential order (first non-empty wins):
   Workspace ID:    OPENCODE_GO_WORKSPACE_ID env
                    ~/.config/opencode/workspace_id
                    ~/.config/opencode-bar/opencode-go.json  (cross-tool compat)
@@ -50,6 +50,8 @@ except Exception:
 WORKSPACE_ID_PATH = os.path.expanduser("~/.config/opencode/workspace_id")
 OPENCODE_BAR_CONFIG_PATH = os.path.expanduser("~/.config/opencode-bar/opencode-go.json")
 GO_STATUS_URL = "https://console.opencode.ai/api/go/status"
+GO_USAGE_URL = "https://opencode.ai/zen/go/v1/usage"
+API_KEY_ENV_VARS = ("OPENCODE_API_KEY", "OPENCODE_GO_API_KEY")
 CONSOLE_SESSION_COOKIE = "__Host-console_session"
 COOKIE_NAME = "auth"
 # Domains whose session cookies must be sent together for the authenticated
@@ -67,6 +69,15 @@ RED = "#dc322f"
 # --------------------------------------------------------------------------- #
 # Credential resolution
 # --------------------------------------------------------------------------- #
+def get_api_key():
+    """Resolve the OpenCode Go API key from the environment."""
+    for name in API_KEY_ENV_VARS:
+        value = os.environ.get(name, "").strip()
+        if value:
+            return value
+    return None
+
+
 def _read_opencode_bar_config():
     """Read the opencode-bar JSON config if present (cross-tool compatibility)."""
     try:
@@ -238,6 +249,27 @@ def _console_session_token(jar):
     return None
 
 
+def fetch_api_usage(api_key, timeout=15):
+    """Fetch Go usage with API key auth (the route the CLI uses).
+
+    Returns None when the key was rejected (401), which means the key is
+    revoked or wrong.
+    """
+    headers = {
+        "Accept": "application/json",
+        "Authorization": f"Bearer {api_key}",
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+        ),
+    }
+    response = requests.get(GO_USAGE_URL, headers=headers, timeout=timeout)
+    if response.status_code == 401:
+        return None
+    response.raise_for_status()
+    return response.json()
+
+
 def fetch_status(workspace_id, bearer_token, timeout=15):
     """Fetch the Go subscription status from the console API.
 
@@ -308,6 +340,12 @@ def parse_status(data, now=None):
     return windows
 
 
+def _join_windows(windows):
+    """Join formatted windows with the middle-dot separator, like zai/synthetic."""
+    return " \u00b7 ".join(format_window(window, icon=window["icon"])
+                          for window in windows)
+
+
 def format_status(data, now=None):
     """Format the go/status payload for polybar."""
     parts = [format_window(window, icon=window["icon"])
@@ -315,6 +353,45 @@ def format_status(data, now=None):
     if data.get("useBalance"):
         parts.append("\uf155")  # dollar icon -> Zen balance fallback enabled
     return " \u00b7 ".join(parts)  # middle-dot separator, like zai/synthetic
+
+
+# API meter names and icons: same order and glyphs as the console meters.
+API_METERS = (
+    ("rolling", "\uf017"),
+    ("weekly", "\uf073"),
+    ("monthly", "\uf133"),
+)
+
+
+def parse_api_usage(data, now=None):
+    """Extract usage windows from the API key payload (/zen/go/v1/usage).
+
+    The payload reports percent used per window:
+      usage.{rolling,weekly,monthly}.{status,percent,resetsAt}
+    """
+    if now is None:
+        now = datetime.now(timezone.utc)
+
+    usage = data.get("usage") or {}
+    windows = []
+    for meter_name, icon in API_METERS:
+        meter = usage.get(meter_name)
+        if not isinstance(meter, dict):
+            continue
+        percent = meter.get("percent")
+        if percent is None:
+            continue
+        windows.append({
+            "icon": icon,
+            "usagePercent": max(0.0, min(100.0, float(percent))),
+            "resetInSec": _iso_to_reset_seconds(meter.get("resetsAt"), now),
+        })
+    return windows
+
+
+def format_api_status(data, now=None):
+    """Format the API key usage payload for polybar."""
+    return _join_windows(parse_api_usage(data, now))
 
 
 # --------------------------------------------------------------------------- #
@@ -369,7 +446,37 @@ def format_window(window, icon=""):
 # --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
+def report_error(status=None):
+    """Print the polybar label for a failed request and exit."""
+    if status in (401, 403):
+        print(f"%{{F{RED}}}Expired%{{F-}}")
+    else:
+        print(f"%{{F{RED}}}?%{{F-}}")
+    sys.exit(0)
+
+
 def main():
+    # Preferred source: API key. Avoids the 30-day browser session entirely.
+    api_key = get_api_key()
+    if api_key:
+        try:
+            usage = fetch_api_usage(api_key)
+        except requests.HTTPError as exc:
+            status = exc.response.status_code if exc.response is not None else None
+            report_error(status)
+        except Exception:
+            report_error()
+        else:
+            if usage is None:
+                report_error(401)
+            try:
+                output = format_api_status(usage)
+            except (KeyError, TypeError, ValueError):
+                output = ""
+            print(output or f"%{{F{RED}}}?%{{F-}}")
+            return
+
+    # Fallback: console session cookie from the browser.
     workspace_id = get_workspace_id()
     if not workspace_id:
         # Mirrors claude-credits.py: prompt the user to run the setup action.
@@ -386,19 +493,14 @@ def main():
     try:
         data = fetch_status(workspace_id, bearer_token)
     except requests.HTTPError as exc:
-        if exc.response is not None and exc.response.status_code in (401, 403):
-            print(f"%{{F{RED}}}Expired%{{F-}}")
-        else:
-            print(f"%{{F{RED}}}?%{{F-}}")
-        sys.exit(0)
+        status = exc.response.status_code if exc.response is not None else None
+        report_error(status)
     except Exception:
-        print(f"%{{F{RED}}}?%{{F-}}")
-        sys.exit(0)
+        report_error()
 
     # A None result means the console session token was rejected.
     if data is None:
-        print(f"%{{F{RED}}}Expired%{{F-}}")
-        sys.exit(0)
+        report_error(401)
 
     try:
         output = format_status(data)
