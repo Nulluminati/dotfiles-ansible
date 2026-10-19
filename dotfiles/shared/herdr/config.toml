@@ -48,7 +48,7 @@ name = "terminal"
 auto_switch = false
 
 [ui.toast]
-delivery = "system"
+delivery = "herdr"
 
 [ui.sound]
 enabled = true
