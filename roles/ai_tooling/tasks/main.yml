@@ -25,6 +25,12 @@
     - herdr-plus
     - hunk
 
+# Browser for agents inside Herdr panes
+- name: Install terminal-browser
+  import_tasks: terminal_browser.yml
+  tags:
+    - terminal-browser
+
 # Bun tools (AI CLI tools and skills CLI)
 - name: Install bun tools
   ansible.builtin.shell:
