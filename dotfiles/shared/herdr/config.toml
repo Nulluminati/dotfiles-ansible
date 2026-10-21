@@ -43,7 +43,7 @@ claude = [
   ["$claude_context", "$claude_cost"],
 ]
 
-[experimental]
+[terminal]
 # terminal-browser draws pages with the kitty graphics protocol.
 kitty_graphics = true
 
