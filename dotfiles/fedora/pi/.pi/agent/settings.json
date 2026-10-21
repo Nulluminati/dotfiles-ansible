@@ -11,6 +11,7 @@
     "opencode-go/mimo-v2.6-pro",
     "openai-codex/gpt-6.1-sol",
     "openai-codex/gpt-6-astra",
+    "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash-1017",
     "synthetic/hf:deepseek-ai/DeepSeek-V4.1-Flash",
     "synthetic/hf:zai-org/GLM-5.3",
     "synthetic/hf:zai-org/GLM-5.3-Flash",
