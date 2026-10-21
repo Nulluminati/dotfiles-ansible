@@ -22,11 +22,16 @@ herdr_plugins:
 
 # Bun packages to install globally
 bun_tools:
-  - "@mariozechner/pi-coding-agent"
+  - "@earendil-works/pi-coding-agent"
   - "@openai/codex@latest"
   - "@let-it-cook/cli"
   - happy-coder
   - skills
+
+# Bun packages to remove globally when present
+bun_retired_tools:
+  # Old pi package name; its `pi` binary shadows the @earendil-works one
+  - "@mariozechner/pi-coding-agent"
 
 # Agent skills to install globally via skills CLI
 agent_skills:

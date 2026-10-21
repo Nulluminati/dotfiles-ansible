@@ -32,6 +32,30 @@
     - terminal-browser
 
 # Bun tools (AI CLI tools and skills CLI)
+- name: Read global bun packages
+  ansible.builtin.slurp:
+    src: "{{ ansible_facts.env.HOME }}/.bun/install/global/package.json"
+  register: bun_global_package
+  failed_when: false
+  tags:
+    - bun_tools
+    - bun
+
+- name: Remove retired bun tools
+  ansible.builtin.command:
+    argv:
+      - "{{ ansible_facts.env.HOME }}/.bun/bin/bun"
+      - remove
+      - -g
+      - "{{ item }}"
+  loop: "{{ bun_retired_tools }}"
+  when:
+    - bun_global_package.content is defined
+    - item in ((bun_global_package.content | b64decode | from_json).dependencies | default({}))
+  tags:
+    - bun_tools
+    - bun
+
 - name: Install bun tools
   ansible.builtin.shell:
     cmd: "~/.bun/bin/bun install -g {{ item }}"
