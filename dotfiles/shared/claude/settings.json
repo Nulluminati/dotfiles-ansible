@@ -9,7 +9,9 @@
     "pr": ""
   },
   "permissions": {
-    "allow": [],
+    "allow": [
+      "Bash(terminal-browser:*)"
+    ],
     "deny": [
       "Bash(rm -rf /)",
       "Read(**/.env*)",
