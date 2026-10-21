@@ -1,10 +1,14 @@
 # terminal-browser: a browser inside the terminal (https://terminal-browser.sh)
-# The installer runs `terminal-browser setup`, which links the agent skill into
-# ~/.claude/skills and ~/.agents/skills. Without a terminal it accepts the skill.
+# The installer's `terminal-browser setup` step prompts on /dev/tty, which
+# Ansible hides, so it is skipped. The first other terminal-browser command
+# runs setup without a prompt and links the agent skill into ~/.claude/skills
+# and ~/.agents/skills.
 
 - name: Install terminal-browser
   ansible.builtin.shell:
     cmd: "curl -fsSL https://terminal-browser.sh/install | bash"
+  environment:
+    TERMINAL_BROWSER_SKIP_SETUP: "1"
   args:
     creates: "{{ ansible_facts.env.HOME }}/.local/bin/terminal-browser"
   tags:
