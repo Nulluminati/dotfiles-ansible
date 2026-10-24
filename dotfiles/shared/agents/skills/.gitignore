@@ -9,3 +9,5 @@
 !herdr/**
 !show-docs/
 !show-docs/**
+!harness-triage/
+!harness-triage/**
