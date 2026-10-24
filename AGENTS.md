@@ -46,6 +46,12 @@ When modifying roles:
 
 For secrets, reference `secrets.example.yml` (never commit `secrets.yml`).
 
+## Testing
+
+This repo has no test suite. Verify changes with a dry run: `./bin/setup -t "<roles>" --check`.
+
+Ad-hoc scripts to check something are fine, but do not commit them.
+
 ## Stow Management
 
 Dotfiles are symlinked via GNU Stow, but **managed through Ansible** (not run manually). The `stow` role:
