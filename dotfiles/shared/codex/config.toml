@@ -3,3 +3,8 @@ model_reasoning_effort = "medium"
 
 [features]
 hooks = true
+
+[tui]
+theme = "ansi"
+status_line = ["model-with-reasoning", "current-dir", "thread-name", "git-branch", "branch-changes", "approval-mode", "context-used"]
+status_line_use_colors = true

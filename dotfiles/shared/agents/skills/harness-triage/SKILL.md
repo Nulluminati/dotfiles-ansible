@@ -45,11 +45,11 @@ Use the component that must change, not the place where you saw the symptom.
 | pi settings, models, small-model and worker-model files | `dotfiles/fedora/pi/.pi/agent/` | `nulluminati-dotfiles-ansible` |
 | Herdr configuration (`~/.config/herdr/config.toml`) | `dotfiles/fedora/herdr/` | `nulluminati-dotfiles-ansible` |
 | Installation of Claude Code, pi, Codex, Herdr, Herdr plugins, bun tools | `roles/ai_tooling/` | `nulluminati-dotfiles-ansible` |
-| Codex configuration (`~/.codex/config.toml`, `~/.codex/hooks.json`) | not managed by the dotfiles | `nulluminati-dotfiles-ansible`, to bring it under management |
+| Codex configuration (`~/.codex/config.toml`, `~/.codex/hooks.json`, `~/.codex/AGENTS.md`) | `dotfiles/fedora/codex/.codex/`, `dotfiles/shared/codex/` | `nulluminati-dotfiles-ansible` |
 | Herdr integration hooks (`herdr-agent-state.sh`, `~/.pi/agent/extensions/herdr-agent-state.ts`) | written by Herdr; do not edit | `inbox`, tagged `#upstream` |
 | Herdr itself, Claude Code, pi core, Codex, third-party Herdr plugins (`herdr-plus`, `hunkdiff`) | upstream projects | `inbox`, tagged `#upstream` |
 
-Paths that start with `dotfiles/` or `roles/` are in `~/Projects/dotfiles-ansible`. The live files in `~/.agents`, `~/.claude` and `~/.pi/agent` are symbolic links into that repository. Run `readlink -f <path>` to find the source of a file you are not sure about.
+Paths that start with `dotfiles/` or `roles/` are in `~/Projects/dotfiles-ansible`. The live files in `~/.agents`, `~/.claude`, `~/.codex` and `~/.pi/agent` are symbolic links into that repository. Run `readlink -f <path>` to find the source of a file you are not sure about.
 
 If two components could own the fix, use the one that must change first. Name the other one in the card details.
 
