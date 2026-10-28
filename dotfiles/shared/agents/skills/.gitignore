@@ -11,3 +11,5 @@
 !show-docs/**
 !harness-triage/
 !harness-triage/**
+!clarity/
+!clarity/**
