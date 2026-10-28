@@ -1,0 +1,23 @@
+prefix_rule(
+    pattern = ["herdboard", ["show", "list", "log", "attach", "mockup", "move"]],
+    decision = "allow",
+    justification = "work agents and planners keep their herdboard cards up to date; these subcommands do not change a repository",
+)
+
+prefix_rule(
+    pattern = ["herdboard", "--json", ["show", "list", "log", "attach", "mockup", "move"]],
+    decision = "allow",
+    justification = "work agents and planners keep their herdboard cards up to date; these subcommands do not change a repository",
+)
+
+prefix_rule(
+    pattern = ["/home/natekift/Projects/herdr-extensions/plugins/herdboard/.venv/bin/python3", "-m", "herdboard", ["show", "list", "log", "attach", "mockup", "move"]],
+    decision = "allow",
+    justification = "herdboard briefs call the plugin interpreter directly; these subcommands do not change a repository",
+)
+
+prefix_rule(
+    pattern = ["/home/natekift/Projects/herdr-extensions/plugins/herdboard/.venv/bin/python3", "-m", "herdboard", "--json", ["show", "list", "log", "attach", "mockup", "move"]],
+    decision = "allow",
+    justification = "herdboard briefs call the plugin interpreter directly; these subcommands do not change a repository",
+)
