@@ -179,6 +179,7 @@ mac_brew_packages:
   - neovim # Ambitious Vim-fork focused on extensibility and agility
   - node # Platform built on V8 to build network applications
   - pre-commit # Framework for managing multi-language pre-commit hooks
+  - python # Interpreter for python3 (Herdr resource-usage plugin needs 3.11 or later)
   - ripgrep # Search tool like grep and The Silver Searcher
   - starship # Cross-shell prompt for astronauts
   - tgswitch # Switch between different versions of terraform

@@ -5,6 +5,9 @@ herdr_plugins:
   - id: nulluminati.agent-icons
     path: "{{ herdr_extensions_dir }}/plugins/agent-icons"
     tags: [install, herdr]
+  - id: nulluminati.resource-usage
+    path: "{{ herdr_extensions_dir }}/plugins/resource-usage"
+    tags: [install, herdr]
   - id: nulluminati.herdboard
     path: "{{ herdr_extensions_dir }}/plugins/herdboard"
     tags: [install, herdr]

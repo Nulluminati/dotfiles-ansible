@@ -15,6 +15,7 @@ rows = [
   ] }],
   ["$workflow_profile"],
   ["branch", "git_status"],
+  ["$resource_usage"],
 ]
 
 [ui.sidebar.agents]
