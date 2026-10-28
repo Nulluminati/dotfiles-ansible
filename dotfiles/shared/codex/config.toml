@@ -13,6 +13,21 @@ screen_reader_detection_done = true
 [tui.model_availability_nux]
 "gpt-6.1-sol" = 3
 
+# Documentation and code search servers, matching Claude's user MCP servers.
+# The context7 API key is optional; Codex forwards CONTEXT7_API_KEY when it is set.
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+env_vars = ["CONTEXT7_API_KEY"]
+
+[mcp_servers.grep_app]
+url = "https://mcp.grep.app"
+
+# searchGitHub only reads public code, but it does not declare itself read-only,
+# so without this Codex rejects it when approvals are "never".
+[mcp_servers.grep_app.tools.searchGitHub]
+approval_mode = "approve"
+
 [projects."/home/natekift/Projects/herdr-extensions"]
 trust_level = "trusted"
 
