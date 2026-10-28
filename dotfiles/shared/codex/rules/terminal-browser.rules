@@ -1,0 +1,5 @@
+prefix_rule(
+    pattern = ["terminal-browser"],
+    decision = "allow",
+    justification = "herdboard reviewers open pages; terminal-browser needs the Herdr socket and its data folder, which the reviewer sandbox blocks",
+)
