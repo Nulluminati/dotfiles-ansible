@@ -34,3 +34,5 @@ CLAUDE.local.md
 .pi/workers/
 .pi/worktrees/
 
+
+**/.claude/.cc-writes/
