@@ -16,7 +16,7 @@ roles/           # Ansible roles: uv, llm, cli, ai_tooling, stow, fonts, sublime
 herdr-plugins/   # Local Herdr plugins, linked by ai_tooling (not stowed)
 dotfiles/
   fedora/        # Fedora-specific configs
-  shared/        # Cross-platform configs
+  shared/        # Cross-platform configs (not stowed directly; fedora/ and mac/ packages symlink into it)
   mac/           # macOS-specific (partial)
 secrets.example.yml  # Template for secrets (copy to secrets.yml)
 secrets.yml      # API keys and sensitive config (gitignored)
@@ -34,22 +34,20 @@ secrets.yml      # API keys and sensitive config (gitignored)
 # Specific roles
 ./bin/setup -t "fonts,cli"
 
-# Dry-run (preview changes without applying):
-./bin/setup -t "cli" --check
-# Or run ansible directly:
+# Dry-run (preview changes without applying). bin/setup has no --check flag, so run ansible directly:
 ansible-playbook bootstrap.yml --extra-vars @secrets.yml -i hosts --check --tags "cli" --ask-become-pass
 ```
 
 When modifying roles:
 - Each role follows `tasks/main.yml` and `defaults/main.yml` structure
 - Platform-specific tasks go in `tasks/fedora.yml` or `tasks/mac.yml`
-- See `bootstrap.yml:1-38` for available role tags
+- See `bootstrap.yml` for available role tags
 
-For secrets, reference `secrets.example.yml` (never commit `secrets.yml`).
+Prerequisites: `python3` and `uv` (`bin/setup` installs Ansible with uv). `secrets.yml` must exist because every run passes it as `--extra-vars`; copy it from `secrets.example.yml` (never commit `secrets.yml`).
 
 ## Testing
 
-This repo has no test suite. Verify changes with a dry run: `./bin/setup -t "<roles>" --check`.
+This repo has no test suite. Verify changes with the `ansible-playbook ... --check --tags "<roles>"` dry run above.
 
 Ad-hoc scripts to check something are fine, but do not commit them.
 
