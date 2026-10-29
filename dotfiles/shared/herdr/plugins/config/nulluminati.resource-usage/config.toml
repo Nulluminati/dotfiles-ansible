@@ -1,0 +1,2 @@
+# Show Nerd Font icons in place of the words CPU and MEM in the sidebar row.
+icon_style = "nerd"
