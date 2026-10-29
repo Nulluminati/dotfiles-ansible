@@ -1,0 +1,16 @@
+id = "nulluminati.workflow-sidebar"
+name = "Workflow Sidebar"
+version = "0.1.0"
+min_herdr_version = "0.9.0"
+description = "Report the herdr-plus workflow sidebar tokens again when the Herdr server starts."
+platforms = ["linux", "macos"]
+
+# Herdr keeps sidebar tokens in memory only. herdr-plus reports
+# $workflow_project when a workflow opens, so restored workspaces lose it.
+[[startup]]
+command = ["sh", "-c", "exec python3 \"$HOME/.config/herdr/plugins/config/cloudmanic.herdr-plus/bin/herdr_workflow.py\" refresh-sidebar"]
+
+[[actions]]
+id = "refresh"
+title = "Workflow sidebar: refresh"
+command = ["sh", "-c", "exec python3 \"$HOME/.config/herdr/plugins/config/cloudmanic.herdr-plus/bin/herdr_workflow.py\" refresh-sidebar"]

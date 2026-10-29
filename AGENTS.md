@@ -13,6 +13,7 @@ bootstrap.yml    # Main playbook - imports all roles with tags
 bin/             # Setup scripts
 hosts            # Ansible inventory (localhost)
 roles/           # Ansible roles: uv, llm, cli, ai_tooling, stow, fonts, sublime
+herdr-plugins/   # Local Herdr plugins, linked by ai_tooling (not stowed)
 dotfiles/
   fedora/        # Fedora-specific configs
   shared/        # Cross-platform configs
