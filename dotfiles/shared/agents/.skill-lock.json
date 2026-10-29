@@ -9,7 +9,7 @@
       "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
       "pluginName": "example-skills",
       "installedAt": "2026-02-23T02:51:45.197Z",
-      "updatedAt": "2026-10-28T20:48:45.899Z"
+      "updatedAt": "2026-10-29T16:19:57.480Z"
     },
     "frontend-design": {
       "source": "anthropics/skills",
@@ -19,7 +19,7 @@
       "skillFolderHash": "d79e2a5bb4df4a386c2adcdd9ab8709bba28c3f6",
       "pluginName": "example-skills",
       "installedAt": "2026-02-23T02:51:47.809Z",
-      "updatedAt": "2026-10-28T20:48:48.685Z"
+      "updatedAt": "2026-10-29T16:19:59.689Z"
     },
     "mermaid-diagrams": {
       "source": "softaworks/agent-toolkit",
@@ -28,7 +28,7 @@
       "skillPath": "skills/mermaid-diagrams/SKILL.md",
       "skillFolderHash": "1b7a962715838d762fe4b34701d797d1d57496cd",
       "installedAt": "2026-02-23T02:51:50.290Z",
-      "updatedAt": "2026-10-28T20:48:51.076Z"
+      "updatedAt": "2026-10-29T16:20:02.369Z"
     },
     "humanizer": {
       "source": "softaworks/agent-toolkit",
@@ -37,7 +37,7 @@
       "skillPath": "skills/humanizer/SKILL.md",
       "skillFolderHash": "004c1998fffe4d5cd4535123d65cf9fb1a107b64",
       "installedAt": "2026-02-23T02:51:52.185Z",
-      "updatedAt": "2026-10-28T20:48:54.324Z"
+      "updatedAt": "2026-10-29T16:20:04.425Z"
     },
     "agent-md-refactor": {
       "source": "softaworks/agent-toolkit",
@@ -46,7 +46,7 @@
       "skillPath": "skills/agent-md-refactor/SKILL.md",
       "skillFolderHash": "89a8fede359cb48c66f1af44c5aa8fc07b82cded",
       "installedAt": "2026-02-23T02:51:54.045Z",
-      "updatedAt": "2026-10-28T20:48:56.573Z"
+      "updatedAt": "2026-10-29T16:20:07.229Z"
     },
     "uv-package-manager": {
       "source": "wshobson/agents",
@@ -55,7 +55,7 @@
       "skillPath": "plugins/python-development/skills/uv-package-manager/SKILL.md",
       "skillFolderHash": "1adca5aea1b2682cdc2744e81932c5b6c9a489d6",
       "installedAt": "2026-02-23T02:51:56.564Z",
-      "updatedAt": "2026-10-28T20:49:00.457Z"
+      "updatedAt": "2026-10-29T16:20:09.915Z"
     },
     "code-review-excellence": {
       "source": "wshobson/agents",
@@ -64,7 +64,7 @@
       "skillPath": "plugins/developer-essentials/skills/code-review-excellence/SKILL.md",
       "skillFolderHash": "eb067e9432b526fe6a13cea53be60ad6f853fced",
       "installedAt": "2026-02-23T02:51:59.123Z",
-      "updatedAt": "2026-10-28T20:49:03.877Z"
+      "updatedAt": "2026-10-29T16:20:12.758Z"
     },
     "peer-review": {
       "source": "Nulluminati/herdr-extensions",
@@ -73,7 +73,7 @@
       "skillPath": "plugins/peer-review/skills/peer-review/SKILL.md",
       "skillFolderHash": "77f7a383f33ae6356c2b95fc22e85d0caec2d254",
       "installedAt": "2026-10-14T23:14:31.807Z",
-      "updatedAt": "2026-10-28T20:49:06.895Z"
+      "updatedAt": "2026-10-29T16:20:19.095Z"
     },
     "herdboard": {
       "source": "Nulluminati/herdr-extensions",
@@ -82,7 +82,7 @@
       "skillPath": "plugins/herdboard/skills/herdboard/SKILL.md",
       "skillFolderHash": "c43dc85b527878a2956500b0a5ee577507133301",
       "installedAt": "2026-10-14T23:14:34.054Z",
-      "updatedAt": "2026-10-28T20:49:09.729Z"
+      "updatedAt": "2026-10-29T16:20:23.950Z"
     }
   },
   "dismissed": {}
