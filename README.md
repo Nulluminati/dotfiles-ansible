@@ -79,6 +79,8 @@ ansible-playbook bootstrap.yml --extra-vars @secrets.yml -i hosts --check --tags
 🧛
 ![](https://github.com/nulluminati/dotfiles-ansible/blob/main/previews/preview.png?raw=true)
 
+![](https://github.com/nulluminati/dotfiles-ansible/blob/main/previews/preview-2.png?raw=true)
+
 
 ## License
 <p align="center">
