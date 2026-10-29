@@ -6,6 +6,8 @@ pane_borders = "always"
 pane_outer_borders = true
 
 [ui.sidebar.spaces]
+# Line 1: the project. A card workspace shows its own name, which is its branch name.
+# Line 2: the herdboard card, else the branch. herdboard card branches hide by their prefix.
 rows = [
   ["state_icon", "$workflow_project", { token = "workspace", rules = [
     { starts_with = "implementation · ", hide = true },
@@ -13,35 +15,27 @@ rows = [
     { starts_with = "local-review · ", hide = true },
     { starts_with = "pr-review · ", hide = true },
   ] }],
-  ["$workflow_profile"],
-  ["branch", "git_status"],
+  ["$herdboard_card", { token = "branch", rules = [
+    { starts_with = "feat/t", hide = true },
+    { starts_with = "fix/t", hide = true },
+    { starts_with = "chore/t", hide = true },
+    { starts_with = "docs/t", hide = true },
+    { starts_with = "refactor/t", hide = true },
+    { starts_with = "test/t", hide = true },
+    { starts_with = "perf/t", hide = true },
+  ] }, "git_status"],
   ["$resource_usage"],
 ]
 
 [ui.sidebar.agents]
-rows = [
-  ["state_icon", "$agent_icon", "agent", "state_text"],
-  ["workspace", "tab"],
-]
-
-[ui.sidebar.agents.rows_by_agent]
-# Shared rows first, in the same order for every agent; agent-only rows follow.
+# One layout for every agent. Rows whose tokens have no value disappear.
 # $herdboard_card: the herdboard card that `herdboard start` gave the agent.
-pi = [
-  ["state_icon", "$agent_icon", "agent"],
+rows = [
+  ["state_icon", { token = "$agent_icon", rules = [{ equals = "", fg = "#D97757" }] }],
+  ["tab"],
   ["$herdboard_card"],
-  ["$pi_session_name"],
-  ["$pi_context", "$pi_cost"],
-  ["$pi_todos"],
-  ["$pi_messenger"],
-  ["$pi_mission", "$pi_mission_status"],
-  ["$pi_workers", "$pi_goal"],
-]
-claude = [
-  ["state_icon", { token = "$agent_icon", fg = "#D97757" }, "agent"],
-  ["$herdboard_card"],
-  ["$claude_session_name"],
-  ["$claude_context", "$claude_cost"],
+  ["$pi_workers"],
+  ["$claude_context", "$claude_cost", "$pi_context", "$pi_cost", "$codex_context", "$codex_cost"],
 ]
 
 [terminal]
