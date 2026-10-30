@@ -10,6 +10,7 @@ configuration {
     fullscreen:                     false;
     hide-scrollbar:                 true;
     sidebar-mode:                   false;
+    terminal:                       "ghostty";
 }
 
 @theme "~/.cache/wal/colors-rofi"
