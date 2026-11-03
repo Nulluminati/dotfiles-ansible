@@ -71,10 +71,55 @@
     - install
     - hunk
 
-- name: Install skills globally
-  ansible.builtin.shell:
-    cmd: "skills add {{ item }} -g -y"
+# `skills add` installs a missing skill and rebuilds an installed one, but it
+# always reports "installed". Split the work so Ansible reports real changes:
+# add the missing skills, then refresh the installed ones with `skills update`.
+- name: Read the installed global skills
+  ansible.builtin.command:
+    argv:
+      - skills
+      - list
+      - -g
+      - --json
+  register: agent_skill_list
+  changed_when: false
+  check_mode: false
+  tags:
+    - skills
+
+- name: Record the managed skill names and the installed ones
+  ansible.builtin.set_fact:
+    agent_skill_names: "{{ agent_skills | map('regex_replace', '^.*@', '') | list }}"
+    agent_skill_names_installed: >-
+      {{ (agent_skill_list.stdout | from_json)
+         | selectattr('status', 'ne', 'missing')
+         | map(attribute='name')
+         | list }}
+  tags:
+    - skills
+
+- name: Install the missing skills globally
+  ansible.builtin.command:
+    argv:
+      - skills
+      - add
+      - "{{ item }}"
+      - -g
+      - -y
   loop: "{{ agent_skills }}"
+  when: (item | regex_replace('^.*@', '')) not in agent_skill_names_installed
+  changed_when: true
+  tags:
+    - skills
+
+- name: Update the installed skills globally
+  ansible.builtin.command:
+    argv: "{{ ['skills', 'update'] + managed_installed_skills + ['-g', '-y'] }}"
+  vars:
+    managed_installed_skills: "{{ agent_skill_names | intersect(agent_skill_names_installed) }}"
+  when: managed_installed_skills | length > 0
+  register: agent_skill_update
+  changed_when: "'Updated' in agent_skill_update.stdout"
   tags:
     - skills
 
