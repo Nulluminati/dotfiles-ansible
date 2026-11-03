@@ -46,8 +46,8 @@ Use the component that must change, not the place where you saw the symptom.
 | Herdr configuration (`~/.config/herdr/config.toml`) | `dotfiles/fedora/herdr/` | `nulluminati-dotfiles-ansible` |
 | Installation of Claude Code, pi, Codex, Herdr, Herdr plugins, bun tools | `roles/ai_tooling/` | `nulluminati-dotfiles-ansible` |
 | Codex configuration (`~/.codex/config.toml`, `~/.codex/hooks.json`, `~/.codex/AGENTS.md`) | `dotfiles/fedora/codex/.codex/`, `dotfiles/shared/codex/` | `nulluminati-dotfiles-ansible` |
-| Herdr integration hooks (`herdr-agent-state.sh`, `~/.pi/agent/extensions/herdr-agent-state.ts`) | written by Herdr; do not edit | `inbox`, tagged `#upstream` |
-| Herdr itself, Claude Code, pi core, Codex, third-party Herdr plugins (`herdr-plus`, `hunkdiff`) | upstream projects | `inbox`, tagged `#upstream` |
+| Herdr integration hooks (`herdr-agent-state.sh`, `~/.pi/agent/extensions/herdr-agent-state.ts`) | written by Herdr; do not edit | `inbox`, tagged `upstream` |
+| Herdr itself, Claude Code, pi core, Codex, third-party Herdr plugins (`herdr-plus`, `hunkdiff`) | upstream projects | `inbox`, tagged `upstream` |
 
 Paths that start with `dotfiles/` or `roles/` are in `~/Projects/dotfiles-ansible`. The live files in `~/.agents`, `~/.claude`, `~/.codex` and `~/.pi/agent` are symbolic links into that repository. Run `readlink -f <path>` to find the source of a file you are not sure about.
 
@@ -95,11 +95,11 @@ Found by: <your agent kind, for example claude or pi> while working on <card ref
 Then add the card:
 
 ```bash
-herdboard --json add "<short title> #harness" --type bug --column Triage --board <board> --body-file <file>
+herdboard --json add "<short title>" --tag harness --type bug --column Triage --board <board> --body-file <file>
 ```
 
 - Use `--type bug` for a defect. Use `--type feature` for a missing capability. Use `--type docs` for wrong or missing skill or AGENTS.md text. Use `--type chore` for clean-up.
-- Always add the `#harness` tag. Add `#upstream` for an upstream project. Add a component tag when it helps the user sort, for example `#skills`, `#hooks` or `#herdboard`.
+- Always add `--tag harness`. Add `--tag upstream` for an upstream project. Add a component tag when it helps the user sort, for example `--tag skills`, `--tag hooks` or `--tag herdboard`. Repeat `--tag` for each tag. Do not put `#tag` text in the title: herdboard keeps it as title text and adds no tag.
 - Write the title as a short statement of the problem: `herdboard brief omits the base branch`, not `Bug found`.
 - `--column Triage` creates the Triage column on a board that has none. A plain `add` does not use Triage.
 - Write the body file in your scratchpad directory, not in a repository.
