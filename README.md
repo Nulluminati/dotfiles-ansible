@@ -30,7 +30,7 @@ The important stuff:
 
 Desktop (Fedora)
 - i3
-- Picom
+- Picom (installed, autostart disabled)
 - Polybar
 - Pywal
 - Rofi

@@ -1,0 +1,7 @@
+# Overrides /etc/xdg/autostart/picom.desktop so dex-autostart does not start picom.
+# Delete this file to start picom with i3 again.
+[Desktop Entry]
+Type=Application
+Name=picom
+Exec=picom
+Hidden=true
