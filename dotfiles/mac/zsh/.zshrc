@@ -22,8 +22,6 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 # ── Version & language managers ────────────────────────────────────────
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 command -v pyenv >/dev/null && eval "$(pyenv init -)"
 # Let mise use the authenticated GitHub CLI
 export MISE_GITHUB_CREDENTIAL_COMMAND='gh auth token --hostname "$MISE_CREDENTIAL_HOST"'
