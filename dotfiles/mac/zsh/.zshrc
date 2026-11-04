@@ -145,6 +145,13 @@ if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init zsh --cmd zx)"
 fi
 
+# ── Key bindings ───────────────────────────────────────────────────────
+# Terminals encode Shift+Enter as an escape sequence so apps such as Claude
+# Code can tell it apart from Enter. zsh does not know these sequences and
+# prints their tail (";2;13~" or ";2u"), so treat Shift+Enter as Enter.
+bindkey '^[[27;2;13~' accept-line  # xterm modifyOtherKeys (Ghostty)
+bindkey '^[[13;2u' accept-line     # kitty CSI-u (Alacritty binding)
+
 # ── Machine-local overrides ────────────────────────────────────────────
 # Never committed to git; hand-placed per machine (see .gitignore).
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
