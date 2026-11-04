@@ -1,0 +1,44 @@
+# macOS overrides for the shared Ghostty config (matches ~/.config/alacritty-local.toml)
+
+font-size = 12
+
+# Launches from the Dock or Finder start in /, so start in the home directory.
+# New tabs and splits still inherit the current directory.
+working-directory = home
+
+# Transparent titlebar that keeps the close/minimize/zoom buttons. A blank
+# title hides the title text (an empty value would restore the default).
+window-decoration = auto
+macos-titlebar-style = transparent
+title = " "
+macos-titlebar-proxy-icon = hidden
+
+# Keep the bell out of the titlebar (the shared config adds a bell emoji to
+# the title); the dock icon still bounces when Ghostty is unfocused.
+bell-features = no-system,no-audio,attention,no-title,no-border
+
+# Catppuccin Mocha
+# https://github.com/catppuccin/alacritty
+background = #1e1e2e
+foreground = #cdd6f4
+cursor-color = #f5e0dc
+cursor-text = #1e1e2e
+selection-background = #f5e0dc
+selection-foreground = #1e1e2e
+
+palette = 0=#45475a
+palette = 1=#f38ba8
+palette = 2=#a6e3a1
+palette = 3=#f9e2af
+palette = 4=#89b4fa
+palette = 5=#f5c2e7
+palette = 6=#94e2d5
+palette = 7=#bac2de
+palette = 8=#585b70
+palette = 9=#f38ba8
+palette = 10=#a6e3a1
+palette = 11=#f9e2af
+palette = 12=#89b4fa
+palette = 13=#f5c2e7
+palette = 14=#94e2d5
+palette = 15=#a6adc8

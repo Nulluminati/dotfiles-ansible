@@ -40,6 +40,29 @@
     - homebrew
     - packages
 
+# Ghostty as the default terminal: it opens executables and .command/.tool
+# scripts from Finder. Plain .sh files stay with their editor.
+- name: Check default terminal handlers
+  ansible.builtin.command: duti -d {{ item }}
+  loop: "{{ mac_terminal_utis }}"
+  register: terminal_handlers
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - ghostty
+    - default_terminal
+
+- name: Set Ghostty as default terminal
+  ansible.builtin.command: duti -s {{ mac_terminal_bundle_id }} {{ item.item }} all
+  loop: "{{ terminal_handlers.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: item.stdout != mac_terminal_bundle_id
+  tags:
+    - ghostty
+    - default_terminal
+
 # Bun - required by the ai_tooling role, which installs its bun tools before
 # any package manager would otherwise provide bun on macOS.
 - name: Install bun

@@ -142,6 +142,7 @@ mac_cask_packages:
   - docker # Docker Desktop
   - firefox # Mozilla Firefox web browser
   - font-source-code-pro # Monospaced font family for user interface and coding environments
+  - ghostty # GPU-accelerated terminal emulator (default terminal)
   - kap # Screen recorder
   - keepassxc # Password manager
   - linearmouse # LinearMouse - Linear mouse acceleration
@@ -160,6 +161,7 @@ mac_brew_packages:
   - check-jsonschema # JSON Schema validator
   - codex # OpenAI Codex CLI coding agent
   - dive # Tool for exploring each layer in a docker image
+  - duti # Set default applications for document types and URL schemes
   - eza # Modern, maintained replacement for ls
   - fd # Simple, fast and user-friendly alternative to 'find'
   - fzf # Command-line fuzzy finder written in Go
@@ -196,3 +198,10 @@ mac_brew_packages:
   - zsh # UNIX shell (command interpreter)
   - zsh-autosuggestions # Fish-like fast/unobtrusive autosuggestions for zsh
   - zsh-syntax-highlighting # Fish shell-like syntax highlighting for zsh
+
+# Default terminal on macOS: the app that opens executables and Terminal
+# scripts (.command, .tool) from Finder.
+mac_terminal_bundle_id: com.mitchellh.ghostty
+mac_terminal_utis:
+  - public.unix-executable
+  - com.apple.terminal.shell-script
