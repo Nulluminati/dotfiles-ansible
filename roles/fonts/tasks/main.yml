@@ -25,6 +25,12 @@
   tags:
     - fonts
 
+- name: Build Hack fonts with Herdr agent icons
+  import_tasks: herdr_agent_icons_mac.yml
+  tags:
+    - fonts
+    - herdr
+
 - name: Refresh font cache after removing legacy fonts
   command: fc-cache -f
   when:

@@ -1,0 +1,20 @@
+---
+# Alacritty on macOS only falls back to the system Core Text font list, so it
+# never uses the separate Herdr agent icon font. Build Hack copies that carry
+# the icon glyphs under their own family name instead.
+- name: Merge Herdr agent icons into Hack fonts
+  command: >-
+    uv run --quiet --script {{ role_path }}/files/merge_herdr_agent_icons.py
+    "{{ mac_font_dir }}/{{ font }}"
+    "{{ herdr_agent_icons_font_dir }}/HerdrAgentIconsMax-Regular.ttf"
+    "{{ herdr_merged_font_dir }}/{{ font | basename | replace('HackNerdFont', herdr_merged_font_family | replace(' ', '')) }}"
+    "{{ herdr_merged_font_family }}"
+  register: herdr_merged_font
+  changed_when: herdr_merged_font.stdout == 'changed'
+  loop: "{{ fonts }}"
+  loop_control:
+    loop_var: font
+  when: ansible_facts.distribution == 'MacOSX'
+  tags:
+    - fonts
+    - herdr

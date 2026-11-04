@@ -21,8 +21,8 @@ style = "Bold"
 x = 0
 y = 0
 
+# The font family is set per platform in ~/.config/alacritty-local.toml.
 [font.normal]
-family = "Hack Nerd Font"
 style = "Regular"
 
 [font.offset]

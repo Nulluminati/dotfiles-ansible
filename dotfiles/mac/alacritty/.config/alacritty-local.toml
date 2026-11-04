@@ -1,6 +1,11 @@
 [font]
 size = 12
 
+# Hack Nerd Font with the Herdr agent icons merged in, built by the fonts role.
+# Alacritty on macOS cannot fall back to the separate icon font.
+[font.normal]
+family = "Hack Herdr"
+
 [window.padding]
 x = 10
 y = 25
