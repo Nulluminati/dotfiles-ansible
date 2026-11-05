@@ -1,5 +1,5 @@
 {
-  "provider": "zai",
-  "model": "glm-5.3-flash",
+  "provider": "virtual-models",
+  "model": "worker-auto-v1",
   "thinkingLevel": "high"
 }
