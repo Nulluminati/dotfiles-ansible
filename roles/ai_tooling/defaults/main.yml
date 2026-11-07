@@ -59,12 +59,6 @@ mcp_servers:
 
 fedora_mcp_servers: []
 
-# MCP servers to remove from the user scope; removing an entry from
-# mcp_servers alone leaves it in ~/.claude.json
-retired_mcp_servers:
-  - brave-search
-  - context7
-
 mac_mcp_servers:
   # - name: honeycomb
   #   transport: http
