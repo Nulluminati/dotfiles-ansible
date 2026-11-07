@@ -1,13 +1,13 @@
 ---
 name: harness-triage
-description: "File a bug or improvement for the user's agent harness as a herdboard card in the Triage column of the board that owns the fix. The harness is pi and its extensions (pi-extensions), the Herdr plugins (herdr-extensions, including herdboard), and the dotfiles that configure Claude Code, pi, Codex, Herdr, skills, hooks and AGENTS.md (dotfiles-ansible). Use when a harness tool, hook, skill, extension, plugin or agent instruction fails, misleads you, or slows the work, when you find a missing capability or a workaround the harness should not need, or when the user asks you to file harness feedback. Not for bugs in the project you were asked to work on."
+description: "File a bug or improvement for the user's agent harness as a herdboard card in the Triage column of the board that owns the fix. The harness is pi and its extensions (pi-extensions), the Herdr plugins (herdr-extensions, including herdboard), and the dotfiles that configure Claude Code, pi, Codex, Herdr, skills, hooks and AGENTS.md (dotfiles-ansible). Use when a harness tool, hook, skill, extension, plugin or agent instruction fails, misleads you, or slows the work, when you find a missing capability or a workaround the harness should not need, or when the user asks you to file harness feedback. File on your own initiative when the evidence matches the triggers; never ask the user first. Not for bugs in the project you were asked to work on."
 ---
 
 # Harness triage
 
 You run inside a harness that the user builds. When the harness gets in your way, file a card so the user can fix it. The card goes to the Triage column of the board that owns the fix. The user sorts Triage later.
 
-Filing a Triage card does not need the user's permission. Triage exists for reports like this. Do not stop your current task to fix the harness. File the card, then continue.
+Filing a Triage card does not need the user's permission. Triage exists for reports like this. Do not ask the user before you file, and do not offer to file and wait for a reply. Agents often run with no human at the keyboard; a question gets missed and blocks the work. If the case matches "When to file", file the card, then continue. Do not stop your current task to fix the harness.
 
 Read the `herdboard` skill for the full CLI. This skill covers one job: route a harness report to the correct board and write a card that the user can act on.
 
@@ -125,4 +125,4 @@ Then continue with your task.
 - Do not create Linear issues (`add --linear` or `promote`).
 - Do not fix the harness in the same session unless the user asks. The current task comes first.
 - File one card for each problem. Do not combine unrelated problems.
-- Do not file more than three cards in one session without asking the user first.
+- If one session finds more than three problems, file the three most important. Log the rest in the activity log of the last card, so the user can promote them later. Do not stop to ask.
