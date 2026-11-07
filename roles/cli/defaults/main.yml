@@ -31,7 +31,7 @@ cli_dnf_packages:
   - ImageMagick
   - jq
   - keepassxc
-  - kubectl
+  - kubernetes1.35-client
   - neofetch
   - neovim
   - picom
@@ -100,12 +100,6 @@ fedora_repositories:
     description: Hashicorp Stable - $basearch
     url: https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable
     gpg_url: https://apt.releases.hashicorp.com/gpg
-    gpg_check: true
-
-  - name: Kubernetes
-    description: Kubernetes
-    url: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/
-    gpg_url: https://pkgs.k8s.io/core:/stable:/v1.31/rpm/repodata/repomd.xml.key
     gpg_check: true
 
   - name: sublime-text
