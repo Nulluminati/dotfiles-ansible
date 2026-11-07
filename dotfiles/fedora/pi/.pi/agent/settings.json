@@ -35,8 +35,5 @@
   "defaultProjectTrust": "always",
   "warnings": {
     "anthropicExtraUsage": true
-  },
-  "env": {
-    "PI_VOICE_SOURCE": "pi_voice_mic"
   }
 }
