@@ -37,6 +37,29 @@
     - mcp
     - config
 
+- name: Check for retired MCP servers
+  ansible.builtin.shell:
+    cmd: "claude mcp get {{ item }}"
+  register: retired_mcp_check_results
+  loop: "{{ retired_mcp_servers | default([]) }}"
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  tags:
+    - mcp
+    - config
+
+- name: Remove retired MCP servers
+  ansible.builtin.shell:
+    cmd: "claude mcp remove {{ item.item }} -s user"
+  loop: "{{ retired_mcp_check_results.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: item.rc == 0
+  tags:
+    - mcp
+    - config
+
 - name: Check for configured MCP servers
   ansible.builtin.shell:
     cmd: "claude mcp get {{ item.name }}"

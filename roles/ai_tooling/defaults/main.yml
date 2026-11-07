@@ -53,17 +53,17 @@ agent_skills:
   - "Nulluminati/herdr-extensions@herdboard"
 
 mcp_servers:
-  - name: brave-search
-    command: "npx -y @modelcontextprotocol/server-brave-search"
-    env:
-      BRAVE_API_KEY: "{{ api_keys.brave }}"
-  - name: context7
-    command: "npx -y @upstash/context7-mcp"
   - name: grep_app
     transport: http
     url: "https://mcp.grep.app"
 
 fedora_mcp_servers: []
+
+# MCP servers to remove from the user scope; removing an entry from
+# mcp_servers alone leaves it in ~/.claude.json
+retired_mcp_servers:
+  - brave-search
+  - context7
 
 mac_mcp_servers:
   # - name: honeycomb

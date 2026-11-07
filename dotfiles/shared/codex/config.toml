@@ -13,13 +13,7 @@ screen_reader_detection_done = true
 [tui.model_availability_nux]
 "gpt-6.1-sol" = 4
 
-# Documentation and code search servers, matching Claude's user MCP servers.
-# The context7 API key is optional; Codex forwards CONTEXT7_API_KEY when it is set.
-[mcp_servers.context7]
-command = "npx"
-args = ["-y", "@upstash/context7-mcp"]
-env_vars = ["CONTEXT7_API_KEY"]
-
+# Code search server, matching Claude's user MCP servers.
 [mcp_servers.grep_app]
 url = "https://mcp.grep.app"
 
