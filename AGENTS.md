@@ -51,6 +51,10 @@ This repo has no test suite. Verify changes with the `ansible-playbook ... --che
 
 Ad-hoc scripts to check something are fine, but do not commit them.
 
+## Secret scanning
+
+Gitleaks scans every push and pull request in CI (`.github/workflows/ci.yml`), using `.gitleaks.toml`. Run `pre-commit install` once per clone to scan staged changes before each commit. The `cli` role installs `gitleaks` and `pre-commit`.
+
 ## Stow Management
 
 Dotfiles are symlinked via GNU Stow, but **managed through Ansible** (not run manually). The `stow` role:

@@ -1,0 +1,12 @@
+# Gitleaks configuration
+# https://github.com/gitleaks/gitleaks/blob/master/config/gitleaks.toml
+
+# Use the bundled default ruleset. The rules cover ~150 common token
+# formats (GitHub PATs, AWS keys, Stripe, OpenAI, Anthropic, etc.) and
+# are kept current by the gitleaks project.
+# https://github.com/gitleaks/gitleaks/tree/master/config
+[extend]
+useDefault = true
+
+# Repository title shown in gitleaks output.
+title = "dotfiles-ansible"

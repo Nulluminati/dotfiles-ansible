@@ -1,0 +1,10 @@
+# Install the hooks once per clone: pre-commit install
+# The cli role installs gitleaks and pre-commit on Fedora and macOS.
+repos:
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: gitleaks
+        entry: gitleaks git --pre-commit --staged --redact --verbose --config .gitleaks.toml
+        language: system
+        pass_filenames: false

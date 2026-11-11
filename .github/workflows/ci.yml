@@ -1,0 +1,44 @@
+name: CI
+
+# Run on direct pushes to main and on every pull request.
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+
+# pull-requests: read lets gitleaks-action's ScanPullRequest mode fetch the
+# PR's commits to scan just the diff (it calls /pulls/{n}/commits, which
+# 403s without this scope).
+permissions:
+  contents: read
+  pull-requests: read
+
+# Cancel in-progress runs for the same ref so a force-push doesn't queue stale work.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Gitleaks needs the full history to detect past leaks.
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITLEAKS_CONFIG: .gitleaks.toml
+          GITLEAKS_VERSION: "8.30.1"
+          # The action fails the job on any leak by default. GITHUB_TOKEN
+          # is required for the action to read the PR's commits.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Fork pull requests have read-only tokens. Report findings in the
+          # job without attempting to write review comments.
+          GITLEAKS_ENABLE_COMMENTS: "false"

@@ -20,6 +20,7 @@ cli_dnf_packages:
   - fzf
   - gh
   - git-delta
+  - gitleaks
   - ghostty
   - helm
   - htop
@@ -37,6 +38,7 @@ cli_dnf_packages:
   - picom
   - pipewire-utils
   - polybar
+  - pre-commit
   - python3-pip
   - ripgrep
   - rofi
@@ -162,6 +164,7 @@ mac_brew_packages:
   - gh # GitHub command-line interface for pull request reviews
   - git # Distributed revision control system
   - git-delta # Syntax-highlighting pager for git and diff output
+  - gitleaks # Scan git repos for secrets
   - grep # GNU grep, egrep and fgrep
   - helm # The Kubernetes Package Manager
   - helm-docs # Generate documentation for your Helm charts
