@@ -15,6 +15,18 @@ herdr_plugins:
   - id: nulluminati.peer-review
     path: "{{ herdr_extensions_dir }}/plugins/peer-review"
     tags: [install, herdr]
+  # Gives each tab a title from its agent session, pane label or herdboard card
+  - id: nulluminati.auto-title
+    path: "{{ herdr_extensions_dir }}/plugins/auto-title"
+    tags: [install, herdr]
+  # Sets the $codex_context and $codex_cost tokens for the sidebar Agents list
+  - id: nulluminati.codex-usage
+    path: "{{ herdr_extensions_dir }}/plugins/codex-usage"
+    tags: [install, herdr]
+  # Opens the projects in its layout.toml at server start; does nothing without that file
+  - id: nulluminati.default-layout
+    path: "{{ herdr_extensions_dir }}/plugins/default-layout"
+    tags: [install, herdr]
   # Re-reports the herdr-plus workflow sidebar tokens when Herdr starts
   - id: nulluminati.workflow-sidebar
     path: "{{ playbook_dir }}/herdr-plugins/workflow-sidebar"
