@@ -25,6 +25,20 @@
     - herdr-plus
     - hunk
 
+# The herdboard CLI runs from the local clone, so edits there take effect at once.
+# The clone comes from the nulluminati.herdboard entry in herdr_plugins.
+- name: Install the herdboard CLI from the local clone
+  ansible.builtin.command:
+    argv:
+      - uv
+      - tool
+      - install
+      - --editable
+      - "{{ herdboard_dir }}"
+  tags:
+    - install
+    - herdr
+
 # Browser for agents inside Herdr panes
 - name: Install terminal-browser
   import_tasks: terminal_browser.yml

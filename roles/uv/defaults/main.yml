@@ -7,7 +7,6 @@ packages:
   - yt-dlp                                # https://github.com/yt-dlp/yt-dlp
   - tldr                                  # https://github.com/tldr-pages/tldr
   - basedpyright                          # https://github.com/DetachHead/basedpyright
-  - "git+ssh://git@github.com/Nulluminati/herdboard"
 
 fedora_packages:
   - pywal                                 # https://github.com/dylanaraps/pywal
