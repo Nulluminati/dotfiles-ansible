@@ -26,7 +26,6 @@
     - hunk
 
 # The herdboard CLI runs from the local clone, so edits there take effect at once.
-# The clone comes from the nulluminati.herdboard entry in herdr_plugins.
 - name: Install the herdboard CLI from the local clone
   ansible.builtin.command:
     argv:

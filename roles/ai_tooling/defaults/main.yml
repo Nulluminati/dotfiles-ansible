@@ -9,9 +9,7 @@ herdr_plugins:
   - id: nulluminati.resource-usage
     path: "{{ herdr_extensions_dir }}/plugins/resource-usage"
     tags: [install, herdr]
-  # Private repository, so the clone uses SSH
   - id: nulluminati.herdboard
-    repo: "git@github.com:Nulluminati/herdboard.git"
     path: "{{ herdboard_dir }}"
     tags: [install, herdr]
   - id: nulluminati.peer-review
