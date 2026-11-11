@@ -76,13 +76,13 @@
       "updatedAt": "2026-10-29T16:20:19.095Z"
     },
     "herdboard": {
-      "source": "Nulluminati/herdr-extensions",
+      "source": "Nulluminati/herdboard",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/Nulluminati/herdr-extensions.git",
-      "skillPath": "plugins/herdboard/skills/herdboard/SKILL.md",
-      "skillFolderHash": "18a27bcfc7639797c3d86a3ca2e5c663237031c7",
+      "sourceUrl": "https://github.com/Nulluminati/herdboard.git",
+      "skillPath": "skills/herdboard/SKILL.md",
+      "skillFolderHash": "fa65f5c671ba53b40b7ec71dfc81f7d58fc0bbae",
       "installedAt": "2026-10-14T23:14:34.054Z",
-      "updatedAt": "2026-11-07T06:50:09.910Z"
+      "updatedAt": "2026-11-11T15:48:55.308Z"
     }
   },
   "dismissed": {}
