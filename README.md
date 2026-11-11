@@ -50,7 +50,7 @@ AI tooling
 - Claude Code
 - Codex
 - Pi
-- Herdr, plus the local plugins in `herdr-plugins/`
+- Herdr, plus the plugins from [herdr-extensions](https://github.com/nulluminati/herdr-extensions)
 - Hunk
 - llm
 

@@ -6,15 +6,15 @@ working_dir = "{prompt}"
 name = "review"
 
 [[tabs.panes]]
-command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-agent local-review pi'"""
+command = """sh -c 'exec uv run --no-project --script "$HOME/Projects/herdr-extensions/plugins/workflow/bin/herdr_workflow.py" review-agent local-review pi'"""
 
 [[tabs.panes]]
-command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" review-hunk local-review'"""
+command = """sh -c 'exec uv run --no-project --script "$HOME/Projects/herdr-extensions/plugins/workflow/bin/herdr_workflow.py" review-hunk local-review'"""
 split = "right"
 ratio = 0.5
 
 [[tabs.panes]]
-command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" layout-claude local-review'"""
+command = """sh -c 'exec uv run --no-project --script "$HOME/Projects/herdr-extensions/plugins/workflow/bin/herdr_workflow.py" layout-claude local-review'"""
 split = "down"
 ratio = 0.5
 

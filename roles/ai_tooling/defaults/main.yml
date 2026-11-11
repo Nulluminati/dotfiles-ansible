@@ -27,9 +27,9 @@ herdr_plugins:
   - id: nulluminati.default-layout
     path: "{{ herdr_extensions_dir }}/plugins/default-layout"
     tags: [install, herdr]
-  # Re-reports the herdr-plus workflow sidebar tokens when Herdr starts
-  - id: nulluminati.workflow-sidebar
-    path: "{{ playbook_dir }}/herdr-plugins/workflow-sidebar"
+  # Opens herdr-plus workflow workspaces and re-reports their sidebar tokens when Herdr starts
+  - id: nulluminati.workflow
+    path: "{{ herdr_extensions_dir }}/plugins/workflow"
     tags: [install, herdr, herdr-plus]
   # Herdr workspace templates and quick actions (https://github.com/cloudmanic/herdr-plus)
   - id: cloudmanic.herdr-plus
