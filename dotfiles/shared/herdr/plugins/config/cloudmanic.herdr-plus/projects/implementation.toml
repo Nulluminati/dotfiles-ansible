@@ -14,7 +14,7 @@ split = "right"
 ratio = 0.5
 
 [[tabs.panes]]
-command = """sh -c 'exec uv run --no-project --script "$HOME/Projects/herdr-extensions/plugins/workflow/bin/herdr_workflow.py" layout-claude implementation'"""
+command = """sh -c 'config=$(herdr plugin config-dir cloudmanic.herdr-plus) && exec uv run --no-project --script "$config/bin/herdr_workflow.py" layout-claude implementation'"""
 split = "down"
 ratio = 0.5
 

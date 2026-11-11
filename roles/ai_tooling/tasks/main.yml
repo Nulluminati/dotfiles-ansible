@@ -25,6 +25,19 @@
     - herdr-plus
     - hunk
 
+# The herdr-plus projects and quick actions run bin/herdr_workflow.py from
+# their config directory. The script lives in the nulluminati.workflow plugin.
+- name: Link the herdr-plus workflow script from the workflow plugin
+  ansible.builtin.file:
+    src: "{{ herdr_extensions_dir }}/plugins/workflow/bin"
+    dest: "{{ ansible_facts.env.HOME }}/.config/herdr/plugins/config/cloudmanic.herdr-plus/bin"
+    state: link
+    force: true
+  tags:
+    - install
+    - herdr
+    - herdr-plus
+
 # The herdboard CLI runs from the local clone, so edits there take effect at once.
 - name: Install the herdboard CLI from the local clone
   ansible.builtin.command:
