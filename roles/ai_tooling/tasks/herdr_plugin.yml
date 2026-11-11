@@ -1,4 +1,13 @@
 ---
+# Clone only when the directory is missing; never touch a working clone
+- name: Clone {{ herdr_plugin.id }}
+  ansible.builtin.git:
+    repo: "{{ herdr_plugin.repo }}"
+    dest: "{{ herdr_plugin.path }}"
+    update: false
+    accept_hostkey: true
+  when: herdr_plugin.repo is defined
+
 - name: Check whether {{ herdr_plugin.id }} is installed
   ansible.builtin.command:
     argv:

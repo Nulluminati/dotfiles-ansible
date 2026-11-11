@@ -28,6 +28,12 @@ trust_level = "trusted"
 [projects."/Users/natekift/personal/herdr-extensions"]
 trust_level = "trusted"
 
+[projects."/home/natekift/Projects/herdboard"]
+trust_level = "trusted"
+
+[projects."/Users/natekift/personal/herdboard"]
+trust_level = "trusted"
+
 [projects."/home/natekift/Projects/pi-extensions"]
 trust_level = "trusted"
 

@@ -1,5 +1,6 @@
 ---
 herdr_extensions_dir: "{{ ansible_facts.env.HOME }}/{{ (ansible_facts.distribution == 'MacOSX') | ternary('personal', 'Projects') }}/herdr-extensions"
+herdboard_dir: "{{ ansible_facts.env.HOME }}/{{ (ansible_facts.distribution == 'MacOSX') | ternary('personal', 'Projects') }}/herdboard"
 
 herdr_plugins:
   - id: nulluminati.agent-icons
@@ -8,8 +9,10 @@ herdr_plugins:
   - id: nulluminati.resource-usage
     path: "{{ herdr_extensions_dir }}/plugins/resource-usage"
     tags: [install, herdr]
+  # Private repository, so the clone uses SSH
   - id: nulluminati.herdboard
-    path: "{{ herdr_extensions_dir }}/plugins/herdboard"
+    repo: "git@github.com:Nulluminati/herdboard.git"
+    path: "{{ herdboard_dir }}"
     tags: [install, herdr]
   - id: nulluminati.peer-review
     path: "{{ herdr_extensions_dir }}/plugins/peer-review"
@@ -50,7 +53,7 @@ agent_skills:
   - "wshobson/agents@uv-package-manager"
   - "wshobson/agents@code-review-excellence"
   - "Nulluminati/herdr-extensions@peer-review"
-  - "Nulluminati/herdr-extensions@herdboard"
+  - "Nulluminati/herdboard@herdboard"
 
 mcp_servers:
   - name: grep_app
