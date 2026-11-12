@@ -64,6 +64,7 @@
 ## Starting a new project
 
 When working on a new project or adding significant functionality:
+- To create a repository, or bring one up to the standard of the public repos (GitHub settings, rulesets, CI, Dependabot, docs, tooling), use the new-project skill. It also audits a repo against that standard.
 - If a AGENTS.md OR CLAUDE.md doesn't exist, write an AGENTS.md that captures project-specific context
 - Prefer AGENTS.md with a CLAUDE.md containing only `@AGENTS.md` for projects that do not yet have one.
 - Use the agent-md-refactor skill to audit and improve existing AGENTS.md or CLAUDE.md files

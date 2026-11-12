@@ -13,3 +13,5 @@
 !harness-triage/**
 !clarity/
 !clarity/**
+!new-project/
+!new-project/**

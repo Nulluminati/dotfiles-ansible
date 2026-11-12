@@ -39,7 +39,7 @@ Use the component that must change, not the place where you saw the symptom.
 | Skills that a plugin ships (`herdboard`, `peer-review`) | `~/Projects/herdr-extensions/plugins/<name>/skills` | `nulluminati-herdr-extensions` |
 | herdboard briefs, card commands, columns, review and merge flow | `~/Projects/herdr-extensions/plugins/herdboard` | `nulluminati-herdr-extensions` |
 | Global agent instructions (`~/.agents/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/.pi/agent/AGENTS.md`) | `dotfiles/shared/agents/AGENTS.md` | `nulluminati-dotfiles-ansible` |
-| Skills in this repository (`herdr`, `show-docs`, `quick-wins`, `speak`, `harness-triage`) | `dotfiles/shared/agents/skills/<name>` | `nulluminati-dotfiles-ansible` |
+| Skills in this repository (`herdr`, `show-docs`, `quick-wins`, `speak`, `harness-triage`, `new-project`) | `dotfiles/shared/agents/skills/<name>` | `nulluminati-dotfiles-ansible` |
 | Skills from the skills CLI (`.skill-lock.json`, `agent_skills` in the `ai_tooling` role) | upstream repositories | `nulluminati-dotfiles-ansible`, for the choice or the version |
 | Claude Code settings, hooks, status line | `dotfiles/fedora/claude/.claude/`, `dotfiles/shared/claude/` | `nulluminati-dotfiles-ansible` |
 | pi settings, models, small-model and worker-model files | `dotfiles/fedora/pi/.pi/agent/` | `nulluminati-dotfiles-ansible` |
