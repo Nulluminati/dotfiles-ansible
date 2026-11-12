@@ -1,5 +1,5 @@
 ---
-- name: Check whether {{ herdr_plugin.id }} is installed
+- name: Check install state of Herdr plugin {{ herdr_plugin.id }}
   ansible.builtin.command:
     argv:
       - herdr
@@ -13,7 +13,7 @@
   check_mode: false
   when: herdr_check.rc == 0 or not ansible_check_mode
 
-- name: Link {{ herdr_plugin.id }} from local clone
+- name: Link local clone of Herdr plugin {{ herdr_plugin.id }}
   ansible.builtin.command:
     argv:
       - herdr
@@ -27,7 +27,7 @@
       (herdr_installed_plugin.stdout | from_json).result.plugins |
       selectattr('plugin_root', 'equalto', herdr_plugin.path) | list | length == 0
 
-- name: Install {{ herdr_plugin.id }} from GitHub
+- name: Install from GitHub the Herdr plugin {{ herdr_plugin.id }}
   ansible.builtin.command:
     argv:
       - herdr

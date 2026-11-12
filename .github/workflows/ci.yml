@@ -1,3 +1,4 @@
+---
 name: CI
 
 # Run on direct pushes to main and on every pull request.
@@ -42,3 +43,43 @@ jobs:
           # Fork pull requests have read-only tokens. Report findings in the
           # job without attempting to write review comments.
           GITLEAKS_ENABLE_COMMENTS: "false"
+
+  yamllint:
+    name: YAML lint (yamllint)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          # The repo has no uv.lock to key a cache on.
+          enable-cache: false
+      - name: Run yamllint
+        # Settings live in .yamllint. --strict fails the job on warnings too.
+        run: uvx yamllint@1.38.0 --strict .
+
+  ansible-lint:
+    name: Ansible lint (ansible-lint)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          # The repo has no uv.lock to key a cache on.
+          enable-cache: false
+      - name: Run ansible-lint
+        # Settings live in .ansible-lint. ansible-lint installs the
+        # collections from requirements.yml before it lints.
+        env:
+          # ansible-core prints callback deprecation notices on load.
+          ANSIBLE_DEPRECATION_WARNINGS: "false"
+        run: uvx --from ansible-lint==26.10.1 ansible-lint

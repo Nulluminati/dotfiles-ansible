@@ -1,7 +1,7 @@
 ---
 - name: Import repositories GPG keys
   become: true
-  rpm_key:
+  ansible.builtin.rpm_key:
     state: present
     key: "{{ item.gpg_url }}"
   loop: "{{ fedora_repositories }}"
@@ -10,20 +10,20 @@
 
 - name: Add repositories
   become: true
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     baseurl: "{{ item.url }}"
     gpgkey: "{{ item.gpg_url }}"
     gpgcheck: "{{ item.gpg_check | bool }}"
-    enabled: yes
+    enabled: true
   loop: "{{ fedora_repositories }}"
   tags:
     - repos
 
 - name: Import RPM Fusion Free GPG key
   become: true
-  rpm_key:
+  ansible.builtin.rpm_key:
     state: present
     key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-{{ ansible_facts.distribution | lower }}-2020
   tags:
@@ -31,15 +31,15 @@
 
 - name: Install RPM Fusion Free
   become: true
-  dnf:
-    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_facts.distribution_major_version}}.noarch.rpm
+  ansible.builtin.dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm
     state: present
   tags:
     - repos
 
 - name: Add copr repositories
-  become: yes
-  shell: dnf copr enable {{ item.name }} -y
+  become: true
+  ansible.builtin.shell: dnf copr enable {{ item.name }} -y
   args:
     creates: /etc/yum.repos.d/{{ item.creates }}
   loop: "{{ copr_repositories }}"
@@ -48,7 +48,7 @@
 
 - name: Install command line tools in Fedora
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ cli_dnf_packages }}"
     state: present
   tags:
@@ -56,7 +56,7 @@
 
 - name: Grant cap_perfmon capability to intel_gpu_top
   become: true
-  capabilities:
+  community.general.capabilities:
     path: /usr/bin/intel_gpu_top
     capability: cap_perfmon=ep
     state: present
@@ -67,7 +67,7 @@
 # Add app IDs to flatpak_packages in defaults/main.yml.
 - name: Ensure flatpak is installed
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name: flatpak
     state: present
   tags:
@@ -106,21 +106,21 @@
 # Docker
 # Add user to docker group
 - name: Add user to docker group
-  become: yes
-  user:
+  become: true
+  ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
     groups: docker
-    append: yes
+    append: true
   tags:
     - docker
 
 # Fish Shell
 - name: Setup Fish Shell
-  import_tasks: fish.yml
+  ansible.builtin.import_tasks: fish.yml
 
 # NodeJS
 - name: Install node
-  shell: |
+  ansible.builtin.shell: |
     if not nvm list | grep -q {{ item }}
       nvm install {{ item }}
     end
@@ -134,7 +134,7 @@
 
 # AWS CLI
 - name: Install AWS CLI
-  import_tasks: aws.yml
+  ansible.builtin.import_tasks: aws.yml
 
 # Bun
 - name: Install bun
@@ -154,7 +154,7 @@
 
 # Github CLI Extensions
 - name: Install gh extensions
-  shell: gh extension install {{ item }}
+  ansible.builtin.shell: gh extension install {{ item }}
   args:
     executable: /usr/bin/fish
   loop: "{{ gh_extensions }}"
@@ -163,9 +163,9 @@
 
 # API Keys for polybar scripts
 - name: Set API keys as fish universal variables
-  shell: |
+  ansible.builtin.shell: |
     set -Ux BRAVE_API_KEY {{ api_keys.brave }}
-    set -Ux CLAUDE_API_KEY {{api_keys.claude}}
+    set -Ux CLAUDE_API_KEY {{ api_keys.claude }}
     set -Ux FIREWORKS_API_KEY {{ api_keys.fireworks }}
     set -Ux NEURALWATT_API_KEY {{ api_keys.neuralwatt }}
     set -Ux OPENAI_API_KEY {{ api_keys.openai }}
@@ -182,4 +182,4 @@
 
 # Talos Linux CLI tools
 - name: Install Talos Linux tools
-  import_tasks: talos.yml
+  ansible.builtin.import_tasks: talos.yml

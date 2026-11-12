@@ -1,6 +1,6 @@
 ---
 - name: Remove legacy Hack Nerd Font files
-  file:
+  ansible.builtin.file:
     path: "{{ fedora_font_dir }}/Hack/{{ item }}"
     state: absent
   loop:
@@ -12,13 +12,13 @@
     - fonts
 
 - name: Install Herdr agent icon font
-  import_tasks: herdr_agent_icons.yml
+  ansible.builtin.import_tasks: herdr_agent_icons.yml
   tags:
     - fonts
     - herdr
 
 - name: Download Font
-  include_tasks: "nerdfonts.yml"
+  ansible.builtin.include_tasks: "nerdfonts.yml"
   loop: "{{ fonts }}"
   loop_control:
     loop_var: font
@@ -26,13 +26,13 @@
     - fonts
 
 - name: Build Hack fonts with Herdr agent icons
-  import_tasks: herdr_agent_icons_mac.yml
+  ansible.builtin.import_tasks: herdr_agent_icons_mac.yml
   tags:
     - fonts
     - herdr
 
 - name: Refresh font cache after removing legacy fonts
-  command: fc-cache -f
+  ansible.builtin.command: fc-cache -f
   when:
     - ansible_facts.distribution == 'Fedora'
     - legacy_hack_fonts is changed

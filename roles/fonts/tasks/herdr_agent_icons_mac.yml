@@ -3,7 +3,7 @@
 # never uses the separate Herdr agent icon font. Build Hack copies that carry
 # the icon glyphs under their own family name instead.
 - name: Merge Herdr agent icons into Hack fonts
-  command: >-
+  ansible.builtin.command: >-
     uv run --quiet --script {{ role_path }}/files/merge_herdr_agent_icons.py
     "{{ mac_font_dir }}/{{ font }}"
     "{{ herdr_agent_icons_font_dir }}/HerdrAgentIconsMax-Regular.ttf"

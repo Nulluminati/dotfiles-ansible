@@ -1,5 +1,8 @@
 ---
 - name: Check if uv is available
+  tags:
+    - llm
+    - uv
   block:
     - name: Check if uv command exists
       ansible.builtin.raw: which uv
@@ -8,28 +11,25 @@
       failed_when: which_res.rc > 1
       register: which_res
 
-    - name: uv available
-      debug:
+    - name: Report that uv is available
+      ansible.builtin.debug:
         msg: uv is installed
 
   rescue:
     - name: No uv
-      debug:
+      ansible.builtin.debug:
         msg: uv is not installed
       ignore_errors: true
-  tags:
-    - llm
-    - uv
 
 - name: Install llm and additional tools with uv
-  shell: uv tool install {{ item }}
+  ansible.builtin.shell: uv tool install {{ item }}
   loop: "{{ uv_packages }}"
   tags:
     - llm
     - uv
 
 - name: Locate uv tools directory
-  command: uv tool dir
+  ansible.builtin.command: uv tool dir
   register: uv_tools_dir
   changed_when: false
   tags:
@@ -41,7 +41,7 @@
 # transitively. Several plugins (llm-docs, llm-openrouter, llm-hacker-news,
 # the fragments/templates plugins) still import httpx directly.
 - name: Install legacy httpx into the llm tool environment
-  command: uv pip install --python {{ uv_tools_dir.stdout }}/llm/bin/python httpx
+  ansible.builtin.command: uv pip install --python {{ uv_tools_dir.stdout }}/llm/bin/python httpx
   register: llm_httpx_install
   changed_when: "'Installed' in llm_httpx_install.stdout"
   tags:
@@ -49,7 +49,7 @@
     - plugins
 
 - name: Install additional llm models & plugins
-  shell: llm install -U {{ item }}
+  ansible.builtin.shell: llm install -U {{ item }}
   loop: "{{ llm_plugins }}"
   tags:
     - llm
@@ -57,7 +57,7 @@
 
 - name: Set llm api keys for fedora
   when: ansible_facts.distribution == "Fedora"
-  template:
+  ansible.builtin.template:
     src: templates/llm_keys.json.j2
     dest: "{{ ansible_facts.env.HOME }}/.config/io.datasette.llm/keys.json"
   tags:
@@ -66,7 +66,7 @@
 
 - name: Set llm api keys for mac
   when: ansible_facts.distribution == "MacOSX"
-  template:
+  ansible.builtin.template:
     src: templates/llm_keys.json.j2
     dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/io.datasette.llm/keys.json"
   tags:

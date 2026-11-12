@@ -1,0 +1,23 @@
+---
+# yamllint configuration, also read by ansible-lint for its yaml rule.
+# The comments, comments-indentation, braces and octal-values settings
+# are the values ansible-lint requires.
+extends: default
+
+# dotfiles/ holds application config files (some rewritten by the
+# applications themselves), not Ansible content.
+ignore: |
+  dotfiles/
+  secrets.yml
+
+rules:
+  braces:
+    max-spaces-inside: 1
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  # Task files carry long URLs and one-line Jinja commands.
+  line-length: disable
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true

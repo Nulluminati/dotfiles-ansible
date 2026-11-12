@@ -54,6 +54,17 @@ Ad-hoc scripts to check something are fine, but do not commit them.
 
 Gitleaks scans every push and pull request in CI (`.github/workflows/ci.yml`), using `.gitleaks.toml`. Run `pre-commit install` once per clone to scan staged changes before each commit. The `cli` role installs `gitleaks` and `pre-commit`.
 
+## Linting
+
+CI and pre-commit also run `yamllint --strict` (settings in `.yamllint`) and `ansible-lint` (settings in `.ansible-lint`). The `cli` role installs both. Run them locally before you commit:
+
+```bash
+yamllint --strict .
+ansible-lint
+```
+
+Use fully qualified module names (`ansible.builtin.file`, not `file`) and `true`/`false` for booleans. `.ansible-lint` skips some rules on purpose; read its comments before you add to the list.
+
 ## Stow Management
 
 Dotfiles are symlinked via GNU Stow, but **managed through Ansible** (not run manually). The `stow` role:

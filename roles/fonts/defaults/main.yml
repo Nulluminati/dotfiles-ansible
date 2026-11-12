@@ -12,7 +12,7 @@ herdr_merged_font_dir: "{{ mac_font_dir }}/HackHerdr"
 # Repo path layout: patched-fonts/<Font>/<Font>-<Style>.ttf since nerd-fonts v3.
 nerdfonts_version: v3.5.1
 
-fonts: 
+fonts:
   - 'Hack/HackNerdFont-Regular.ttf'
   - 'Hack/HackNerdFont-Bold.ttf'
   - 'Hack/HackNerdFont-Italic.ttf'

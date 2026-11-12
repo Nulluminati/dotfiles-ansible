@@ -1,5 +1,7 @@
+---
 # Install the hooks once per clone: pre-commit install
-# The cli role installs gitleaks and pre-commit on Fedora and macOS.
+# The cli role installs gitleaks, yamllint, ansible-lint and pre-commit on
+# Fedora and macOS.
 repos:
   - repo: local
     hooks:
@@ -8,3 +10,14 @@ repos:
         entry: gitleaks git --pre-commit --staged --redact --verbose --config .gitleaks.toml
         language: system
         pass_filenames: false
+      - id: yamllint
+        name: yamllint
+        entry: yamllint --strict
+        language: system
+        types: [yaml]
+      - id: ansible-lint
+        name: ansible-lint
+        entry: ansible-lint
+        language: system
+        pass_filenames: false
+        types: [yaml]

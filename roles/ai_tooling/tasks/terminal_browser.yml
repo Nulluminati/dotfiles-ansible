@@ -1,3 +1,4 @@
+---
 # terminal-browser: a browser inside the terminal (https://terminal-browser.sh)
 # The installer's `terminal-browser setup` step prompts on /dev/tty, which
 # Ansible hides, so it is skipped. The first other terminal-browser command

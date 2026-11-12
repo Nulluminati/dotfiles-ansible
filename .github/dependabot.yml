@@ -1,3 +1,4 @@
+---
 version: 2
 updates:
   # The workflow pins each action by commit SHA with a version comment.

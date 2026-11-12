@@ -1,5 +1,8 @@
 ---
 - name: Check if homebrew is available
+  tags:
+    - stow
+    - homebrew
   block:
     - name: Check if brew command exists
       ansible.builtin.raw: which brew
@@ -7,12 +10,9 @@
       changed_when: false
       failed_when: which_res.rc > 0
       register: which_res
-  tags:
-    - stow
-    - homebrew
 
 - name: Install Stow in Mac
-  ansible.builtin.homebrew:
+  community.general.homebrew:
     name: stow
     state: present
   tags:
@@ -22,7 +22,7 @@
 - name: Build directories list
   ansible.builtin.find:
     paths: ["dotfiles/mac"]
-    recurse: no
+    recurse: false
     file_type: directory
   register: files
   tags:

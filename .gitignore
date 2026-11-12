@@ -73,3 +73,6 @@ dotfiles/mac/pi/.pi/agent/auth.json
 .pi/worktrees/
 # TPM plugins must never land in the stowed config dir
 dotfiles/fedora/tmux/.config/tmux/plugins/
+
+# ansible-lint cache (collections from requirements.yml)
+.ansible/

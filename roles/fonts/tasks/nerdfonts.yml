@@ -1,13 +1,13 @@
 ---
 - name: Set fonts directory
-  set_fact:
-    fonts_dir: "{{ (ansible_facts.distribution == 'Fedora')|ternary(fedora_font_dir, mac_font_dir) }}"
+  ansible.builtin.set_fact:
+    fonts_dir: "{{ (ansible_facts.distribution == 'Fedora') | ternary(fedora_font_dir, mac_font_dir) }}"
   tags:
     - fonts
 
 - name: Ensure Fonts directory exists.
-  become: "{{ (ansible_facts.distribution == 'Fedora')|ternary('yes', 'no') }}"
-  file:
+  become: "{{ (ansible_facts.distribution == 'Fedora') | ternary('yes', 'no') }}"
+  ansible.builtin.file:
     group: "{{ ansible_facts.user_gid }}"
     owner: "{{ ansible_facts.user_id }}"
     path: "{{ fonts_dir }}"
@@ -17,13 +17,13 @@
     - fonts
 
 - name: Determine directory name for font
-  set_fact:
-    font_dir: "{{ font|regex_replace('^([^/]+)/.*$', '\\1') }}"
+  ansible.builtin.set_fact:
+    font_dir: "{{ font | regex_replace('^([^/]+)/.*$', '\\1') }}"
   tags:
     - fonts
 
-- name: Create directory for {{ font_dir }} fonts.
-  file:
+- name: Create font directory for {{ font_dir }}
+  ansible.builtin.file:
     group: "{{ ansible_facts.user_gid }}"
     owner: "{{ ansible_facts.user_id }}"
     path: "{{ fonts_dir }}/{{ font_dir }}"
@@ -31,9 +31,9 @@
   tags:
     - fonts
 
-- name: Download {{ font|basename }}.
-  get_url:
-    dest: "{{ fonts_dir }}/{{ font_dir }}/{{ font|basename }}"
+- name: Download {{ font | basename }}.
+  ansible.builtin.get_url:
+    dest: "{{ fonts_dir }}/{{ font_dir }}/{{ font | basename }}"
     group: "{{ ansible_facts.user_gid }}"
     owner: "{{ ansible_facts.user_id }}"
     url: "https://github.com/ryanoasis/nerd-fonts/raw/{{ nerdfonts_version }}/patched-fonts/{{ font | regex_replace(' ', '%20') }}"

@@ -39,6 +39,7 @@ cli_dnf_packages:
   - pipewire-utils
   - polybar
   - pre-commit
+  - python3-ansible-lint
   - python3-pip
   - ripgrep
   - rofi
@@ -58,6 +59,7 @@ cli_dnf_packages:
   - unzip
   - wireplumber
   - xclip
+  - yamllint
   - yazi
   - zoxide
 
@@ -151,6 +153,7 @@ mac_cask_packages:
 
 # Homebrew formulae to install on macOS
 mac_brew_packages:
+  - ansible-lint # Checks Ansible playbooks and roles for practices and behavior
   - awscli # Official Amazon AWS command-line interface
   - bash # Bourne-Again SHell, a UNIX command interpreter
   - bat # Clone of cat with syntax highlighting and Git integration

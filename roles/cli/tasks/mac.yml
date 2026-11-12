@@ -2,8 +2,8 @@
 
 - name: Setup homebrew taps
   community.general.homebrew_tap:
-    name: "{{ item.name|default(item) }}"
-    state: "{{ item.state|default('present') }}"
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
   loop: "{{ mac_homebrew_taps }}"
   tags:
     - homebrew
@@ -11,10 +11,10 @@
 
 - name: Install homebrew cask apps
   community.general.homebrew_cask:
-    name: "{{ item.name|default(item) }}"
-    state: "{{ item.state|default('present') }}"
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
     install_options: "{{ item.install_options | default(omit) }}"
-    accept_external_apps: yes
+    accept_external_apps: true
   loop: "{{ mac_cask_packages }}"
   register: cask_result
   # Homebrew 7 prefixes this error with the cask name ("Error: <cask>: It seems..."),
@@ -28,12 +28,12 @@
 
 # Alacritty
 - name: Install Alacritty
-  import_tasks: alacritty.yml
+  ansible.builtin.import_tasks: alacritty.yml
 
 - name: Install homebrew packages
   community.general.homebrew:
-    name: "{{ item.name|default(item) }}"
-    state: "{{ item.state|default('present') }}"
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
     install_options: "{{ item.install_options | default(omit) }}"
   loop: "{{ mac_brew_packages }}"
   tags:

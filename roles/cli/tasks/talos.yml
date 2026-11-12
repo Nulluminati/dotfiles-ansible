@@ -10,12 +10,12 @@
     - talos
 
 - name: Install talosctl binary
-  become: yes
+  become: true
   ansible.builtin.copy:
     src: "/tmp/talosctl"
     dest: "/usr/local/bin/talosctl"
     mode: '0755'
-    remote_src: yes
+    remote_src: true
   when: talosctl_download.changed
   tags:
     - talos
@@ -33,18 +33,18 @@
   ansible.builtin.unarchive:
     src: "/tmp/talhelper_linux_amd64.tar.gz"
     dest: "/tmp"
-    remote_src: yes
+    remote_src: true
   when: talhelper_download.changed
   tags:
     - talos
 
 - name: Install talhelper binary
-  become: yes
+  become: true
   ansible.builtin.copy:
     src: "/tmp/talhelper"
     dest: "/usr/local/bin/talhelper"
     mode: '0755'
-    remote_src: yes
+    remote_src: true
   when: talhelper_download.changed
   tags:
     - talos

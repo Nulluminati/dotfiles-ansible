@@ -1,0 +1,24 @@
+---
+# ansible-lint configuration. The yaml rule reads .yamllint.
+exclude_paths:
+  - .ansible/
+  - dotfiles/
+  - secrets.yml
+
+skip_list:
+  # Role defaults share plain names (api_keys, packages, fonts) that
+  # secrets.yml and other roles read. A role prefix would rename them all.
+  - var-naming[no-role-prefix]
+  # The roles run installers through shell and command on purpose: fish
+  # syntax, curl pipes, and tools that have no Ansible module. Changing
+  # them alters what runs on the machine.
+  - command-instead-of-module
+  - command-instead-of-shell
+  - no-changed-when
+  - risky-shell-pipe
+  # Tasks that create files keep the default umask. Setting modes on each
+  # one changes file permissions on existing machines.
+  - risky-file-permissions
+  # Tasks branch on registered results instead of handlers.
+  - no-handler
+  - ignore-errors

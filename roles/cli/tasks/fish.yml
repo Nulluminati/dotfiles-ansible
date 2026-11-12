@@ -2,7 +2,7 @@
 # Fish Shell
 # Fisher - https://github.com/jorgebucaran/fisher
 - name: Install fisher
-  shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+  ansible.builtin.shell: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
   args:
     creates: ~/.config/fish/functions/fisher.fish
     executable: fish
@@ -10,15 +10,15 @@
     - fish
 
 - name: Set default shell to fish
-  become: yes
-  user:
+  become: true
+  ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
     shell: /usr/bin/fish
   tags:
     - fish
 
 - name: Install fish plugins
-  shell: fisher install {{ item }}
+  ansible.builtin.shell: fisher install {{ item }}
   args:
     executable: /usr/bin/fish
   loop: "{{ fish_plugins }}"

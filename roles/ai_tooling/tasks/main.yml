@@ -1,17 +1,17 @@
 ---
 # Claude Code and MCP Servers
 - name: Install Claude Code and MCP servers
-  import_tasks: claude_code.yml
+  ansible.builtin.import_tasks: claude_code.yml
 
 # Herdr agent runtime
 - name: Install Herdr
-  import_tasks: herdr.yml
+  ansible.builtin.import_tasks: herdr.yml
   tags:
     - herdr-plus
     - hunk
 
 - name: Install Herdr plugins
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: herdr_plugin.yml
     apply:
       tags: "{{ herdr_plugin.tags }}"
@@ -53,7 +53,7 @@
 
 # Browser for agents inside Herdr panes
 - name: Install terminal-browser
-  import_tasks: terminal_browser.yml
+  ansible.builtin.import_tasks: terminal_browser.yml
   tags:
     - terminal-browser
 
@@ -92,7 +92,7 @@
 
 # Hunk and its GitHub review extension
 - name: Install Hunk review tools
-  import_tasks: hunk.yml
+  ansible.builtin.import_tasks: hunk.yml
   tags:
     - install
     - hunk

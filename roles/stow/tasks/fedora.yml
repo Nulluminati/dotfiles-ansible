@@ -1,7 +1,7 @@
 ---
 - name: Install Stow in Fedora
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name:
       - stow
     state: present
@@ -11,7 +11,7 @@
 - name: Build directories list
   ansible.builtin.find:
     paths: ["dotfiles/fedora"]
-    recurse: no
+    recurse: false
     file_type: directory
   register: files
   tags:

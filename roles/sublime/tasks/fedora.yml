@@ -3,7 +3,7 @@
 
 - name: Import repositories GPG keys
   become: true
-  rpm_key:
+  ansible.builtin.rpm_key:
     state: present
     key: "{{ item.gpg_url }}"
   loop: "{{ fedora_repositories }}"
@@ -12,20 +12,20 @@
 
 - name: Add repositories
   become: true
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
     baseurl: "{{ item.url }}"
     gpgkey: "{{ item.gpg_url }}"
     gpgcheck: "{{ item.gpg_check | bool }}"
-    enabled: yes
+    enabled: true
   loop: "{{ fedora_repositories }}"
   tags:
     - repos
 
 - name: Install Sublime Text in Fedora
   become: true
-  dnf:
+  ansible.builtin.dnf:
     name:
       - sublime-text
     state: present
@@ -35,7 +35,7 @@
 # Create Directoris
 
 - name: Check Sublime installed package directory
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Installed Packages"
   register: check_sublime_installed_packages_dir
   tags:
@@ -43,16 +43,16 @@
     - config
 
 - name: Create Sublime installed package directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Installed Packages"
     state: directory
-  when: check_sublime_installed_packages_dir.stat.exists == False
+  when: not check_sublime_installed_packages_dir.stat.exists
   tags:
     - sublime
     - config
 
 - name: Check Sublime package directory
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Packages"
   register: check_sublime_packages_dir
   tags:
@@ -60,10 +60,10 @@
     - config
 
 - name: Create Sublime Package directory
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Packages"
     state: directory
-  when: check_sublime_packages_dir.stat.exists == False
+  when: not check_sublime_packages_dir.stat.exists
   tags:
     - sublime
     - config
@@ -72,7 +72,7 @@
 # Install Package Control
 
 - name: Install package control for Sublime
-  get_url:
+  ansible.builtin.get_url:
     url: "https://packagecontrol.io/Package%20Control.sublime-package"
     dest: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Installed Packages/Package Control.sublime-package"
   tags:
@@ -82,10 +82,10 @@
 # Install Packages
 
 - name: Install Sublime plugins
-  git:
+  ansible.builtin.git:
     repo: "{{ item.name | default(item) }}"
     version: "{{ item.version | default('master') }}"
-    dest: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$','\\1') }}"
+    dest: "{{ ansible_facts.env.HOME }}/.config/sublime-text/Packages/{{ item.name | default(item) | regex_replace('^.+/([^/.]+)(\\.git)*$', '\\1') }}"
     accept_hostkey: "yes"
   with_items: "{{ sublime_packages }}"
   tags:
