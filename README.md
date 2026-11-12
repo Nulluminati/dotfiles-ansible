@@ -1,7 +1,7 @@
-```
+<pre align="center">
 █▀▄ █▀█ ▀█▀ █▀▀ █ █   █▀▀ █▀
 █▄▀ █▄█  █  █▀  █ █▄▄ ██▄ ▄█
-```
+</pre>
 
 ## table of contents
  - [introduction](#dotfiles)
