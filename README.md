@@ -1,7 +1,6 @@
-<pre align="center">
-█▀▄ █▀█ ▀█▀ █▀▀ █ █   █▀▀ █▀
-█▄▀ █▄█  █  █▀  █ █▄▄ ██▄ ▄█
-</pre>
+<p align="center">
+  <img src="previews/title.svg" alt="Dotfiles" width="640" height="96">
+</p>
 
 ## table of contents
  - [introduction](#dotfiles)
