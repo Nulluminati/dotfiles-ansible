@@ -1,6 +1,6 @@
 ---
 name: harness-triage
-description: "File a bug or improvement for the user's agent harness as a herdboard card in the Triage column of the board that owns the fix. The harness is pi and its extensions (pi-extensions), the Herdr plugins (herdr-extensions, including herdboard), and the dotfiles that configure Claude Code, pi, Codex, Herdr, skills, hooks and AGENTS.md (dotfiles-ansible). Use when a harness tool, hook, skill, extension, plugin or agent instruction fails, misleads you, or slows the work, when you find a missing capability or a workaround the harness should not need, or when the user asks you to file harness feedback. File on your own initiative when the evidence matches the triggers; never ask the user first. Not for bugs in the project you were asked to work on."
+description: "File a bug or improvement for the user's agent harness as a herdboard card in the Triage column of the board that owns the fix. The harness is pi and its extensions (pi-extensions), herdboard, the Herdr plugins in herdr-extensions, and the dotfiles that configure Claude Code, pi, Codex, Herdr, skills, hooks and AGENTS.md (dotfiles-ansible). Use when a harness tool, hook, skill, extension, plugin or agent instruction fails, misleads you, or slows the work, when you find a missing capability or a workaround the harness should not need, or when the user asks you to file harness feedback. File on your own initiative when the evidence matches the triggers; never ask the user first. Not for bugs in the project you were asked to work on."
 ---
 
 # Harness triage
@@ -35,9 +35,9 @@ Use the component that must change, not the place where you saw the symptom.
 |---|---|---|
 | pi extensions (workers, todos, messenger, status-bar, web-search, goal, and the others in `extensions/`) | `~/Projects/pi-extensions` | `nulluminati-pi-extensions` |
 | pi-extensions repository skills (`.pi/skills/`) | `~/Projects/pi-extensions/.pi/skills` | `nulluminati-pi-extensions` |
-| Herdr plugins: herdboard, peer-review, agent-icons, auto-title | `~/Projects/herdr-extensions/plugins/<name>` | `nulluminati-herdr-extensions` |
-| Skills that a plugin ships (`herdboard`, `peer-review`) | `~/Projects/herdr-extensions/plugins/<name>/skills` | `nulluminati-herdr-extensions` |
-| herdboard briefs, card commands, columns, review and merge flow | `~/Projects/herdr-extensions/plugins/herdboard` | `nulluminati-herdr-extensions` |
+| herdboard plugin, its skills, briefs, card commands, columns, review and merge flow | `~/Projects/herdboard` | `nulluminati-herdboard` |
+| Herdr plugins: agent-icons, auto-title, codex-usage, default-layout, peer-review, resource-usage, workflow | `~/Projects/herdr-extensions/plugins/<name>` | `nulluminati-herdr-extensions` |
+| Skills that herdr-extensions plugins ship (`peer-review`) | `~/Projects/herdr-extensions/plugins/<name>/skills` | `nulluminati-herdr-extensions` |
 | Global agent instructions (`~/.agents/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/.pi/agent/AGENTS.md`) | `dotfiles/shared/agents/AGENTS.md` | `nulluminati-dotfiles-ansible` |
 | Skills in this repository (`herdr`, `show-docs`, `quick-wins`, `speak`, `harness-triage`, `new-project`) | `dotfiles/shared/agents/skills/<name>` | `nulluminati-dotfiles-ansible` |
 | Skills from the skills CLI (`.skill-lock.json`, `agent_skills` in the `ai_tooling` role) | upstream repositories | `nulluminati-dotfiles-ansible`, for the choice or the version |
