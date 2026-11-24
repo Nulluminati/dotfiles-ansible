@@ -1,0 +1,121 @@
+# Default Layout (nulluminati.default-layout): the projects that Herdr opens
+# when its server starts, and the programs it relaunches after a restore.
+#
+# Each project matches the herdr-plus "top-level" template: a herdboard board
+# over a thin shell, and a Yazi file explorer tab. The labels match the ones
+# herdr-plus gives, so a workspace opened either way counts as the same project.
+#
+# Format: ~/Projects/herdr-extensions/plugins/default-layout/README.md
+
+[[projects]]
+label = "top-level · ~/Projects/homelab"
+path = "~/Projects/homelab"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85
+
+[[projects.tabs]]
+name = "files"
+command = "yazi"
+
+[[projects]]
+label = "top-level · ~/Projects/dotfiles-ansible"
+path = "~/Projects/dotfiles-ansible"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85
+
+[[projects.tabs]]
+name = "files"
+command = "yazi"
+
+[[projects]]
+label = "top-level · ~/Projects/pi-extensions"
+path = "~/Projects/pi-extensions"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85
+
+[[projects.tabs]]
+name = "files"
+command = "yazi"
+
+[[projects]]
+label = "top-level · ~/Projects/herdboard"
+path = "~/Projects/herdboard"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85
+
+[[projects.tabs]]
+name = "files"
+command = "yazi"
+
+[[projects]]
+label = "top-level · ~/Projects/herdr-extensions"
+path = "~/Projects/herdr-extensions"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85
+
+[[projects.tabs]]
+name = "files"
+command = "yazi"
+
+# Last in the file: this project holds every other project's directory, so a
+# project above it claims its own workspace first. The label still matches the
+# Projects workspace before any directory does.
+[[projects]]
+label = "Projects"
+path = "~/Projects"
+
+[[projects.tabs]]
+name = "board"
+
+[[projects.tabs.panes]]
+label = "board"
+command = """sh -c 'root=$(herdr plugin list --plugin nulluminati.herdboard --json | jq -r ".result.plugins[0].plugin_root") && exec uv run --quiet --project "$root" herdboard board'"""
+
+[[projects.tabs.panes]]
+split = "down"
+ratio = 0.85

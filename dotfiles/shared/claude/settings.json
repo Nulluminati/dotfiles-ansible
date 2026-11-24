@@ -53,7 +53,8 @@
   "enabledPlugins": {
     "sumologic@wrapbook-claude-code-marketplace": true,
     "code-review@wrapbook-claude-code-marketplace": true,
-    "cc-plugin-you-should-know@builtin": true
+    "cc-plugin-you-should-know@builtin": true,
+    "cloudflare@anthropic-plugin-directory": true
   },
   "extraKnownMarketplaces": {},
   "effortLevel": "high",
