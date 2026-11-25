@@ -64,6 +64,7 @@ agent_skills:
   - "wshobson/agents@code-review-excellence"
   - "Nulluminati/herdr-extensions@peer-review"
   - "Nulluminati/herdboard@herdboard"
+  - "backblaze-labs/claude-skill-b2-cloud-storage@b2-cloud-storage"
 
 mcp_servers:
   - name: grep_app

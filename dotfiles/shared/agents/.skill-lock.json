@@ -80,9 +80,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/Nulluminati/herdboard.git",
       "skillPath": "skills/herdboard/SKILL.md",
-      "skillFolderHash": "8083d33f1535e533d736ca7223708da0579c257f",
+      "skillFolderHash": "2a465b7d7b30925d1efc7fe61385f11a81383a8f",
       "installedAt": "2026-10-14T23:14:34.054Z",
-      "updatedAt": "2026-11-11T23:21:41.409Z"
+      "updatedAt": "2026-11-25T01:32:29.575Z"
+    },
+    "b2-cloud-storage": {
+      "source": "backblaze-labs/claude-skill-b2-cloud-storage",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/backblaze-labs/claude-skill-b2-cloud-storage.git",
+      "skillPath": "skills/b2-cloud-storage/SKILL.md",
+      "skillFolderHash": "753fa7e3f502205fa0b63740c08dcfe8715746f8",
+      "installedAt": "2026-11-25T01:32:26.744Z",
+      "updatedAt": "2026-11-25T01:32:26.744Z"
     }
   },
   "dismissed": {}
