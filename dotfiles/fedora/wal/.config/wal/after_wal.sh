@@ -9,6 +9,11 @@ ln -sf "${HOME}/.cache/wal/dunstrc" "${HOME}/.config/dunst/dunstrc"
 pkill dunst
 dunst &
 
+# Ghostty runs as a single-instance server that reads ~/.cache/wal/ghostty.conf
+# only at startup. SIGUSR2 tells it to reload config so new windows use the
+# current colors instead of the colors from when the server started.
+pkill -USR2 -x ghostty
+
 # Generate Sublime Text color scheme from pywal colors
 if command -v python3 &>/dev/null; then
     python3 "${HOME}/.config/scripts/pywal-sublime.py"
